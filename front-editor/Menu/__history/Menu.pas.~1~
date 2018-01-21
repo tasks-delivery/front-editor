@@ -1,0 +1,12 @@
+unit Menu;
+
+interface
+
+implementation
+
+procedure TFrontEd.Button1Click(Sender: TObject);
+begin
+
+end;
+
+end.
