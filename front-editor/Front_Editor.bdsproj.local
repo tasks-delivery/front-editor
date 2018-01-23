@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-  <Transactions>
+	<Transactions>
     <Transaction>2018.01.20 22:49:18.279.pas,C:\Users\User\Documents\Borland Studio Projects\Unit2.pas=D:\projects\Delphi\front-editor\MainForm.pas</Transaction>
     <Transaction>2018.01.20 22:49:18.279.dfm,C:\Users\User\Documents\Borland Studio Projects\Unit2.dfm=D:\projects\Delphi\front-editor\MainForm.dfm</Transaction>
     <Transaction>2018.01.20 22:49:52.040.bdsproj,C:\Users\User\Documents\Borland Studio Projects\Project1.bdsproj=D:\projects\Delphi\front-editor\Front_Editor.bdsproj</Transaction>

@@ -20,7 +20,7 @@ type
     { Private declarations }
   public
 
-
+    Overload;
   end;
 
 var

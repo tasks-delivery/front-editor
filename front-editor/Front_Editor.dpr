@@ -2,13 +2,12 @@ program Front_Editor;
 
 uses
   Forms,
-  MainForm in 'MainForm.pas' {FrontEd},
-  TopMenu in 'Menu\TopMenu.pas';
+  MainForm in 'MainForm.pas' {Main};
 
 {$R *.res}
 
 begin
   Application.Initialize;
-  Application.CreateForm(TFrontEd, FrontEd);
+  Application.CreateForm(TMain, Main);
   Application.Run;
 end.
