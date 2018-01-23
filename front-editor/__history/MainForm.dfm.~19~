@@ -16,28 +16,11 @@ object Main: TMain
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object Editor: TRichEdit
-    Left = 248
+  object Editor: TMemo
+    Left = 240
     Top = 0
-    Width = 1000
-    Height = 800
-    Color = cl3DDkShadow
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clYellow
-    Font.Height = -16
-    Font.Name = 'MS Sans Serif'
-    Font.Style = []
-    Lines.Strings = (
-      'Editor')
-    ParentFont = False
-    ScrollBars = ssVertical
-    TabOrder = 0
-  end
-  object Tree: TMemo
-    Left = 8
-    Top = 0
-    Width = 225
-    Height = 800
+    Width = 361
+    Height = 257
     Color = cl3DDkShadow
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clYellow
@@ -45,10 +28,31 @@ object Main: TMain
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     Lines.Strings = (
-      'Memo2')
+      'Ed')
     ParentFont = False
     ScrollBars = ssVertical
+    TabOrder = 0
+    WantTabs = True
+  end
+  object Tree: TMemo
+    Left = 0
+    Top = 0
+    Width = 225
+    Height = 257
+    Color = clInfoBk
+    Lines.Strings = (
+      'Memo2')
+    ScrollBars = ssVertical
     TabOrder = 1
+  end
+  object RichEdit1: TRichEdit
+    Left = 104
+    Top = 263
+    Width = 433
+    Height = 234
+    Lines.Strings = (
+      'RichEdit1')
+    TabOrder = 2
   end
   object MainMenu1: TMainMenu
     object MenuFile: TMenuItem

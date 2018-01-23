@@ -69,7 +69,7 @@ end;
 end;
 end;
 tags := TStringList.Create;
-tags.CommaText := 'div';
+tags.CommaText := '<div>, </div>';
 for i := 0 to tags.Count-1 do
 begin
 Text:=tags[i];
