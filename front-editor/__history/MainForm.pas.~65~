@@ -25,7 +25,7 @@ type
    // procedure FormCreate(Sender: TObject);
     procedure CloseAppClick(Sender: TObject);
     procedure OpenProjectClick(Sender: TObject);
-//    procedure Podsvet();
+    procedure Podsvet();
   private
   MyArray : array of string;
     { Private declarations }
@@ -454,7 +454,7 @@ const
     end;
 end;
 
-
+end;
 
 {
 const

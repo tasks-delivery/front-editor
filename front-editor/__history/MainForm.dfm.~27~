@@ -13,6 +13,7 @@ object Main: TMain
   Menu = MainMenu1
   OldCreateOrder = False
   WindowState = wsMaximized
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Editor: TRichEdit
@@ -68,6 +69,28 @@ object Main: TMain
       0101000000250000000000000000000000FFFFFFFFFFFFFFFF00000000000000
       000666006F006C00640065007200}
   end
+  object RichMemo1: TRichMemo
+    Left = 264
+    Top = 832
+    Width = 185
+    Height = 89
+    AutoScroll = True
+    CollectionColorWords.Data = {
+      010000000000FF00016053454C4543542C46524F4D2C57484552452C494E5345
+      52542C494E544F2C5550444154452C414E442C554E494F4E2C56414C5545532C
+      4445434F44452C4F524445522C42592C4153432C444553432C554E494F4E2C41
+      4C4C2C4E554C4C2C495300000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000464600000000}
+    RestrictCountCharInStr = False
+    ColorWindow = clWindow
+    ReadOnly = False
+    TabOrder = 3
+    OnChange = RichMemo1Change
+  end
   object MainMenu1: TMainMenu
     object MenuFile: TMenuItem
       Caption = '&File'
@@ -104,10 +127,5 @@ object Main: TMain
     Filter = 'All|*.*'
     Title = 'Save file'
     Left = 56
-  end
-  object Timer1: TTimer
-    Interval = 2000
-    Left = 360
-    Top = 840
   end
 end

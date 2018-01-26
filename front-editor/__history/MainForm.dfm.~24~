@@ -2,7 +2,7 @@ object Main: TMain
   Left = 210
   Top = 144
   Caption = 'Front-Editor'
-  ClientHeight = 985
+  ClientHeight = 489
   ClientWidth = 601
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -13,6 +13,7 @@ object Main: TMain
   Menu = MainMenu1
   OldCreateOrder = False
   WindowState = wsMaximized
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Editor: TRichEdit
@@ -36,6 +37,7 @@ object Main: TMain
     Constraints.MinHeight = 200
     Constraints.MinWidth = 200
     ParentFont = False
+    PlainText = True
     ScrollBars = ssVertical
     TabOrder = 0
     WordWrap = False
@@ -56,17 +58,6 @@ object Main: TMain
     ParentFont = False
     ScrollBars = ssVertical
     TabOrder = 1
-  end
-  object TreeView1: TTreeView
-    Left = 40
-    Top = 832
-    Width = 121
-    Height = 97
-    Indent = 19
-    TabOrder = 2
-    Items.NodeData = {
-      0101000000250000000000000000000000FFFFFFFFFFFFFFFF00000000000000
-      000666006F006C00640065007200}
   end
   object MainMenu1: TMainMenu
     object MenuFile: TMenuItem
@@ -104,10 +95,5 @@ object Main: TMain
     Filter = 'All|*.*'
     Title = 'Save file'
     Left = 56
-  end
-  object Timer1: TTimer
-    Interval = 2000
-    Left = 360
-    Top = 840
   end
 end

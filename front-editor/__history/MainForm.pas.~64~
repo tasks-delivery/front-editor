@@ -25,7 +25,7 @@ type
    // procedure FormCreate(Sender: TObject);
     procedure CloseAppClick(Sender: TObject);
     procedure OpenProjectClick(Sender: TObject);
-//    procedure Podsvet();
+    procedure Podsvet();
   private
   MyArray : array of string;
     { Private declarations }
@@ -405,10 +405,13 @@ tags.CommaText := '<div> </div> <div div>';   }
   '<p>', '</p>', '<p', 'p>',
   '<h>', '</h>', '<h', 'h>',
   '<', '/', '>', '</',
+
   'class=', 'href=', 'src=', 'id=', 'rel=', 'type=', 'defer src=', '',
   'function';     }
+
 const
-  tags: array[1..111] of string[9] = ('<div>', '</div>', '<div', 'div>',
+  tags: array[1..113] of string[9] = ('<div>', '</div>', '<div', 'div>',
+
   '<span>', '</span>', '<span>', 'span>',
   '<ul>', '</ul>', '<ul', 'ul>',
   '<li>', '</li>', '<li', 'li>',
@@ -434,10 +437,12 @@ const
   '<p>', '</p>', '<p', 'p>',
   '<h>', '</h>', '<h', 'h>',
   '<', '/', '>', '</',
-  'class=', 'href=', 'src=', 'id=', 'rel=', 'type=', 'defer src=');
-  begin
 
-  for i :=1 to length(tags) do
+  'class=', 'href=', 'src=', 'id=', 'rel=', 'type=', 'defer src=', '',
+  'function');
+
+
+  for i :=1 to tags.Count-1 do
     begin
       k :=-length(tags[i]);
       repeat
@@ -453,8 +458,6 @@ const
                Application.ProcessMessages;
     end;
 end;
-
-
 
 {
 const

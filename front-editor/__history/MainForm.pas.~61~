@@ -25,7 +25,6 @@ type
    // procedure FormCreate(Sender: TObject);
     procedure CloseAppClick(Sender: TObject);
     procedure OpenProjectClick(Sender: TObject);
-//    procedure Podsvet();
   private
   MyArray : array of string;
     { Private declarations }
@@ -45,7 +44,7 @@ Reswords : array[0..2] of string = ('div', 'span', 'nav');
 implementation
 
 {$R *.dfm}
-  {
+
 procedure TMain.Podsvet();
 var
 i:integer;
@@ -83,7 +82,7 @@ Editor.DoubleBuffered:=true;
 SendMessage(Editor.Handle,WM_SETREDRAW,0,0);
 ema:=SendMessage(Editor.Handle,WM_USER+69,0,0);
 //создаем TRichEdit в памяти
-ri:=Editor.CreateParented(TMain.Handle);
+ri:=TRichEdit.CreateParented(Form37.Handle);
 //копируем из нашего видимого TRichEdit все содержимое в созданный TRichEdit
 ms := TMemoryStream.Create;
 Editor.PlainText:=true;
@@ -339,7 +338,7 @@ Podsvet();
 end;
 end;
 
-    }
+
 procedure TMain.CloseAppClick(Sender: TObject);
 begin
  Close;
@@ -372,11 +371,20 @@ TColorer = record
 end;
    }
 procedure TMain.EditorChange(Sender: TObject);
-var
-  k,i: integer;
- // tags : TStringList;
+ begin
+   Timer1.Enabled:=false;
+Timer1.Enabled:=true;
+ end;
+
 
 {
+var
+  k,i: integer;
+  tags : TStringList;
+
+begin
+
+
 tags := TStringList.Create;
 tags.CommaText := '<div> </div> <div div>';   }
       {
@@ -405,10 +413,13 @@ tags.CommaText := '<div> </div> <div div>';   }
   '<p>', '</p>', '<p', 'p>',
   '<h>', '</h>', '<h', 'h>',
   '<', '/', '>', '</',
+
   'class=', 'href=', 'src=', 'id=', 'rel=', 'type=', 'defer src=', '',
   'function';     }
+{
 const
-  tags: array[1..111] of string[9] = ('<div>', '</div>', '<div', 'div>',
+  tags: array[1..113] of string[9] = ('<div>', '</div>', '<div', 'div>',
+
   '<span>', '</span>', '<span>', 'span>',
   '<ul>', '</ul>', '<ul', 'ul>',
   '<li>', '</li>', '<li', 'li>',
@@ -434,10 +445,12 @@ const
   '<p>', '</p>', '<p', 'p>',
   '<h>', '</h>', '<h', 'h>',
   '<', '/', '>', '</',
-  'class=', 'href=', 'src=', 'id=', 'rel=', 'type=', 'defer src=');
-  begin
 
-  for i :=1 to length(tags) do
+  'class=', 'href=', 'src=', 'id=', 'rel=', 'type=', 'defer src=', '',
+  'function');
+  }
+     {
+  for i :=1 to tags.Count-1 do
     begin
       k :=-length(tags[i]);
       repeat
@@ -452,9 +465,7 @@ const
           Editor.SelAttributes.Color :=clYellow;
                Application.ProcessMessages;
     end;
-end;
-
-
+end;      }
 
 {
 const

@@ -1,0 +1,185 @@
+unit MainForm;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Menus, StdCtrls, ComCtrls;
+
+type
+  TMain = class(TForm)
+    MainMenu1: TMainMenu;
+    MenuFile: TMenuItem;
+    OpenProject: TMenuItem;
+    CloseApp: TMenuItem;
+    MenuAbout: TMenuItem;
+    OpenFile: TOpenDialog;
+    SaveFile: TSaveDialog;
+    SaveProject: TMenuItem;
+    Editor: TRichEdit;
+    Tree: TMemo;
+    TreeView1: TTreeView;
+    procedure EditorChange(Sender: TObject);
+    procedure SaveProjectClick(Sender: TObject);
+   // procedure FormCreate(Sender: TObject);
+    procedure CloseAppClick(Sender: TObject);
+    procedure OpenProjectClick(Sender: TObject);
+  private
+  MyArray : array of string;
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Main: TMain;
+  FName: string;
+//  k0: integer = 0;
+//  k1: integer;
+implementation
+
+{$R *.dfm}
+
+procedure TMain.CloseAppClick(Sender: TObject);
+begin
+ Close;
+end;
+
+procedure TMain.EditorChange(Sender: TObject);
+const
+  tags: array[1..41] of string[9] = ('<div>', '</div>', '<div', 'div>',
+  '<span>', '</span>', '<span>', 'span>',
+  '<ul>', '</ul>', '<ul>', 'ul>',
+  '<li>', '</li>', '<li>', 'li>',
+  '<li>', '</li>', '<li>', 'li>',
+  '<img>', '</img>', '<img>', 'img>',
+  '<nav>', '</nav>', '<nav>', 'nav>',
+  '<body>', '</body>', '<body>', 'body>',
+  '<html>', '</html>', '<html>', 'html>',
+  '<link>', '</link>', '<link>', 'link>',
+  '<title>', '</title>', '<title>', 'title.',
+  '<meta>', '</meta>', '<meta>', 'meta>',
+  '<head>', '</head>', '<head>', 'head>',
+  '<title>', '</title>', '<title>', 'title>',
+  '<h>', '</h>', '<h>', 'h>',
+  '<', '/', '>', '</',
+  'class', 'href', 'script', 'id',
+  'function');
+var
+  k,i: integer;
+begin
+  for i :=1 to length(tags) do
+    begin
+      k :=-length(tags[i]);
+      repeat
+        k :=Editor.FindText(tags[i],k+length(tags[i]),
+        length(Editor.Text)-k-length(tags[i]),[stWholeWord]);
+        Editor.SelStart :=k;
+        Editor.SelLength :=length(tags[i]);
+        Editor.SelAttributes.Color :=clBlue;
+      until k < 0;
+          Editor.SelAttributes.Color :=clYellow;
+    end;
+end;
+{
+const
+  tags: array[1..18] of string[9] = ('div','span','li','ul','class','img','href',
+    'body','<','</','>','case','of','type','var','const','procedure',
+    'function');
+var
+  i: integer;
+  ch: char;
+  s: string;
+begin
+  k1:=length(Editor.Text);
+  if k1 <> 0 then
+    begin
+      ch:=Editor.Text[k1];
+      s:='';
+      if (ch = #62) or  (ch = #60)
+      then s:=copy(Editor.Text,k0+1,k1-k0-1);
+      if ch = #10 then s:=copy(Editor.Text,k0+1,k1-k0-2);
+      for i:=1 to length(tags) do
+        if s = tags[i] then
+          begin
+            Editor.SelStart:=k0;
+            Editor.SelLength:=length(s);
+            Editor.SelAttributes.Color:=clblue;
+            Editor.SelStart:=k1;
+            Editor.Refresh;
+   //         Editor.Lines.EndUpdate
+          end;
+      if (ch = #62)   or (ch = #10)
+      or (ch = #60) or (ch= #47) then k0:=k1;
+    end;
+end;
+
+}
+{
+procedure TMain.FormCreate(Sender: TObject);
+begin
+    Editor.Text := '';
+    Tree.Text := '';
+end;
+}
+procedure TMain.OpenProjectClick(Sender: TObject);
+var sr: TSearchRec;
+    Text: String;
+    i, a: Integer;
+    tags : TStringList;
+begin
+ if OpenFile.Execute then
+ begin
+  FName := OpenFile.FileName;
+  Editor.Lines.LoadFromFile(FName);
+ end;
+
+begin
+ Tree.Clear;
+ if FindFirst('*.*', faAnyFile, sr) = 0 then
+  begin
+  repeat
+  Tree.Lines.Add(sr.Name);
+  until FindNext(sr) <> 0;
+  FindClose(sr);
+end;
+end;
+end;
+{
+
+tags := TStringList.Create;
+tags.CommaText := 'div';
+for i := 0 to tags.Count-1 do
+begin
+Text:=tags[i];
+      begin
+      a:=0;
+      While a<=Length(Editor.Text) do
+            begin
+            Editor.SelStart:=Editor.FindText(Text, a, Length(Editor.Text)-a, [stMatchCase]);
+            Editor.SelLength:=Length(Text);
+            Editor.SelAttributes.Color:=clBlue;
+     //       Editor.SelAttributes.Style:=[fsbold];
+            a:=Editor.SelStart+Length(Text);
+            Application.ProcessMessages;
+            end;
+      end
+end;
+}
+
+
+procedure TMain.SaveProjectClick(Sender: TObject);
+begin
+SaveFile.FileName := FName;
+if SaveFile.Execute then
+ begin
+  FName := SaveFile.FileName;
+  Editor.Lines.SaveToFile(FName);
+end;
+end;
+
+end.
+
+
+
+

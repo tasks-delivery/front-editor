@@ -105,9 +105,4 @@ object Main: TMain
     Title = 'Save file'
     Left = 56
   end
-  object Timer1: TTimer
-    Interval = 2000
-    Left = 360
-    Top = 840
-  end
 end
