@@ -1,0 +1,139 @@
+package SynEdit_R2006;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST ON}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'SynEdit component suite runtime'}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  vcl,
+  vcldb,
+  vclx,
+  rtl;
+
+contains
+  SynTextDrawer in 'SynEdit-master\Source\SynTextDrawer.pas',
+  SynAutoCorrect in 'SynEdit-master\Source\SynAutoCorrect.pas',
+  SynAutoCorrectEditor in 'SynEdit-master\Source\SynAutoCorrectEditor.pas' {frmAutoCorrectEditor},
+  SynCompletionProposal in 'SynEdit-master\Source\SynCompletionProposal.pas',
+  SynDBEdit in 'SynEdit-master\Source\SynDBEdit.pas',
+  SynEdit in 'SynEdit-master\Source\SynEdit.pas',
+  SynEditAutoComplete in 'SynEdit-master\Source\SynEditAutoComplete.pas',
+  SynEditDocumentManager in 'SynEdit-master\Source\SynEditDocumentManager.pas',
+  SynEditExport in 'SynEdit-master\Source\SynEditExport.pas',
+  SynEditHighlighter in 'SynEdit-master\Source\SynEditHighlighter.pas',
+  SynEditKbdHandler in 'SynEdit-master\Source\SynEditKbdHandler.pas',
+  SynEditKeyCmdEditor in 'SynEdit-master\Source\SynEditKeyCmdEditor.pas' {SynEditKeystrokeEditorForm},
+  SynEditKeyCmds in 'SynEdit-master\Source\SynEditKeyCmds.pas',
+  SynEditKeyCmdsEditor in 'SynEdit-master\Source\SynEditKeyCmdsEditor.pas' {SynEditKeystrokesEditorForm},
+  SynEditKeyConst in 'SynEdit-master\Source\SynEditKeyConst.pas',
+  SynEditMiscClasses in 'SynEdit-master\Source\SynEditMiscClasses.pas',
+  SynEditMiscProcs in 'SynEdit-master\Source\SynEditMiscProcs.pas',
+  SynEditOptionsDialog in 'SynEdit-master\Source\SynEditOptionsDialog.pas' {fmEditorOptionsDialog},
+  SynEditPlugins in 'SynEdit-master\Source\SynEditPlugins.pas',
+  SynEditWordWrap in 'SynEdit-master\Source\SynEditWordWrap.pas',
+  SynEditPrint in 'SynEdit-master\Source\SynEditPrint.pas',
+  SynEditPrinterInfo in 'SynEdit-master\Source\SynEditPrinterInfo.pas',
+  SynEditPrintHeaderFooter in 'SynEdit-master\Source\SynEditPrintHeaderFooter.pas',
+  SynEditPrintMargins in 'SynEdit-master\Source\SynEditPrintMargins.pas',
+  SynEditPrintMarginsDialog in 'SynEdit-master\Source\SynEditPrintMarginsDialog.pas' {SynEditPrintMarginsDlg},
+  SynEditPrintPreview in 'SynEdit-master\Source\SynEditPrintPreview.pas',
+  SynEditPrintTypes in 'SynEdit-master\Source\SynEditPrintTypes.pas',
+  SynEditPythonBehaviour in 'SynEdit-master\Source\SynEditPythonBehaviour.pas',
+  SynEditRegexSearch in 'SynEdit-master\Source\SynEditRegexSearch.pas',
+  SynEditSearch in 'SynEdit-master\Source\SynEditSearch.pas',
+  SynEditStrConst in 'SynEdit-master\Source\SynEditStrConst.pas',
+  SynEditTextBuffer in 'SynEdit-master\Source\SynEditTextBuffer.pas',
+  SynEditTypes in 'SynEdit-master\Source\SynEditTypes.pas',
+  SynExportHTML in 'SynEdit-master\Source\SynExportHTML.pas',
+  SynExportRTF in 'SynEdit-master\Source\SynExportRTF.pas',
+  SynExportTeX in 'SynEdit-master\Source\SynExportTeX.pas',
+  SynHighlighterADSP21xx in 'SynEdit-master\Source\SynHighlighterADSP21xx.pas',
+  SynHighlighterAsm in 'SynEdit-master\Source\SynHighlighterAsm.pas',
+  SynHighlighterAWK in 'SynEdit-master\Source\SynHighlighterAWK.pas',
+  SynHighlighterBaan in 'SynEdit-master\Source\SynHighlighterBaan.pas',
+  SynHighlighterBat in 'SynEdit-master\Source\SynHighlighterBat.pas',
+  SynHighlighterCAC in 'SynEdit-master\Source\SynHighlighterCAC.pas',
+  SynHighlighterCache in 'SynEdit-master\Source\SynHighlighterCache.pas',
+  SynHighlighterCobol in 'SynEdit-master\Source\SynHighlighterCobol.pas',
+  SynHighlighterCPM in 'SynEdit-master\Source\SynHighlighterCPM.pas',
+  SynHighlighterCpp in 'SynEdit-master\Source\SynHighlighterCpp.pas',
+  SynHighlighterCS in 'SynEdit-master\Source\SynHighlighterCS.pas',
+  SynHighlighterDfm in 'SynEdit-master\Source\SynHighlighterDfm.pas',
+  SynHighlighterDml in 'SynEdit-master\Source\SynHighlighterDml.pas',
+  SynHighlighterFortran in 'SynEdit-master\Source\SynHighlighterFortran.pas',
+  SynHighlighterFoxpro in 'SynEdit-master\Source\SynHighlighterFoxpro.pas',
+  SynHighlighterGalaxy in 'SynEdit-master\Source\SynHighlighterGalaxy.pas',
+  SynHighlighterGeneral in 'SynEdit-master\Source\SynHighlighterGeneral.pas',
+  SynHighlighterGWS in 'SynEdit-master\Source\SynHighlighterGWS.pas',
+  SynHighlighterHashEntries in 'SynEdit-master\Source\SynHighlighterHashEntries.pas',
+  SynHighlighterHaskell in 'SynEdit-master\Source\SynHighlighterHaskell.pas',
+  SynHighlighterHC11 in 'SynEdit-master\Source\SynHighlighterHC11.pas',
+  SynHighlighterHP48 in 'SynEdit-master\Source\SynHighlighterHP48.pas',
+  SynHighlighterHtml in 'SynEdit-master\Source\SynHighlighterHtml.pas',
+  SynHighlighterIDL in 'SynEdit-master\Source\SynHighlighterIDL.pas',
+  SynHighlighterIni in 'SynEdit-master\Source\SynHighlighterIni.pas',
+  SynHighlighterInno in 'SynEdit-master\Source\SynHighlighterInno.pas',
+  SynHighlighterJava in 'SynEdit-master\Source\SynHighlighterJava.pas',
+  SynHighlighterJScript in 'SynEdit-master\Source\SynHighlighterJScript.pas',
+  SynHighlighterKix in 'SynEdit-master\Source\SynHighlighterKix.pas',
+  SynHighlighterM3 in 'SynEdit-master\Source\SynHighlighterM3.pas',
+  SynHighlighterModelica in 'SynEdit-master\Source\SynHighlighterModelica.pas',
+  SynHighlighterMsg in 'SynEdit-master\Source\SynHighlighterMsg.pas',
+  SynHighlighterMulti in 'SynEdit-master\Source\SynHighlighterMulti.pas',
+  SynHighlighterPas in 'SynEdit-master\Source\SynHighlighterPas.pas',
+  SynHighlighterPerl in 'SynEdit-master\Source\SynHighlighterPerl.pas',
+  SynHighlighterPHP in 'SynEdit-master\Source\SynHighlighterPHP.pas',
+  SynHighlighterProgress in 'SynEdit-master\Source\SynHighlighterProgress.pas',
+  SynHighlighterPython in 'SynEdit-master\Source\SynHighlighterPython.pas',
+  SynHighlighterRC in 'SynEdit-master\Source\SynHighlighterRC.pas',
+  SynHighlighterRuby in 'SynEdit-master\Source\SynHighlighterRuby.pas',
+  SynHighlighterSDD in 'SynEdit-master\Source\SynHighlighterSDD.pas',
+  SynHighlighterSml in 'SynEdit-master\Source\SynHighlighterSml.pas',
+  SynHighlighterSQL in 'SynEdit-master\Source\SynHighlighterSQL.pas',
+  SynHighlighterST in 'SynEdit-master\Source\SynHighlighterST.pas',
+  SynHighlighterTclTk in 'SynEdit-master\Source\SynHighlighterTclTk.pas',
+  SynHighlighterTeX in 'SynEdit-master\Source\SynHighlighterTeX.pas',
+  SynHighlighterUNIXShellScript in 'SynEdit-master\Source\SynHighlighterUNIXShellScript.pas',
+  SynHighlighterUnreal in 'SynEdit-master\Source\SynHighlighterUnreal.pas',
+  SynHighlighterVB in 'SynEdit-master\Source\SynHighlighterVB.pas',
+  SynHighlighterVBScript in 'SynEdit-master\Source\SynHighlighterVBScript.pas',
+  SynHighlighterXML in 'SynEdit-master\Source\SynHighlighterXML.pas',
+  SynMacroRecorder in 'SynEdit-master\Source\SynMacroRecorder.pas',
+  SynMemo in 'SynEdit-master\Source\SynMemo.pas',
+  SynRegExpr in 'SynEdit-master\Source\SynRegExpr.pas',
+  SynHighlighterCss in 'SynEdit-master\Source\SynHighlighterCss.pas',
+  SynHighlighterLDraw in 'SynEdit-master\Source\SynHighlighterLDraw.pas',
+  SynHighlighterURI in 'SynEdit-master\Source\SynHighlighterURI.pas',
+  SynURIOpener in 'SynEdit-master\Source\SynURIOpener.pas',
+  SynHighlighterDOT in 'SynEdit-master\Source\SynHighlighterDOT.pas',
+  SynHighlighterVrml97 in 'SynEdit-master\Source\SynHighlighterVrml97.pas',
+  SynHighlighterEiffel in 'SynEdit-master\Source\SynHighlighterEiffel.pas',
+  SynUnicode in 'SynEdit-master\Source\SynUnicode.pas',
+  SynUsp10 in 'SynEdit-master\Source\SynUsp10.pas';
+
+
+
+end.
+
