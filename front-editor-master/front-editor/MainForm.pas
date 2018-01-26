@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Menus, StdCtrls, ComCtrls, ExtCtrls, SynEditExport, SynExportHTML, SynEdit,
-  SynMemo, SynEditHighlighter, SynHighlighterJava;
+  SynMemo, SynEditHighlighter, SynHighlighterJava, SynHighlighterHtml, ImgList,
+  ToolWin;
 
 type
   TMain = class(TForm)
@@ -18,10 +19,16 @@ type
     SaveFile: TSaveDialog;
     SaveProject: TMenuItem;
     Tree: TMemo;
-    Editor: TRichEdit;
-    RichEdit1: TRichEdit;
-    procedure RichEdit1Change(Sender: TObject);
-    procedure EditorChange(Sender: TObject);
+    Editor: TSynMemo;
+    SynHTMLSyn1: TSynHTMLSyn;
+    ImageList1: TImageList;
+    ToolBar1: TToolBar;
+    htmlTemplate: TToolButton;
+    ToolButton3: TToolButton;
+    About1: TMenuItem;
+    HTML1: TMenuItem;
+    procedure htmlTemplateClick(Sender: TObject);
+    procedure HTML1Click(Sender: TObject);
     procedure SaveProjectClick(Sender: TObject);
     procedure OpenProjectClick(Sender: TObject);
   private
@@ -38,65 +45,25 @@ implementation
 
 {$R *.dfm}
 
-procedure HTMLSyntax(RichEdit: TRichEdit; TextCol, TagCol, DopCol: TColor);
-var  i, iDop : integer;
-  s    : string;
-  Col  : TColor;
-  isTag, isDop: boolean;
-
-begin { HTMLSyntax }
-  iDop := 0; 
-  isDop := False; 
-  isTag := False; 
-  Col := TextCol; 
-//  RichEdit.SetFocus;
-  //   RichEdit.SelStart := i;
-//  RichEdit.Lines.SaveToStream('test.txt');
-  for i := 0 to Length(RichEdit.Text) do
-  begin
-
-    RichEdit.SelStart := i;
-    RichEdit.SelLength := 1;
-   s := RichEdit.SelText;
-
-    if (s='<') or (s=char(123)) then
-      isTag := True; 
-
-    if isTag then
-      if (s=char(34)) then 
-        if not isDop then 
-        begin 
-          iDop := 1; 
-          isDop := True
-        end { not isDop } 
-        else 
-          isDop := False; 
-    
-    if isTag then 
-      if isDop then 
-      begin 
-        if iDop<>1 then 
-          Col := DopCol
-      end { isDop } 
-      else 
-        Col := TagCol 
-    else 
-      Col := TextCol;
-    RichEdit.SelAttributes.Color := Col;
-
-    iDop := 0; 
-    
-    if (s='>') or (s=char(125)) then 
-      isTag := False
-  end; { for i }
-  RichEdit.SelLength := 0
-end; { HTMLSyntax }
-
-procedure TMain.EditorChange(Sender: TObject);
+procedure TMain.HTML1Click(Sender: TObject);
 begin
-   // Editor.Lines.BeginUpdate;
-    HTMLSyntax(Editor, clBlue, clRed, clGreen);
-   // Editor.Lines.EndUpdate
+     Editor.Enabled := True;
+     Editor.Lines.Clear;
+     Editor.Lines.Add('<!doctype html>');
+     Editor.Lines.Add(' <html lang="en">');
+     Editor.Lines.Add('  <head>');
+     Editor.Lines.Add('   <title></title>');
+     Editor.Lines.Add('    <meta charset="utf-8">');
+     Editor.Lines.Add('  </head>');
+     Editor.Lines.Add('   <body>');
+     Editor.Lines.Add('');
+     Editor.Lines.Add('   </body>');
+     Editor.Lines.Add(' </html>');
+end;
+
+procedure TMain.htmlTemplateClick(Sender: TObject);
+begin
+   HTML1.Click;
 end;
 
 procedure TMain.OpenProjectClick(Sender: TObject);
@@ -121,21 +88,6 @@ end;
 end;
 end;
 
-procedure TMain.RichEdit1Change(Sender: TObject);
-
-var  fs: TFileStream;
-     s : string;
-begin
-    s := RichEdit1.SelText;
- begin
-   fs := tfilestream.create('D:\projects\Delphi\front-editor-master\front-editor\test.dat', fmCreate);
-//   fs := TFileStream.Create('temp.txt', fmCreate or fmOpenWrite);
-   fs.Write(s, Length(s));// this will give you garbage
-   fs.Write(PChar(s)^, Length(s));// this is the correct way
-end;
-end;
-
-
 procedure TMain.SaveProjectClick(Sender: TObject);
 begin
 SaveFile.FileName := FName;
@@ -144,25 +96,6 @@ if SaveFile.Execute then
   FName := SaveFile.FileName;
   Editor.Lines.SaveToFile(FName);
 end;
-end;
-
-{
-procedure caststring;
- var
-   fs: TFileStream;
- const
-   s: string = 'Hello';
- begin
-   fs := TFileStream.Create('temp.txt', fmCreate or fmOpenWrite);
-   fs.Write(s, Length(s));// this will give you garbage
-   fs.Write(PChar(s)^, Length(s));// this is the correct way
- end;
- }
-
- procedure WriteStringToStream(stream: TStream; const appendText: string);
-begin
-  stream.WriteBuffer(Pointer(appendText)^,
-   Length(appendText)*SizeOf(Char));
 end;
 
 end.

@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Menus, StdCtrls, ComCtrls, ExtCtrls, SynEditExport, SynExportHTML, SynEdit,
-  SynMemo, SynEditHighlighter, SynHighlighterJava;
+  SynMemo, SynEditHighlighter, SynHighlighterJava, SynHighlighterHtml, ImgList,
+  ToolWin;
 
 type
   TMain = class(TForm)
@@ -18,10 +19,17 @@ type
     SaveFile: TSaveDialog;
     SaveProject: TMenuItem;
     Tree: TMemo;
-    TreeView1: TTreeView;
-    Editor: TSynEdit;
+    Editor: TSynMemo;
+    SynHTMLSyn1: TSynHTMLSyn;
+    ImageList1: TImageList;
+    ToolBar1: TToolBar;
+    htmlTemplate: TToolButton;
+    ToolButton3: TToolButton;
+    About1: TMenuItem;
+    HTML1: TMenuItem;
+    procedure htmlTemplateClick(Sender: TObject);
+    procedure HTML1Click(Sender: TObject);
     procedure SaveProjectClick(Sender: TObject);
-  //  procedure CloseAppClick(Sender: TObject);
     procedure OpenProjectClick(Sender: TObject);
   private
 
@@ -37,17 +45,31 @@ implementation
 
 {$R *.dfm}
 
+procedure TMain.HTML1Click(Sender: TObject);
+begin
+     Editor.Enabled := True;
+     Editor.Lines.Clear;
+     Editor.Lines.Add('<!doctype html>');
+     Editor.Lines.Add(' <html lang="en">');
+     Editor.Lines.Add('  <head>');
+     Editor.Lines.Add('   <title></title>');
+     Editor.Lines.Add('    <meta charset="utf-8">');
+     Editor.Lines.Add('  </head>');
+     Editor.Lines.Add('   <body>');
+     Editor.Lines.Add('');
+     Editor.Lines.Add('   </body>');
+     Editor.Lines.Add(' </html>');
+end;
+
 procedure TMain.OpenProjectClick(Sender: TObject);
 var sr: TSearchRec;
-    Text: String;
-    i, a: Integer;
-    tags : TStringList;
+
 begin
  if OpenFile.Execute then
  begin
   FName := OpenFile.FileName;
   Editor.Lines.LoadFromFile(FName);
- end;
+end;
 
 begin
  Tree.Clear;
@@ -60,28 +82,6 @@ begin
 end;
 end;
 end;
-{
-
-tags := TStringList.Create;
-tags.CommaText := 'div';
-for i := 0 to tags.Count-1 do
-begin
-Text:=tags[i];
-      begin
-      a:=0;
-      While a<=Length(Editor.Text) do
-            begin
-            Editor.SelStart:=Editor.FindText(Text, a, Length(Editor.Text)-a, [stMatchCase]);
-            Editor.SelLength:=Length(Text);
-            Editor.SelAttributes.Color:=clBlue;
-     //       Editor.SelAttributes.Style:=[fsbold];
-            a:=Editor.SelStart+Length(Text);
-            Application.ProcessMessages;
-            end;
-      end
-end;
-}
-
 
 procedure TMain.SaveProjectClick(Sender: TObject);
 begin
@@ -93,11 +93,4 @@ if SaveFile.Execute then
 end;
 end;
 
-
-
-
 end.
-
-
-
-

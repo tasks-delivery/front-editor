@@ -31,35 +31,23 @@ object Main: TMain
     ScrollBars = ssVertical
     TabOrder = 0
   end
-  object TreeView1: TTreeView
-    Left = 40
-    Top = 832
-    Width = 121
-    Height = 97
-    Indent = 19
-    TabOrder = 1
-    Items.NodeData = {
-      0101000000250000000000000000000000FFFFFFFFFFFFFFFF00000000000000
-      000666006F006C00640065007200}
-  end
-  object Editor: TSynEdit
-    Left = 256
+  object Editor: TRichEdit
+    Left = 248
     Top = 0
-    Width = 1000
+    Width = 700
     Height = 800
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Courier New'
-    Font.Style = []
+    TabOrder = 1
+    OnChange = EditorChange
+  end
+  object RichEdit1: TRichEdit
+    Left = 112
+    Top = 856
+    Width = 185
+    Height = 89
+    Lines.Strings = (
+      'RichEdit1')
     TabOrder = 2
-    Gutter.Font.Charset = DEFAULT_CHARSET
-    Gutter.Font.Color = clWindowText
-    Gutter.Font.Height = -11
-    Gutter.Font.Name = 'Courier New'
-    Gutter.Font.Style = []
-    Lines.UnicodeStrings = 'Editor'
-    FontSmoothing = fsmNone
+    OnChange = RichEdit1Change
   end
   object MainMenu1: TMainMenu
     object MenuFile: TMenuItem

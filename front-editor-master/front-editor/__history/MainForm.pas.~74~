@@ -18,11 +18,10 @@ type
     SaveFile: TSaveDialog;
     SaveProject: TMenuItem;
     Tree: TMemo;
-    TreeView1: TTreeView;
-    Editor: TSynEdit;
+    Editor: TRichEdit;
     RichEdit1: TRichEdit;
-    procedure EditorChange(Sender: TObject);
     procedure RichEdit1Change(Sender: TObject);
+    procedure EditorChange(Sender: TObject);
     procedure SaveProjectClick(Sender: TObject);
     procedure OpenProjectClick(Sender: TObject);
   private
@@ -39,31 +38,31 @@ implementation
 
 {$R *.dfm}
 
-procedure HTMLSyntax(SynEdit: TSynEdit; TextCol, TagCol, DopCol: TColor);
-var
-  i,
-  iDop : integer;
+procedure HTMLSyntax(RichEdit: TRichEdit; TextCol, TagCol, DopCol: TColor);
+var  i, iDop : integer;
   s    : string;
   Col  : TColor;
-  isTag,
-  isDop: boolean;
+  isTag, isDop: boolean;
+
 begin { HTMLSyntax }
   iDop := 0; 
   isDop := False; 
   isTag := False; 
   Col := TextCol; 
-  SynEdit.SetFocus;
-  
-  for i := 0 to Length(SynEdit.Text) do
-  begin 
-    SynEdit.SelStart := i;
-    SynEdit.SelLength := 1;
-    s := SynEdit.SelText;
-    
-    if (s='<') or (s=char(123)) then 
+//  RichEdit.SetFocus;
+  //   RichEdit.SelStart := i;
+//  RichEdit.Lines.SaveToStream('test.txt');
+  for i := 0 to Length(RichEdit.Text) do
+  begin
+
+    RichEdit.SelStart := i;
+    RichEdit.SelLength := 1;
+   s := RichEdit.SelText;
+
+    if (s='<') or (s=char(123)) then
       isTag := True; 
 
-    if isTag then 
+    if isTag then
       if (s=char(34)) then 
         if not isDop then 
         begin 
@@ -82,43 +81,33 @@ begin { HTMLSyntax }
       else 
         Col := TagCol 
     else 
-      Col := TextCol; 
-        SynEdit.SelectedColor.Background := Col;
-    //SynEdit.SelAttributes.Color := Col;
-    
+      Col := TextCol;
+    RichEdit.SelAttributes.Color := Col;
+
     iDop := 0; 
     
     if (s='>') or (s=char(125)) then 
       isTag := False
-  end; { for i } 
-  SynEdit.SelLength := 0
+  end; { for i }
+  RichEdit.SelLength := 0
 end; { HTMLSyntax }
-
- {
-procedure TMain.Button1Click(Sender: TObject);
-begin { TForm1.Button1Click }
-{
-  RichEdit1.Lines.BeginUpdate;
-  HTMLSyntax(RichEdit1, clBlue, clRed, clGreen);
-  RichEdit1.Lines.EndUpdate
-end;} { TForm1.Button1Click }
 
 procedure TMain.EditorChange(Sender: TObject);
 begin
-     HTMLSyntax(SynEdit, clBlue, clRed, clGreen);
+   // Editor.Lines.BeginUpdate;
+    HTMLSyntax(Editor, clBlue, clRed, clGreen);
+   // Editor.Lines.EndUpdate
 end;
 
 procedure TMain.OpenProjectClick(Sender: TObject);
 var sr: TSearchRec;
-    Text: String;
-    i, a: Integer;
-    tags : TStringList;
+
 begin
  if OpenFile.Execute then
  begin
   FName := OpenFile.FileName;
   Editor.Lines.LoadFromFile(FName);
- end;
+end;
 
 begin
  Tree.Clear;
@@ -133,11 +122,19 @@ end;
 end;
 
 procedure TMain.RichEdit1Change(Sender: TObject);
+
+var  fs: TFileStream;
+     s : string;
 begin
- // RichEdit1.Lines.BeginUpdate;
- // HTMLSyntax(Editor, clBlue, clRed, clGreen);
- // RichEdit1.Lines.EndUpdate
+    s := RichEdit1.SelText;
+ begin
+   fs := tfilestream.create('D:\projects\Delphi\front-editor-master\front-editor\test.dat', fmCreate);
+//   fs := TFileStream.Create('temp.txt', fmCreate or fmOpenWrite);
+   fs.Write(s, Length(s));// this will give you garbage
+   fs.Write(PChar(s)^, Length(s));// this is the correct way
 end;
+end;
+
 
 procedure TMain.SaveProjectClick(Sender: TObject);
 begin
@@ -147,6 +144,25 @@ if SaveFile.Execute then
   FName := SaveFile.FileName;
   Editor.Lines.SaveToFile(FName);
 end;
+end;
+
+{
+procedure caststring;
+ var
+   fs: TFileStream;
+ const
+   s: string = 'Hello';
+ begin
+   fs := TFileStream.Create('temp.txt', fmCreate or fmOpenWrite);
+   fs.Write(s, Length(s));// this will give you garbage
+   fs.Write(PChar(s)^, Length(s));// this is the correct way
+ end;
+ }
+
+ procedure WriteStringToStream(stream: TStream; const appendText: string);
+begin
+  stream.WriteBuffer(Pointer(appendText)^,
+   Length(appendText)*SizeOf(Char));
 end;
 
 end.
