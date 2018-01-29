@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Menus, StdCtrls, ComCtrls, ExtCtrls, SynEditExport, SynExportHTML, SynEdit,
   SynMemo, SynEditHighlighter, SynHighlighterJava, SynHighlighterHtml, ImgList,
-  ToolWin, SynHighlighterCSS, SynHighlighterCS, SynHighlighterGo;
+  ToolWin;
 
 type
   TMain = class(TForm)
@@ -27,8 +27,6 @@ type
     ToolButton3: TToolButton;
     About1: TMenuItem;
     HTML1: TMenuItem;
-    SynCssSyn1: TSynCssSyn;
-    procedure EditorChange(Sender: TObject);
     procedure htmlTemplateClick(Sender: TObject);
     procedure HTML1Click(Sender: TObject);
     procedure SaveProjectClick(Sender: TObject);
@@ -46,11 +44,6 @@ var
 implementation
 
 {$R *.dfm}
-
-procedure TMain.EditorChange(Sender: TObject);
-begin
-   //TSynEdit.Gutter.Visible := False;
-end;
 
 procedure TMain.HTML1Click(Sender: TObject);
 begin

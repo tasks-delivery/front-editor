@@ -52,10 +52,7 @@ object Main: TMain
     Gutter.Font.Height = -11
     Gutter.Font.Name = 'Courier New'
     Gutter.Font.Style = []
-    Gutter.ShowLineNumbers = True
     Highlighter = SynHTMLSyn1
-    Options = [eoAltSetsColumnMode, eoAutoIndent, eoDragDropEditing, eoEnhanceEndKey, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoSmartTabs, eoSpecialLineDefaultFg, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces]
-    OnChange = EditorChange
     FontSmoothing = fsmNone
   end
   object ToolBar1: TToolBar
@@ -68,6 +65,7 @@ object Main: TMain
     Caption = 'ToolBar1'
     Images = ImageList1
     TabOrder = 2
+    ExplicitWidth = 601
     object htmlTemplate: TToolButton
       Left = 0
       Top = 0
@@ -134,7 +132,7 @@ object Main: TMain
     Left = 352
     Top = 129
     Bitmap = {
-      494C010103000400040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010103000400040010001000FFFFFFFFFF00FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -270,14 +268,6 @@ object Main: TMain
       0000C00100000000000180000000000000018000000000000001C00000000000
       0001C000000000000001C003000000000001C003000000000001C00300000000
       0000C003000000000000C003000000000001C0030000000003FFE00700000000
-      FFFFFBFFFFC00000FFFFFFFFFFFF000000000000000000000000000000000000
-      000000000000}
-  end
-  object SynCssSyn1: TSynCssSyn
-    Options.AutoDetectEnabled = False
-    Options.AutoDetectLineLimit = 0
-    Options.Visible = False
-    Left = 384
-    Top = 200
+      FFFFFBFFFFC00000FFFFFFFFFFFF0000}
   end
 end
