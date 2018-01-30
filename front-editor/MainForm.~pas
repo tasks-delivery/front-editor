@@ -1,0 +1,65 @@
+unit MainForm;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Menus, StdCtrls;
+
+type
+  TMain = class(TForm)
+    MainMenu1: TMainMenu;
+    File1: TMenuItem;
+    Openproject1: TMenuItem;
+    Exit2: TMenuItem;
+    Support1: TMenuItem;
+    Memo2: TMemo;
+    Ed: TMemo;
+    OpenDialog1: TOpenDialog;
+    SaveDialog1: TSaveDialog;
+    S1: TMenuItem;
+    procedure Exit2Click(Sender: TObject);
+    procedure Openproject1Click(Sender: TObject);
+    procedure S1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Main: TMain;
+
+implementation
+
+{$R *.dfm}
+
+procedure TMain.Exit2Click(Sender: TObject);
+begin
+ Close;
+end;
+
+procedure TMain.Openproject1Click(Sender: TObject);
+begin
+  if OpenDialog1.Execute then
+  begin
+      Ed.Lines.LoadFromFile(opendialog1.FileName);
+      Caption := '' + ExtractFilename(opendialog1.FileName);
+  End;
+  End;
+
+procedure TMain.S1Click(Sender: TObject);
+begin
+  if SaveDialog1.Execute then
+  begin
+      Ed.Lines.LoadFromFile(savedialog1.FileName);
+      Caption := '' + ExtractFilename(opendialog1.FileName);
+  End;
+  End;
+
+end.
+
+
+
+

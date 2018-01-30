@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2018.01.20 22:49:18.279.pas,C:\Users\User\Documents\Borland Studio Projects\Unit2.pas=D:\projects\Delphi\front-editor\MainForm.pas</Transaction>
+    <Transaction>2018.01.20 22:49:18.279.dfm,C:\Users\User\Documents\Borland Studio Projects\Unit2.dfm=D:\projects\Delphi\front-editor\MainForm.dfm</Transaction>
+    <Transaction>2018.01.20 22:49:52.040.bdsproj,C:\Users\User\Documents\Borland Studio Projects\Project1.bdsproj=D:\projects\Delphi\front-editor\Front_Editor.bdsproj</Transaction>
+    <Transaction>2018.01.20 22:50:50.691.pas,D:\projects\Delphi\front-editor\Unit1.pas=D:\projects\Delphi\front-editor\Menu.pas</Transaction>
+    <Transaction>2018.01.20 22:55:25.893.pas,D:\projects\Delphi\front-editor\Menu.pas=D:\projects\Delphi\front-editor\Menu\Menu.pas</Transaction>
+    <Transaction>2018.01.20 23:28:14.170.pas,D:\projects\Delphi\front-editor\Menu\Menu.pas=D:\projects\Delphi\front-editor\Menu\Navigation.pas</Transaction>
+    <Transaction>2018.01.20 23:28:31.642.pas,D:\projects\Delphi\front-editor\Menu\Navigation.pas=D:\projects\Delphi\front-editor\Menu\TopMenu.pas</Transaction>
+    <Transaction>2018.01.20 23:30:01.478.bdsproj,D:\projects\Delphi\front-editor\Front_Editor.bdsproj=D:\projects\Delphi\front-editor\Front_Editor.bdsproj</Transaction>
+    <Transaction>2018.01.27 01:27:28.914.bdsproj,D:\projects\Delphi\front-editor-master\front-editor\Front_Editor.bdsproj=D:\projects\Delphi\front-editor-master\front-editor\Front_Editor.bdsproj</Transaction>
+    <Transaction>2018.01.27 01:33:32.924.bdsproj,D:\projects\Delphi\front-editor\Front_Editor.bdsproj=D:\projects\Delphi\front-editor\Front_Editor.bdsproj</Transaction>
+    <Transaction>2018.01.27 01:37:45.252.bdsproj,D:\projects\Delphi\front-editor\Front_Editor.bdsproj=D:\projects\Delphi\front-editor\Front_Editor.bdsproj</Transaction>
+    <Transaction>2018.01.29 20:28:50.111.bdsproj,D:\projects\Delphi\front-editor\Front_Editor.bdsproj=D:\projects\Delphi\front-editor\Front_Editor.bdsproj</Transaction>
+    <Transaction>2018.01.29 22:35:54.473.bdsproj,D:\projects\Delphi\front-editor\Front_Editor.bdsproj=D:\projects\Delphi\front-editor\Front_Editor.bdsproj</Transaction>
+    <Transaction>2018.01.30 21:57:37.077.bdsproj,D:\projects\Delphi\front-editor\Front_Editor.bdsproj=D:\projects\Delphi\front-editor\Front_Editor.bdsproj</Transaction>
+  </Transactions>
+</BorlandProject>
