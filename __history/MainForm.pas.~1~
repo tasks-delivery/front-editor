@@ -10,7 +10,7 @@ uses
 
 type
   TMain = class(TForm)
-    MainMenu: TMainMenu;
+    MainMenu1: TMainMenu;
     MenuFile: TMenuItem;
     OpenProject: TMenuItem;
     CloseApp: TMenuItem;
@@ -20,34 +20,23 @@ type
     SaveProject: TMenuItem;
     Tree: TMemo;
     Editor: TSynMemo;
-    SynHTMLSyn: TSynHTMLSyn;
-    ImageList: TImageList;
-    ToolBar: TToolBar;
+    SynHTMLSyn1: TSynHTMLSyn;
+    ImageList1: TImageList;
+    ToolBar1: TToolBar;
     htmlTemplate: TToolButton;
-    Style: TToolButton;
-    About: TMenuItem;
-    HTML: TMenuItem;
-    SynCssSyn: TSynCssSyn;
-    Saveas: TMenuItem;
-    Edit: TMenuItem;
-    New: TMenuItem;
-    Undo: TMenuItem;
-    Redo: TMenuItem;
-    Cut: TMenuItem;
-    Copy: TMenuItem;
-    Paste: TMenuItem;
-    View: TMenuItem;
-    FontDialog: TFontDialog;
-    Packagejson1: TMenuItem;
-    procedure Packagejson1Click(Sender: TObject);
-    procedure StyleClick(Sender: TObject);
-    procedure ViewClick(Sender: TObject);
-    procedure SaveasClick(Sender: TObject);
+    ToolButton3: TToolButton;
+    About1: TMenuItem;
+    HTML1: TMenuItem;
+    SynCssSyn1: TSynCssSyn;
+    procedure EditorChange(Sender: TObject);
     procedure htmlTemplateClick(Sender: TObject);
-    procedure HTMLClick(Sender: TObject);
+    procedure HTML1Click(Sender: TObject);
+    procedure SaveProjectClick(Sender: TObject);
     procedure OpenProjectClick(Sender: TObject);
   private
+
   public
+    { Public declarations }
   end;
 
 var
@@ -58,7 +47,12 @@ implementation
 
 {$R *.dfm}
 
-procedure TMain.HTMLClick(Sender: TObject);
+procedure TMain.EditorChange(Sender: TObject);
+begin
+   //TSynEdit.Gutter.Visible := False;
+end;
+
+procedure TMain.HTML1Click(Sender: TObject);
 begin
      Editor.Enabled := True;
      Editor.Lines.Clear;
@@ -72,12 +66,11 @@ begin
      Editor.Lines.Add('');
      Editor.Lines.Add('   </body>');
      Editor.Lines.Add(' </html>');
-     FName := '';
 end;
 
 procedure TMain.htmlTemplateClick(Sender: TObject);
 begin
-   HTML.Click;
+   HTML1.Click;
 end;
 
 procedure TMain.OpenProjectClick(Sender: TObject);
@@ -87,7 +80,6 @@ begin
  if OpenFile.Execute then
  begin
   FName := OpenFile.FileName;
-  Editor.Enabled := True;
   Editor.Lines.LoadFromFile(FName);
 end;
 
@@ -103,47 +95,14 @@ end;
 end;
 end;
 
-procedure TMain.Packagejson1Click(Sender: TObject);
-begin
-     Editor.Enabled := True;
-     Editor.Lines.Clear;
-     Editor.Lines.Add('{');
-     Editor.Lines.Add(' "name": "",');
-     Editor.Lines.Add(' "private": true,');
-     Editor.Lines.Add(' "version": "",');
-     Editor.Lines.Add(' "description": "",');
-     Editor.Lines.Add(' "repository": "",');
-     Editor.Lines.Add(' license": "MIT",');
-     Editor.Lines.Add(' "devDependencies": {');
-     Editor.Lines.Add('             "": "^"');
-     Editor.Lines.Add('             },');
-     Editor.Lines.Add(' "scripts": {');
-     Editor.Lines.Add('             "": ""');
-     Editor.Lines.Add('             }');
-     Editor.Lines.Add('}');
-     FName := '';
-end;
-
-procedure TMain.SaveasClick(Sender: TObject);
+procedure TMain.SaveProjectClick(Sender: TObject);
 begin
 SaveFile.FileName := FName;
 if SaveFile.Execute then
  begin
   FName := SaveFile.FileName;
-    Editor.Enabled := True;
   Editor.Lines.SaveToFile(FName);
 end;
-end;
-
-procedure TMain.StyleClick(Sender: TObject);
-begin
-  View.Click;
-end;
-
-procedure TMain.ViewClick(Sender: TObject);
-begin
-if FontDialog.Execute then
-Editor.Font := FontDialog.Font;
 end;
 
 end.

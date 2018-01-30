@@ -2,20 +2,20 @@ object Main: TMain
   Left = 210
   Top = 144
   Caption = 'Front-Editor'
-  ClientHeight = 349
+  ClientHeight = 329
   ClientWidth = 471
-  Color = clActiveCaption
+  Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  Menu = MainMenu
+  Menu = MainMenu1
   OldCreateOrder = False
   WindowState = wsMaximized
   DesignSize = (
     471
-    349)
+    329)
   PixelsPerInch = 96
   TextHeight = 13
   object Tree: TMemo
@@ -23,7 +23,7 @@ object Main: TMain
     Left = 23
     Top = 80
     Width = 186
-    Height = 216
+    Height = 196
     Anchors = [akLeft, akTop, akRight, akBottom]
     Color = cl3DDkShadow
     Font.Charset = DEFAULT_CHARSET
@@ -34,13 +34,12 @@ object Main: TMain
     ParentFont = False
     ScrollBars = ssVertical
     TabOrder = 0
-    ExplicitHeight = 196
   end
   object Editor: TSynMemo
     Left = 240
     Top = 80
     Width = 209
-    Height = 216
+    Height = 196
     Anchors = [akLeft, akTop, akRight, akBottom]
     Color = cl3DDkShadow
     Font.Charset = DEFAULT_CHARSET
@@ -55,22 +54,21 @@ object Main: TMain
     Gutter.Font.Name = 'Courier New'
     Gutter.Font.Style = []
     Gutter.ShowLineNumbers = True
-    Highlighter = SynHTMLSyn
+    Highlighter = SynHTMLSyn1
     Options = [eoAltSetsColumnMode, eoAutoIndent, eoDragDropEditing, eoEnhanceEndKey, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoSmartTabs, eoSpecialLineDefaultFg, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces]
     RightEdgeColor = clActiveBorder
+    OnChange = EditorChange
     FontSmoothing = fsmNone
-    ExplicitHeight = 196
   end
-  object ToolBar: TToolBar
+  object ToolBar1: TToolBar
     Left = 0
     Top = 0
     Width = 471
     Height = 57
     ButtonHeight = 40
     ButtonWidth = 40
-    Color = clGradientActiveCaption
-    Images = ImageList
-    ParentColor = False
+    Caption = 'ToolBar1'
+    Images = ImageList1
     TabOrder = 2
     object htmlTemplate: TToolButton
       Left = 0
@@ -80,79 +78,36 @@ object Main: TMain
       ImageIndex = 0
       OnClick = htmlTemplateClick
     end
-    object Style: TToolButton
+    object ToolButton3: TToolButton
       Left = 23
       Top = 0
-      Caption = 'Style'
+      Caption = 'ToolButton3'
       ImageIndex = 1
-      OnClick = StyleClick
     end
   end
-  object MainMenu: TMainMenu
+  object MainMenu1: TMainMenu
     object MenuFile: TMenuItem
       Caption = '&File'
-      object New: TMenuItem
-        Caption = 'New'
-        ShortCut = 16462
-      end
       object OpenProject: TMenuItem
         Caption = 'Open'
-        ShortCut = 16463
         OnClick = OpenProjectClick
       end
       object SaveProject: TMenuItem
         Caption = 'Save'
-        ShortCut = 16467
-      end
-      object Saveas: TMenuItem
-        Caption = 'Save as'
-        ShortCut = 24659
-        OnClick = SaveasClick
+        OnClick = SaveProjectClick
       end
       object CloseApp: TMenuItem
         Caption = 'Exit'
-        ShortCut = 32883
-      end
-    end
-    object Edit: TMenuItem
-      Caption = '&Edit'
-      object Undo: TMenuItem
-        Caption = 'Undo'
-        ShortCut = 16474
-      end
-      object Redo: TMenuItem
-        Caption = 'Redo'
-        ShortCut = 24666
-      end
-      object Cut: TMenuItem
-        Caption = 'Cut'
-        ShortCut = 16472
-      end
-      object Copy: TMenuItem
-        Caption = 'Copy'
-        ShortCut = 16451
-      end
-      object Paste: TMenuItem
-        Caption = 'Paste'
-        ShortCut = 16470
-      end
-      object View: TMenuItem
-        Caption = 'View'
-        OnClick = ViewClick
       end
     end
     object MenuAbout: TMenuItem
       Caption = '&Template'
-      object HTML: TMenuItem
+      object HTML1: TMenuItem
         Caption = 'HTML'
-        OnClick = HTMLClick
-      end
-      object Packagejson1: TMenuItem
-        Caption = 'Package.json'
-        OnClick = Packagejson1Click
+        OnClick = HTML1Click
       end
     end
-    object About: TMenuItem
+    object About1: TMenuItem
       Caption = '&About'
     end
   end
@@ -170,7 +125,7 @@ object Main: TMain
     Title = 'Save file'
     Left = 56
   end
-  object SynHTMLSyn: TSynHTMLSyn
+  object SynHTMLSyn1: TSynHTMLSyn
     Options.AutoDetectEnabled = False
     Options.AutoDetectLineLimit = 0
     Options.Visible = False
@@ -179,7 +134,7 @@ object Main: TMain
     Left = 296
     Top = 128
   end
-  object ImageList: TImageList
+  object ImageList1: TImageList
     Left = 352
     Top = 129
     Bitmap = {
@@ -322,20 +277,11 @@ object Main: TMain
       FFFFFBFFFFC00000FFFFFFFFFFFF000000000000000000000000000000000000
       000000000000}
   end
-  object SynCssSyn: TSynCssSyn
+  object SynCssSyn1: TSynCssSyn
     Options.AutoDetectEnabled = False
     Options.AutoDetectLineLimit = 0
     Options.Visible = False
     Left = 384
-    Top = 200
-  end
-  object FontDialog: TFontDialog
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    Left = 328
     Top = 200
   end
 end
