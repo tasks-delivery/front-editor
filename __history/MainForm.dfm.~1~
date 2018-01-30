@@ -41,7 +41,6 @@ object Main: TMain
     Width = 209
     Height = 196
     Anchors = [akLeft, akTop, akRight, akBottom]
-    Color = cl3DDkShadow
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
@@ -56,7 +55,6 @@ object Main: TMain
     Gutter.ShowLineNumbers = True
     Highlighter = SynHTMLSyn1
     Options = [eoAltSetsColumnMode, eoAutoIndent, eoDragDropEditing, eoEnhanceEndKey, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoSmartTabs, eoSpecialLineDefaultFg, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces]
-    RightEdgeColor = clActiveBorder
     OnChange = EditorChange
     FontSmoothing = fsmNone
   end
@@ -129,8 +127,6 @@ object Main: TMain
     Options.AutoDetectEnabled = False
     Options.AutoDetectLineLimit = 0
     Options.Visible = False
-    KeyAttri.Foreground = clYellow
-    ValueAttri.Foreground = clYellow
     Left = 296
     Top = 128
   end
