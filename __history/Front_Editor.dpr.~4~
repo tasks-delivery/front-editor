@@ -1,0 +1,15 @@
+program Front_Editor;
+
+uses
+  Forms,
+  MainForm in 'MainForm.pas' {Main},
+  BrowserForm in 'BrowserForm.pas' {Browser};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TMain, Main);
+  Application.CreateForm(TBrowser, Browser);
+  Application.Run;
+end.
