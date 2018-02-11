@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Menus, StdCtrls, ComCtrls, ExtCtrls, SynEditExport, SynExportHTML, SynEdit,
-  SynMemo, SynEditHighlighter, SynHighlighterHtml, ImgList,
+  SynMemo, SynEditHighlighter, SynHighlighterJava, SynHighlighterHtml, ImgList,
   ToolWin, SynHighlighterCSS, Buttons;
 
 type
@@ -103,11 +103,27 @@ begin
 
 procedure TMain.ClearEditorClick(Sender: TObject);
 begin
+   PageEditor.ActivePageIndex := PageEditor.PageCount - 1;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Clear;
 end;
 
 procedure TMain.HTMLClick(Sender: TObject);
 begin
+  NewTab := TTabSheet.Create(PageEditor);
+  with NewTab do
+  begin
+    PageControl := PageEditor;
+    Caption := FName;
+  end;
+  NewSynEdit := TSynEdit.Create(NewTab);
+  with NewSynEdit do
+  begin
+  Highlighter:=SynHTMLSyn;
+    Parent := NewTab;
+    Align := alClient;
+    Clear;
+  end;
+  PageEditor.ActivePageIndex := PageEditor.PageCount - 1;
   Editor.Enabled := True;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Clear;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<!doctype html>');
@@ -176,6 +192,20 @@ end;
 
 procedure TMain.PackagejsonClick(Sender: TObject);
 begin
+  NewTab := TTabSheet.Create(PageEditor);
+  with NewTab do
+  begin
+    PageControl := PageEditor;
+    Caption := FName;
+  end;
+  NewSynEdit := TSynEdit.Create(NewTab);
+  with NewSynEdit do
+  begin
+  Highlighter:=SynHTMLSyn;
+    Parent := NewTab;
+    Align := alClient;
+    Clear;
+  end;
      Editor.Enabled := True;
      (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Clear;
      (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('{');
