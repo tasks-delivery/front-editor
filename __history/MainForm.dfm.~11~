@@ -559,7 +559,6 @@ object Main: TMain
       ParentShowHint = False
       ShowHint = True
       TabOrder = 4
-      OnClick = SupportClick
       Glyph.Data = {
         36080000424D3608000000000000360400002800000020000000200000000100
         08000000000000040000C40E0000C40E00000001000000000000000000000000
