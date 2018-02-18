@@ -2,7 +2,7 @@ object Main: TMain
   Left = 210
   Top = 144
   Caption = 'Front-Editor'
-  ClientHeight = 449
+  ClientHeight = 568
   ClientWidth = 675
   Color = clActiveCaption
   Font.Charset = DEFAULT_CHARSET
@@ -15,12 +15,12 @@ object Main: TMain
   WindowState = wsMaximized
   DesignSize = (
     675
-    449)
+    568)
   PixelsPerInch = 96
   TextHeight = 13
   object Editor: TSynMemo
     Left = 416
-    Top = 102
+    Top = 140
     Width = 120
     Height = 84
     Anchors = []
@@ -42,7 +42,7 @@ object Main: TMain
     Options = [eoAltSetsColumnMode, eoAutoIndent, eoDragDropEditing, eoEnhanceEndKey, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoSmartTabs, eoSpecialLineDefaultFg, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces]
     RightEdgeColor = clActiveBorder
     FontSmoothing = fsmNone
-    ExplicitTop = 140
+    ExplicitTop = 134
   end
   object ToolBar: TToolBar
     Left = 0
@@ -559,7 +559,6 @@ object Main: TMain
       ParentShowHint = False
       ShowHint = True
       TabOrder = 4
-      OnClick = SupportClick
       Glyph.Data = {
         36080000424D3608000000000000360400002800000020000000200000000100
         08000000000000040000C40E0000C40E00000001000000000000000000000000
@@ -633,18 +632,17 @@ object Main: TMain
     Left = 294
     Top = 71
     Width = 315
-    Height = 321
+    Height = 440
     Anchors = [akLeft, akTop, akRight, akBottom]
     DockSite = True
     HotTrack = True
     TabOrder = 2
-    ExplicitHeight = 440
   end
   object Tree: TShellTreeView
     Left = 24
     Top = 71
     Width = 250
-    Height = 321
+    Height = 440
     ObjectTypes = [otFolders, otNonFolders]
     Root = 'rfDesktop'
     UseShellImages = True
@@ -656,7 +654,7 @@ object Main: TMain
     ShowRoot = False
     TabOrder = 3
     OnClick = TreeClick
-    ExplicitHeight = 440
+    ExplicitHeight = 420
   end
   object MainMenu: TMainMenu
     object MenuFile: TMenuItem
@@ -671,9 +669,13 @@ object Main: TMain
         ShortCut = 16463
         OnClick = OpenProjectClick
       end
+      object SaveProject: TMenuItem
+        Caption = 'Save'
+        ShortCut = 16467
+      end
       object Saveas: TMenuItem
         Caption = 'Save as'
-        ShortCut = 16467
+        ShortCut = 24659
         OnClick = SaveasClick
       end
       object CloseApp: TMenuItem
@@ -684,6 +686,26 @@ object Main: TMain
     end
     object Edit: TMenuItem
       Caption = '&Edit'
+      object Undo: TMenuItem
+        Caption = 'Undo'
+        ShortCut = 16474
+      end
+      object Redo: TMenuItem
+        Caption = 'Redo'
+        ShortCut = 24666
+      end
+      object Cut: TMenuItem
+        Caption = 'Cut'
+        ShortCut = 16472
+      end
+      object Copy: TMenuItem
+        Caption = 'Copy'
+        ShortCut = 16451
+      end
+      object Paste: TMenuItem
+        Caption = 'Paste'
+        ShortCut = 16470
+      end
       object View: TMenuItem
         Caption = 'View'
         OnClick = ViewClick
@@ -694,12 +716,10 @@ object Main: TMain
       object HTML: TMenuItem
         Caption = 'HTML'
         Hint = 'Add html template'
-        ShortCut = 16456
         OnClick = HTMLClick
       end
       object Packagejson: TMenuItem
         Caption = 'Package.json'
-        ShortCut = 16458
         OnClick = PackagejsonClick
       end
     end
