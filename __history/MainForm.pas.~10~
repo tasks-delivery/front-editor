@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Menus, StdCtrls, ComCtrls, ExtCtrls, SynEditExport, SynExportHTML, SynEdit,
   SynMemo, SynEditHighlighter, SynHighlighterHtml, ImgList,
-  ToolWin, SynHighlighterCSS, Buttons, ShellCtrls, ShellApi;
+  ToolWin, SynHighlighterCSS, Buttons, ShellCtrls;
 
 type
   TMain = class(TForm)
@@ -27,6 +27,8 @@ type
     Saveas: TMenuItem;
     Edit: TMenuItem;
     New: TMenuItem;
+    Undo: TMenuItem;
+    Redo: TMenuItem;
     View: TMenuItem;
     FontDialog: TFontDialog;
     Packagejson: TMenuItem;
@@ -42,7 +44,6 @@ type
     PageEditor: TPageControl;
     NewFile: TBitBtn;
     Tree: TShellTreeView;
-    procedure SupportClick(Sender: TObject);
     procedure CloseAppClick(Sender: TObject);
     procedure TreeClick(Sender: TObject);
     procedure NewClick(Sender: TObject);
@@ -236,11 +237,6 @@ end;
 procedure TMain.SaveFClick(Sender: TObject);
 begin
   Saveas.Click;
-end;
-
-procedure TMain.SupportClick(Sender: TObject);
-begin
-ShellExecute(Handle, 'open', 'https://github.com/tasks-delivery/front-editor', nil, nil, SW_SHOW);
 end;
 
 procedure TMain.TextStyleClick(Sender: TObject);
