@@ -1,0 +1,26 @@
+; This file is maintained by HCW. Do not modify this file directly.
+
+[OPTIONS]
+HCW=0
+COMPRESS=12 Hall Zeck
+ERRORLOG=shtrees.log
+LCID=0x407 0x2 0x0 ;Deutsch (Deutschland)
+REPORT=Yes
+CONTENTS=class_TShellTreeView
+TITLE=Hilfe für Komponente TShellTreeView
+COPYRIGHT=ShTrees Unit (c)1997 drs. Rudolph Velthuis
+DEFFONT=MS Sans Serif,8,0
+HLP=G:\borland\delphi 3\help\ShTrees.hlp
+
+[FILES]
+.\ShTrees.RTF
+
+[WINDOWS]
+Main="",,20736,,(r12632256),f3
+
+[CONFIG]
+RegisterRoutine('MltHlp32.dll', 'WinHelpEntry', 'USS')
+;CreateButton(SRCHALL, 'Search &all', WinHelpEntry(hwndApp, 'Delphi.hlp', 'f:\borland\delphi 2.0\Bin\DELPHI.HDX'))
+;CreateButton('VCL', '&VCL', JumpKeyword('VCL', ''))
+;CreateButton('API', 'A&PI', JumpContents('win32.hlp'))
+BrowseButtons()

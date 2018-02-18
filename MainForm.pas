@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Menus, StdCtrls, ComCtrls, ExtCtrls, SynEditExport, SynExportHTML, SynEdit,
   SynMemo, SynEditHighlighter, SynHighlighterHtml, ImgList,
-  ToolWin, SynHighlighterCSS, Buttons;
+  ToolWin, SynHighlighterCSS, Buttons, ShellCtrls, ShellApi;
 
 type
   TMain = class(TForm)
@@ -17,8 +17,6 @@ type
     MenuAbout: TMenuItem;
     OpenFile: TOpenDialog;
     SaveFile: TSaveDialog;
-    SaveProject: TMenuItem;
-    Tree: TMemo;
     Editor: TSynMemo;
     SynHTMLSyn: TSynHTMLSyn;
     ImageList: TImageList;
@@ -29,11 +27,6 @@ type
     Saveas: TMenuItem;
     Edit: TMenuItem;
     New: TMenuItem;
-    Undo: TMenuItem;
-    Redo: TMenuItem;
-    Cut: TMenuItem;
-    Copy: TMenuItem;
-    Paste: TMenuItem;
     View: TMenuItem;
     FontDialog: TFontDialog;
     Packagejson: TMenuItem;
@@ -48,6 +41,10 @@ type
     TextStyle: TBitBtn;
     PageEditor: TPageControl;
     NewFile: TBitBtn;
+    Tree: TShellTreeView;
+    procedure SupportClick(Sender: TObject);
+    procedure CloseAppClick(Sender: TObject);
+    procedure TreeClick(Sender: TObject);
     procedure NewClick(Sender: TObject);
     procedure NewFileClick(Sender: TObject);
     procedure ClearEditorClick(Sender: TObject);
@@ -73,8 +70,6 @@ var
 
 implementation
 
-uses testForm;
-
 {$R *.dfm}
 
 procedure TMain.NewClick(Sender: TObject);
@@ -99,6 +94,7 @@ begin
     Clear;
   end;
   PageEditor.ActivePageIndex := PageEditor.PageCount - 1;
+  Saveas.Click;
   end;
 
 procedure TMain.ClearEditorClick(Sender: TObject);
@@ -106,8 +102,16 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Clear;
 end;
 
+procedure TMain.CloseAppClick(Sender: TObject);
+begin
+Close;
+end;
+
 procedure TMain.HTMLClick(Sender: TObject);
 begin
+if PageEditor.PageCount = 0 then
+begin
+  NewFile.Click;
   Editor.Enabled := True;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Clear;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<!doctype html>');
@@ -120,7 +124,20 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('   </body>');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' </html>');
-  FName := '';
+  end
+  else
+   Editor.Enabled := True;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Clear;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<!doctype html>');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' <html lang="en">');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('  <head>');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('   <title></title>');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('    <meta charset="utf-8">');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('  </head>');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('   <body>');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('   </body>');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' </html>');
 end;
 
 procedure TMain.htmlTemplateClick(Sender: TObject);
@@ -139,8 +156,6 @@ begin
 end;
 
 procedure TMain.OpenProjectClick(Sender: TObject);
-var
-  sr: TSearchRec;
 begin
 if OpenFile.Execute then begin
   NewTab := TTabSheet.Create(PageEditor);
@@ -162,20 +177,13 @@ if OpenFile.Execute then begin
   PageEditor.ActivePageIndex := PageEditor.PageCount - 1;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.LoadFromFile(FName);
   end;
-  begin
- Tree.Clear;
- if FindFirst('*.*', faAnyFile, sr) = 0 then
-  begin
-  repeat
-  Tree.Lines.Add(sr.Name);
-  until FindNext(sr) <> 0;
-  FindClose(sr);
-end;
-end;
 end;
 
 procedure TMain.PackagejsonClick(Sender: TObject);
 begin
+  if PageEditor.PageCount = 0 then
+begin
+     NewFile.Click;
      Editor.Enabled := True;
      (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Clear;
      (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('{');
@@ -192,7 +200,24 @@ begin
      (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             "": ""');
      (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             }');
      (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
-     FName := '';
+     end
+     else
+     Editor.Enabled := True;
+     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Clear;
+     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('{');
+     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "name": "",');
+     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "private": true,');
+     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "version": "",');
+     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "description": "",');
+     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "repository": "",');
+     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' license": "MIT",');
+     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "devDependencies": {');
+     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             "": "^"');
+     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             },');
+     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "scripts": {');
+     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             "": ""');
+     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             }');
+     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
 end;
 
 procedure TMain.SaveasClick(Sender: TObject);
@@ -213,10 +238,27 @@ begin
   Saveas.Click;
 end;
 
+procedure TMain.SupportClick(Sender: TObject);
+begin
+ShellExecute(Handle, 'open', 'https://github.com/tasks-delivery/front-editor', nil, nil, SW_SHOW);
+end;
+
 procedure TMain.TextStyleClick(Sender: TObject);
 begin
   View.Click
 end;
+
+procedure TMain.TreeClick(Sender: TObject);
+var F: TShellFolder;
+begin
+ F := Tree.SelectedFolder;
+ if Assigned(F) then
+   if not F.IsFolder then
+   begin
+   OpenProject.Click;
+end;
+end;
+
 procedure TMain.ViewClick(Sender: TObject);
 begin
 if FontDialog.Execute then
