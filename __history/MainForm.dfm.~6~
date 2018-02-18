@@ -2,7 +2,7 @@ object Main: TMain
   Left = 210
   Top = 144
   Caption = 'Front-Editor'
-  ClientHeight = 568
+  ClientHeight = 548
   ClientWidth = 675
   Color = clActiveCaption
   Font.Charset = DEFAULT_CHARSET
@@ -15,12 +15,30 @@ object Main: TMain
   WindowState = wsMaximized
   DesignSize = (
     675
-    568)
+    548)
   PixelsPerInch = 96
   TextHeight = 13
+  object Tree: TMemo
+    AlignWithMargins = True
+    Left = 8
+    Top = 71
+    Width = 250
+    Height = 420
+    Anchors = [akLeft, akTop, akBottom]
+    Color = cl3DDkShadow
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clYellow
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    ScrollBars = ssVertical
+    TabOrder = 0
+    ExplicitHeight = 400
+  end
   object Editor: TSynMemo
     Left = 416
-    Top = 140
+    Top = 134
     Width = 120
     Height = 84
     Anchors = []
@@ -30,7 +48,7 @@ object Main: TMain
     Font.Height = -13
     Font.Name = 'Courier New'
     Font.Style = []
-    TabOrder = 0
+    TabOrder = 1
     Visible = False
     Gutter.Font.Charset = DEFAULT_CHARSET
     Gutter.Font.Color = clWindowText
@@ -42,7 +60,7 @@ object Main: TMain
     Options = [eoAltSetsColumnMode, eoAutoIndent, eoDragDropEditing, eoEnhanceEndKey, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoSmartTabs, eoSpecialLineDefaultFg, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces]
     RightEdgeColor = clActiveBorder
     FontSmoothing = fsmNone
-    ExplicitTop = 134
+    ExplicitTop = 128
   end
   object ToolBar: TToolBar
     Left = 0
@@ -54,15 +72,13 @@ object Main: TMain
     Color = clGradientActiveCaption
     Images = ImageList
     ParentColor = False
-    TabOrder = 1
+    TabOrder = 2
     object SaveF: TBitBtn
       Left = 0
       Top = 0
       Width = 40
       Height = 40
       Hint = 'Save file'
-      ParentShowHint = False
-      ShowHint = True
       TabOrder = 0
       OnClick = SaveFClick
       Glyph.Data = {
@@ -139,8 +155,6 @@ object Main: TMain
       Width = 40
       Height = 40
       Hint = 'Open file'
-      ParentShowHint = False
-      ShowHint = True
       TabOrder = 1
       OnClick = OpenFClick
       Glyph.Data = {
@@ -216,9 +230,6 @@ object Main: TMain
       Top = 0
       Width = 40
       Height = 40
-      Hint = 'New file'
-      ParentShowHint = False
-      ShowHint = True
       TabOrder = 7
       OnClick = NewFileClick
       Glyph.Data = {
@@ -295,8 +306,6 @@ object Main: TMain
       Width = 40
       Height = 40
       Hint = 'Text style'
-      ParentShowHint = False
-      ShowHint = True
       TabOrder = 6
       OnClick = TextStyleClick
       Glyph.Data = {
@@ -372,9 +381,7 @@ object Main: TMain
       Top = 0
       Width = 40
       Height = 40
-      Hint = 'Clear code'
-      ParentShowHint = False
-      ShowHint = True
+      Hint = 'Remove code'
       TabOrder = 5
       OnClick = ClearEditorClick
       Glyph.Data = {
@@ -458,8 +465,6 @@ object Main: TMain
       Width = 40
       Height = 40
       Hint = 'Add html template'
-      ParentShowHint = False
-      ShowHint = True
       TabOrder = 2
       OnClick = htmlTemplateClick
       Glyph.Data = {
@@ -537,8 +542,6 @@ object Main: TMain
       Height = 40
       Hint = 'Add package.json template'
       Caption = 'JS'
-      ParentShowHint = False
-      ShowHint = True
       TabOrder = 3
       OnClick = JsTemplateClick
     end
@@ -556,8 +559,6 @@ object Main: TMain
       Width = 40
       Height = 40
       Hint = 'Support'
-      ParentShowHint = False
-      ShowHint = True
       TabOrder = 4
       Glyph.Data = {
         36080000424D3608000000000000360400002800000020000000200000000100
@@ -632,29 +633,9 @@ object Main: TMain
     Left = 294
     Top = 71
     Width = 315
-    Height = 440
+    Height = 420
     Anchors = [akLeft, akTop, akRight, akBottom]
-    DockSite = True
-    HotTrack = True
-    TabOrder = 2
-  end
-  object Tree: TShellTreeView
-    Left = 24
-    Top = 71
-    Width = 250
-    Height = 440
-    ObjectTypes = [otFolders, otNonFolders]
-    Root = 'rfDesktop'
-    UseShellImages = True
-    Anchors = [akLeft, akTop, akBottom]
-    AutoRefresh = False
-    Indent = 19
-    ParentColor = False
-    RightClickSelect = True
-    ShowRoot = False
     TabOrder = 3
-    OnClick = TreeClick
-    ExplicitHeight = 420
   end
   object MainMenu: TMainMenu
     object MenuFile: TMenuItem
@@ -681,7 +662,6 @@ object Main: TMain
       object CloseApp: TMenuItem
         Caption = 'Exit'
         ShortCut = 32883
-        OnClick = CloseAppClick
       end
     end
     object Edit: TMenuItem
@@ -715,7 +695,6 @@ object Main: TMain
       Caption = '&Template'
       object HTML: TMenuItem
         Caption = 'HTML'
-        Hint = 'Add html template'
         OnClick = HTMLClick
       end
       object Packagejson: TMenuItem
@@ -733,13 +712,11 @@ object Main: TMain
       '.txt'
     Filter = 'All|*.*'
     FilterIndex = 0
-    Options = [ofOverwritePrompt, ofHideReadOnly, ofNoChangeDir, ofNoValidate, ofCreatePrompt, ofNoReadOnlyReturn, ofEnableSizing]
     Title = 'Open file'
     Left = 24
   end
   object SaveFile: TSaveDialog
     Filter = 'All|*.*'
-    Options = [ofOverwritePrompt, ofHideReadOnly, ofNoChangeDir, ofNoValidate, ofCreatePrompt, ofNoReadOnlyReturn, ofEnableSizing]
     Title = 'Save file'
     Left = 56
   end

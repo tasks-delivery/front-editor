@@ -48,7 +48,6 @@ type
     PageEditor: TPageControl;
     NewFile: TBitBtn;
     Tree: TShellTreeView;
-    procedure CloseAppClick(Sender: TObject);
     procedure TreeClick(Sender: TObject);
     procedure NewClick(Sender: TObject);
     procedure NewFileClick(Sender: TObject);
@@ -99,17 +98,12 @@ begin
     Clear;
   end;
   PageEditor.ActivePageIndex := PageEditor.PageCount - 1;
-  Saveas.Click;
+  //  Saveas.Click;
   end;
 
 procedure TMain.ClearEditorClick(Sender: TObject);
 begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Clear;
-end;
-
-procedure TMain.CloseAppClick(Sender: TObject);
-begin
-Close;
 end;
 
 procedure TMain.HTMLClick(Sender: TObject);
