@@ -99,7 +99,7 @@ begin
     Clear;
   end;
   PageEditor.ActivePageIndex := PageEditor.PageCount - 1;
-  Saveas.Click;
+  //  Saveas.Click;
   end;
 
 procedure TMain.ClearEditorClick(Sender: TObject);
@@ -264,5 +264,8 @@ begin
 if FontDialog.Execute then
 Editor.Font := FontDialog.Font;
 end;
+//////////////////////////////////////////////////
+
+
 
 end.
