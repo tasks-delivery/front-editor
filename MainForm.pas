@@ -42,6 +42,8 @@ type
     PageEditor: TPageControl;
     NewFile: TBitBtn;
     Tree: TShellTreeView;
+    Terminal: TBitBtn;
+    procedure TerminalClick(Sender: TObject);
     procedure SupportClick(Sender: TObject);
     procedure CloseAppClick(Sender: TObject);
     procedure TreeClick(Sender: TObject);
@@ -96,6 +98,11 @@ begin
   PageEditor.ActivePageIndex := PageEditor.PageCount - 1;
   Saveas.Click;
   end;
+
+procedure TMain.TerminalClick(Sender: TObject);
+begin
+WinExec('cmd /c start cmd.exe', SW_SHOW)
+end;
 
 procedure TMain.ClearEditorClick(Sender: TObject);
 begin
@@ -264,5 +271,7 @@ begin
 if FontDialog.Execute then
 Editor.Font := FontDialog.Font;
 end;
+
+
 
 end.
