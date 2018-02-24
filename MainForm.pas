@@ -43,6 +43,8 @@ type
     NewFile: TBitBtn;
     Tree: TShellTreeView;
     Terminal: TBitBtn;
+    procedure EditorChange(Sender: TObject);
+    procedure PageEditorChange(Sender: TObject);
     procedure TerminalClick(Sender: TObject);
     procedure SupportClick(Sender: TObject);
     procedure CloseAppClick(Sender: TObject);
@@ -62,6 +64,8 @@ type
     procedure OpenProjectClick(Sender: TObject);
   private
   public
+       MouseDownSpot : TPoint;
+    Capturing : bool;
   end;
 
 var
@@ -112,6 +116,11 @@ end;
 procedure TMain.CloseAppClick(Sender: TObject);
 begin
 Close;
+end;
+
+procedure TMain.EditorChange(Sender: TObject);
+begin
+//
 end;
 
 procedure TMain.HTMLClick(Sender: TObject);
@@ -227,6 +236,11 @@ begin
      (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
 end;
 
+procedure TMain.PageEditorChange(Sender: TObject);
+begin
+//
+end;
+
 procedure TMain.SaveasClick(Sender: TObject);
 begin
   SaveFile.FileName := FName;
@@ -271,7 +285,5 @@ begin
 if FontDialog.Execute then
 Editor.Font := FontDialog.Font;
 end;
-
-
-
+
 end.

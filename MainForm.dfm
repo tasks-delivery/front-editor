@@ -2,9 +2,12 @@ object Main: TMain
   Left = 210
   Top = 144
   Caption = 'Front-Editor'
-  ClientHeight = 449
-  ClientWidth = 675
+  ClientHeight = 541
+  ClientWidth = 784
   Color = clActiveCaption
+  Constraints.MinHeight = 500
+  Constraints.MinWidth = 800
+  DragMode = dmAutomatic
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -14,13 +17,13 @@ object Main: TMain
   OldCreateOrder = False
   WindowState = wsMaximized
   DesignSize = (
-    675
-    449)
+    784
+    541)
   PixelsPerInch = 96
   TextHeight = 13
   object Editor: TSynMemo
-    Left = 416
-    Top = 102
+    Left = 493
+    Top = 132
     Width = 120
     Height = 84
     Anchors = []
@@ -41,12 +44,15 @@ object Main: TMain
     Highlighter = SynHTMLSyn
     Options = [eoAltSetsColumnMode, eoAutoIndent, eoDragDropEditing, eoEnhanceEndKey, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoSmartTabs, eoSpecialLineDefaultFg, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces]
     RightEdgeColor = clActiveBorder
+    OnChange = EditorChange
     FontSmoothing = fsmNone
+    ExplicitLeft = 416
+    ExplicitTop = 102
   end
   object ToolBar: TToolBar
     Left = 0
     Top = 0
-    Width = 675
+    Width = 784
     Height = 41
     ButtonHeight = 40
     ButtonWidth = 113
@@ -54,6 +60,7 @@ object Main: TMain
     Images = ImageList
     ParentColor = False
     TabOrder = 1
+    ExplicitWidth = 675
     object SaveF: TBitBtn
       Left = 0
       Top = 0
@@ -772,18 +779,21 @@ object Main: TMain
   object PageEditor: TPageControl
     Left = 294
     Top = 71
-    Width = 315
-    Height = 321
+    Width = 424
+    Height = 413
     Anchors = [akLeft, akTop, akRight, akBottom]
     DockSite = True
     HotTrack = True
     TabOrder = 2
+    OnChange = PageEditorChange
+    ExplicitWidth = 315
+    ExplicitHeight = 321
   end
   object Tree: TShellTreeView
     Left = 24
     Top = 71
     Width = 250
-    Height = 321
+    Height = 413
     ObjectTypes = [otFolders, otNonFolders]
     Root = 'rfMyComputer'
     UseShellImages = True
@@ -795,6 +805,7 @@ object Main: TMain
     ShowRoot = False
     TabOrder = 3
     OnClick = TreeClick
+    ExplicitHeight = 321
   end
   object MainMenu: TMainMenu
     object MenuFile: TMenuItem
