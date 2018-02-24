@@ -8,6 +8,7 @@ uses
 
 begin
   Application.Initialize;
+  Application.Title := 'Front-editor';
   Application.CreateForm(TMain, Main);
   Application.Run;
 end.

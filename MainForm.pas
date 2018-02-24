@@ -121,7 +121,7 @@ end;
 
 procedure TMain.EditorChange(Sender: TObject);
 begin
-//
+//     fgdsf
 end;
 
 procedure TMain.OpenTerminalClick(Sender: TObject);
