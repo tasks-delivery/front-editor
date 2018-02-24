@@ -3,10 +3,10 @@ object Main: TMain
   Top = 144
   Caption = 'Front-Editor'
   ClientHeight = 541
-  ClientWidth = 784
+  ClientWidth = 684
   Color = clActiveCaption
   Constraints.MinHeight = 500
-  Constraints.MinWidth = 800
+  Constraints.MinWidth = 700
   DragMode = dmAutomatic
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,12 +17,12 @@ object Main: TMain
   OldCreateOrder = False
   WindowState = wsMaximized
   DesignSize = (
-    784
+    684
     541)
   PixelsPerInch = 96
   TextHeight = 13
   object Editor: TSynMemo
-    Left = 493
+    Left = 422
     Top = 132
     Width = 120
     Height = 84
@@ -52,7 +52,7 @@ object Main: TMain
   object ToolBar: TToolBar
     Left = 0
     Top = 0
-    Width = 784
+    Width = 684
     Height = 41
     ButtonHeight = 40
     ButtonWidth = 113
@@ -779,15 +779,14 @@ object Main: TMain
   object PageEditor: TPageControl
     Left = 294
     Top = 71
-    Width = 424
+    Width = 324
     Height = 413
     Anchors = [akLeft, akTop, akRight, akBottom]
     DockSite = True
     HotTrack = True
     TabOrder = 2
     OnChange = PageEditorChange
-    ExplicitWidth = 315
-    ExplicitHeight = 321
+    ExplicitWidth = 424
   end
   object Tree: TShellTreeView
     Left = 24

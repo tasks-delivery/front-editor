@@ -64,8 +64,6 @@ type
     procedure OpenProjectClick(Sender: TObject);
   private
   public
-       MouseDownSpot : TPoint;
-    Capturing : bool;
   end;
 
 var
@@ -100,6 +98,7 @@ begin
     Clear;
   end;
   PageEditor.ActivePageIndex := PageEditor.PageCount - 1;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Gutter.ShowLineNumbers := True;
   Saveas.Click;
   end;
 
@@ -143,6 +142,7 @@ begin
   end
   else
    Editor.Enabled := True;
+   (PageEditor.ActivePage.Components[0] as TSynEdit).Gutter.ShowLineNumbers := True;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Clear;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<!doctype html>');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' <html lang="en">');
@@ -192,6 +192,7 @@ if OpenFile.Execute then begin
   Editor.Enabled := True;
   PageEditor.ActivePageIndex := PageEditor.PageCount - 1;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.LoadFromFile(FName);
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Gutter.ShowLineNumbers := True;
   end;
 end;
 
@@ -219,6 +220,7 @@ begin
      end
      else
      Editor.Enabled := True;
+     (PageEditor.ActivePage.Components[0] as TSynEdit).Gutter.ShowLineNumbers := True;
      (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Clear;
      (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('{');
      (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "name": "",');
