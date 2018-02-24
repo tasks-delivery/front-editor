@@ -71,7 +71,7 @@ type
 
 var
   Main: TMain;
-  FName: string;
+  FName, tabName: string;
   NewTab: TTabSheet;
   NewSynEdit: TSynEdit;
 
@@ -90,7 +90,6 @@ begin
   with NewTab do
   begin
     PageControl := PageEditor;
-    Caption := 'Tab' + IntToStr(PageEditor.Tag + 1);
   end;
   NewSynEdit := TSynEdit.Create(NewTab);
   with NewSynEdit do
@@ -123,10 +122,6 @@ end;
 procedure TMain.ClearEditorClick(Sender: TObject);
 begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Clear;
-  (PageEditor.ActivePage.Components[0] as  TSynEdit).SelStart:=
-  Length((PageEditor.ActivePage.Components[0] as TSynEdit).lines.text);
-  (PageEditor.ActivePage.Components[0] as TSynEdit).perform(EM_LINESCROLL,0,
-  (PageEditor.ActivePage.Components[0] as TSynEdit).lines.count);
   (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
 end;
 
@@ -191,7 +186,7 @@ end;
 
 procedure TMain.JsTemplateClick(Sender: TObject);
 begin
-    Packagejson.Click;
+   Packagejson.Click;
 end;
 
 procedure TMain.OpenFClick(Sender: TObject);
@@ -206,7 +201,6 @@ if OpenFile.Execute then begin
   with NewTab do
   begin
     PageControl := PageEditor;
-    Caption := FName;
   end;
   NewSynEdit := TSynEdit.Create(NewTab);
   with NewSynEdit do
@@ -220,6 +214,8 @@ if OpenFile.Execute then begin
   Editor.Enabled := True;
   PageEditor.ActivePageIndex := PageEditor.PageCount - 1;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.LoadFromFile(FName);
+  tabName:=ChangeFileExt(ExtractFileName(FName),'');
+  NewTab.Caption := tabName;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Gutter.ShowLineNumbers := True;
   (PageEditor.ActivePage.Components[0] as  TSynEdit).SelStart:=
   Length((PageEditor.ActivePage.Components[0] as TSynEdit).lines.text);
@@ -290,6 +286,8 @@ begin
     FName := SaveFile.FileName;
     Editor.Enabled := True;
     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.SaveToFile(FName);
+    tabName:=ChangeFileExt(ExtractFileName(FName),'');
+    NewTab.Caption := tabName;
 end;
 end;
 end;
