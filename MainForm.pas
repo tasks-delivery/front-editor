@@ -43,6 +43,8 @@ type
     NewFile: TBitBtn;
     Tree: TShellTreeView;
     Terminal: TBitBtn;
+    OpenTerminal: TMenuItem;
+    procedure OpenTerminalClick(Sender: TObject);
     procedure EditorChange(Sender: TObject);
     procedure PageEditorChange(Sender: TObject);
     procedure TerminalClick(Sender: TObject);
@@ -120,6 +122,11 @@ end;
 procedure TMain.EditorChange(Sender: TObject);
 begin
 //
+end;
+
+procedure TMain.OpenTerminalClick(Sender: TObject);
+begin
+  Terminal.Click
 end;
 
 procedure TMain.HTMLClick(Sender: TObject);

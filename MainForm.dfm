@@ -2,7 +2,7 @@ object Main: TMain
   Left = 210
   Top = 144
   Caption = 'Front-Editor'
-  ClientHeight = 541
+  ClientHeight = 561
   ClientWidth = 684
   Color = clActiveCaption
   Constraints.MinHeight = 500
@@ -18,12 +18,12 @@ object Main: TMain
   WindowState = wsMaximized
   DesignSize = (
     684
-    541)
+    561)
   PixelsPerInch = 96
   TextHeight = 13
   object Editor: TSynMemo
     Left = 422
-    Top = 132
+    Top = 138
     Width = 120
     Height = 84
     Anchors = []
@@ -780,19 +780,20 @@ object Main: TMain
     Left = 294
     Top = 71
     Width = 324
-    Height = 413
+    Height = 433
     Anchors = [akLeft, akTop, akRight, akBottom]
     DockSite = True
     HotTrack = True
     TabOrder = 2
     OnChange = PageEditorChange
     ExplicitWidth = 424
+    ExplicitHeight = 413
   end
   object Tree: TShellTreeView
     Left = 24
     Top = 71
     Width = 250
-    Height = 413
+    Height = 433
     ObjectTypes = [otFolders, otNonFolders]
     Root = 'rfMyComputer'
     UseShellImages = True
@@ -835,6 +836,10 @@ object Main: TMain
       object View: TMenuItem
         Caption = 'View'
         OnClick = ViewClick
+      end
+      object OpenTerminal: TMenuItem
+        Caption = 'Terminal'
+        OnClick = OpenTerminalClick
       end
     end
     object MenuAbout: TMenuItem
