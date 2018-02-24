@@ -44,6 +44,7 @@ type
     Tree: TShellTreeView;
     Terminal: TBitBtn;
     OpenTerminal: TMenuItem;
+    procedure Button1Click(Sender: TObject);
     procedure OpenTerminalClick(Sender: TObject);
     procedure EditorChange(Sender: TObject);
     procedure PageEditorChange(Sender: TObject);
@@ -102,6 +103,11 @@ begin
   PageEditor.ActivePageIndex := PageEditor.PageCount - 1;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Gutter.ShowLineNumbers := True;
   Saveas.Click;
+  (PageEditor.ActivePage.Components[0] as  TSynEdit).SelStart:=
+  Length((PageEditor.ActivePage.Components[0] as TSynEdit).lines.text);
+  (PageEditor.ActivePage.Components[0] as TSynEdit).perform(EM_LINESCROLL,0,
+  (PageEditor.ActivePage.Components[0] as TSynEdit).lines.count);
+  (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
   end;
 
 procedure TMain.TerminalClick(Sender: TObject);
@@ -109,9 +115,19 @@ begin
 WinExec('cmd /c start cmd.exe', SW_SHOW)
 end;
 
+procedure TMain.Button1Click(Sender: TObject);
+begin
+//
+end;
+
 procedure TMain.ClearEditorClick(Sender: TObject);
 begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Clear;
+  (PageEditor.ActivePage.Components[0] as  TSynEdit).SelStart:=
+  Length((PageEditor.ActivePage.Components[0] as TSynEdit).lines.text);
+  (PageEditor.ActivePage.Components[0] as TSynEdit).perform(EM_LINESCROLL,0,
+  (PageEditor.ActivePage.Components[0] as TSynEdit).lines.count);
+  (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
 end;
 
 procedure TMain.CloseAppClick(Sender: TObject);
@@ -121,7 +137,7 @@ end;
 
 procedure TMain.EditorChange(Sender: TObject);
 begin
-//     fgdsf
+//
 end;
 
 procedure TMain.OpenTerminalClick(Sender: TObject);
@@ -148,8 +164,8 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' </html>');
   end
   else
-   Editor.Enabled := True;
-   (PageEditor.ActivePage.Components[0] as TSynEdit).Gutter.ShowLineNumbers := True;
+  Editor.Enabled := True;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Gutter.ShowLineNumbers := True;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Clear;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<!doctype html>');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' <html lang="en">');
@@ -161,6 +177,11 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('   </body>');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' </html>');
+  (PageEditor.ActivePage.Components[0] as  TSynEdit).SelStart:=
+  Length((PageEditor.ActivePage.Components[0] as TSynEdit).lines.text);
+  (PageEditor.ActivePage.Components[0] as TSynEdit).perform(EM_LINESCROLL,0,
+  (PageEditor.ActivePage.Components[0] as TSynEdit).lines.count);
+  (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
 end;
 
 procedure TMain.htmlTemplateClick(Sender: TObject);
@@ -200,6 +221,11 @@ if OpenFile.Execute then begin
   PageEditor.ActivePageIndex := PageEditor.PageCount - 1;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.LoadFromFile(FName);
   (PageEditor.ActivePage.Components[0] as TSynEdit).Gutter.ShowLineNumbers := True;
+  (PageEditor.ActivePage.Components[0] as  TSynEdit).SelStart:=
+  Length((PageEditor.ActivePage.Components[0] as TSynEdit).lines.text);
+  (PageEditor.ActivePage.Components[0] as TSynEdit).perform(EM_LINESCROLL,0,
+  (PageEditor.ActivePage.Components[0] as TSynEdit).lines.count);
+  (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
   end;
 end;
 
@@ -243,6 +269,11 @@ begin
      (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             "": ""');
      (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             }');
      (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
+     (PageEditor.ActivePage.Components[0] as  TSynEdit).SelStart:=
+     Length((PageEditor.ActivePage.Components[0] as TSynEdit).lines.text);
+     (PageEditor.ActivePage.Components[0] as TSynEdit).perform(EM_LINESCROLL,0,
+     (PageEditor.ActivePage.Components[0] as TSynEdit).lines.count);
+     (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
 end;
 
 procedure TMain.PageEditorChange(Sender: TObject);

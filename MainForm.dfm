@@ -11612,8 +11612,6 @@ object Main: TMain
     RightEdgeColor = clActiveBorder
     OnChange = EditorChange
     FontSmoothing = fsmNone
-    ExplicitLeft = 416
-    ExplicitTop = 102
   end
   object ToolBar: TToolBar
     Left = 0
@@ -11626,7 +11624,6 @@ object Main: TMain
     Images = ImageList
     ParentColor = False
     TabOrder = 1
-    ExplicitWidth = 675
     object SaveF: TBitBtn
       Left = 0
       Top = 0
@@ -12193,6 +12190,9 @@ object Main: TMain
       Top = 0
       Width = 40
       Height = 40
+      Hint = 'Open terminal'
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 8
       OnClick = TerminalClick
       Glyph.Data = {
@@ -12352,8 +12352,6 @@ object Main: TMain
     HotTrack = True
     TabOrder = 2
     OnChange = PageEditorChange
-    ExplicitWidth = 424
-    ExplicitHeight = 413
   end
   object Tree: TShellTreeView
     Left = 24
@@ -12371,7 +12369,6 @@ object Main: TMain
     ShowRoot = False
     TabOrder = 3
     OnClick = TreeClick
-    ExplicitHeight = 321
   end
   object MainMenu: TMainMenu
     object MenuFile: TMenuItem
