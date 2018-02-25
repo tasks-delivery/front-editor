@@ -12709,17 +12709,20 @@ object Main: TMain
     end
     object MenuEdit: TMenuItem
       Caption = '&Edit'
+      GroupIndex = 2
       object MenuItemView: TMenuItem
         Caption = 'View'
         OnClick = MenuItemViewClick
       end
       object MenuItemOpenTerminal: TMenuItem
         Caption = 'Terminal'
+        GroupIndex = 2
         OnClick = MenuItemOpenTerminalClick
       end
     end
     object MenuTemplate: TMenuItem
       Caption = '&Template'
+      GroupIndex = 2
       object MenuItemHTML: TMenuItem
         Caption = 'HTML'
         Hint = 'Add html template'
@@ -12727,7 +12730,14 @@ object Main: TMain
       end
       object MenuItemJS: TMenuItem
         Caption = 'JavaScrpit'
-        OnClick = MenuItemJSClick
+        object SubMenuItemPackageJson: TMenuItem
+          Caption = 'Package.json'
+          OnClick = SubMenuItemPackageJsonClick
+        end
+        object SubMenuItemJS: TMenuItem
+          Caption = 'JavaScript'
+          OnClick = SubMenuItemJSClick
+        end
       end
       object MenuItemJava: TMenuItem
         Caption = 'Java'
@@ -12739,7 +12749,22 @@ object Main: TMain
       end
       object MenuItemXML: TMenuItem
         Caption = 'XML'
-        OnClick = MenuItemXMLClick
+        object SubMenuItemPomXml: TMenuItem
+          Caption = 'Pom.xml'
+          OnClick = SubMenuItemPomXmlClick
+        end
+        object SubMenuItemWroXml: TMenuItem
+          Caption = 'Wro.xml'
+          OnClick = SubMenuItemWroXmlClick
+        end
+        object SubMenuItemTestNGXml: TMenuItem
+          Caption = 'TestNG.xml'
+          OnClick = SubMenuItemTestNGXmlClick
+        end
+        object SubMenuItemXml: TMenuItem
+          Caption = 'XML'
+          OnClick = SubMenuItemXmlClick
+        end
       end
       object MenuItemCSS: TMenuItem
         Caption = 'CSS/Less'
@@ -12748,6 +12773,7 @@ object Main: TMain
     end
     object MenuAbout: TMenuItem
       Caption = '&About'
+      GroupIndex = 2
     end
   end
   object OpenFile: TOpenDialog
