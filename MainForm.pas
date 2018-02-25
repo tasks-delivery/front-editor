@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Menus, StdCtrls, ComCtrls, ExtCtrls, SynEditExport, SynExportHTML, SynEdit,
-  SynMemo, SynEditHighlighter, SynHighlighterHtml, ImgList,
+  SynMemo, SynEditHighlighter, SynHighlighterHtml, ImgList, AboutModalWindow,
   ToolWin, SynHighlighterCSS, Buttons, ShellCtrls, ShellApi, SynHighlighterJava,
   SynHighlighterXML, SynHighlighterSQL, SynHighlighterJScript;
 
@@ -22,7 +22,7 @@ type
     SynHTMLSyn: TSynHTMLSyn;
     ImageList: TImageList;
     NavigationPanel: TToolBar;
-    MenuAbout: TMenuItem;
+    MenuHelp: TMenuItem;
     MenuItemHTML: TMenuItem;
     SynCssSyn: TSynCssSyn;
     MenuItemSaveas: TMenuItem;
@@ -37,7 +37,6 @@ type
     BtnHtmlTemplate: TBitBtn;
     BtnJsTemplate: TBitBtn;
     ToolButton2: TToolButton;
-    BtnSupport: TBitBtn;
     BtnClearEditor: TBitBtn;
     BtnTextStyle: TBitBtn;
     PageEditor: TPageControl;
@@ -63,6 +62,11 @@ type
     SubMenuItemTestNGXml: TMenuItem;
     SubMenuItemXml: TMenuItem;
     SubMenuItemJS: TMenuItem;
+    ManuItemAbout: TMenuItem;
+    MenuItemSupport: TMenuItem;
+    procedure ManuItemAboutClick(Sender: TObject);
+    procedure MenuItemSupportClick(Sender: TObject);
+    procedure MenuItemOpenTerminalClick(Sender: TObject);
     procedure SubMenuItemPomXmlClick(Sender: TObject);
     procedure SubMenuItemWroXmlClick(Sender: TObject);
     procedure SubMenuItemTestNGXmlClick(Sender: TObject);
@@ -76,11 +80,9 @@ type
     procedure BtnCssTemplateClick(Sender: TObject);
     procedure MenuItemJavaClick(Sender: TObject);
     procedure BtnJavaTemplateClick(Sender: TObject);
-    procedure MenuItemOpenTerminalClick(Sender: TObject);
     procedure EditorChange(Sender: TObject);
     procedure PageEditorChange(Sender: TObject);
     procedure BtnTerminalClick(Sender: TObject);
-    procedure BtnSupportClick(Sender: TObject);
     procedure MenuItemCloseAppClick(Sender: TObject);
     procedure TreeClick(Sender: TObject);
     procedure MenuItemNewClick(Sender: TObject);
@@ -150,6 +152,11 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
 end;
 
+procedure TMain.ManuItemAboutClick(Sender: TObject);
+begin
+  About.ShowModal ;
+end;
+
 procedure TMain.MenuItemCloseAppClick(Sender: TObject);
 begin
 Close;
@@ -163,11 +170,6 @@ end;
 procedure TMain.EditorChange(Sender: TObject);
 begin
 //
-end;
-
-procedure TMain.MenuItemOpenTerminalClick(Sender: TObject);
-begin
-  BtnTerminal.Click
 end;
 
 procedure TMain.MenuItemHTMLClick(Sender: TObject);
@@ -346,6 +348,11 @@ end;
 end;
 end;
 
+procedure TMain.MenuItemOpenTerminalClick(Sender: TObject);
+begin
+  BtnTerminal.Click;
+end;
+
 procedure TMain.MenuItemJavaClick(Sender: TObject);
 begin
     BtnJavaTemplate.Click
@@ -509,6 +516,11 @@ begin
   BtnSqlTemplate.Click;
 end;
 
+procedure TMain.MenuItemSupportClick(Sender: TObject);
+begin
+  ShellExecute(Handle, 'open', 'https://github.com/tasks-delivery/front-editor/issues', nil, nil, SW_SHOW);
+end;
+
 procedure TMain.BtnSaveFClick(Sender: TObject);
 begin
   MenuItemSaveas.Click;
@@ -549,11 +561,6 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).lines.count);
   (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
   NewSynEdit.Highlighter:=SynSqlSyn;
-end;
-
-procedure TMain.BtnSupportClick(Sender: TObject);
-begin
-ShellExecute(Handle, 'open', 'https://github.com/tasks-delivery/front-editor', nil, nil, SW_SHOW);
 end;
 
 procedure TMain.BtnTextStyleClick(Sender: TObject);
