@@ -66,6 +66,14 @@ type
     MenuItemSupport: TMenuItem;
     BtnDelTab: TButton;
     ImageList1: TImageList;
+    procedure PageEditorDragDrop(Sender, Source: TObject; X, Y: Integer);
+    procedure PageEditorDragOver(Sender, Source: TObject; X, Y: Integer;
+      State: TDragState; var Accept: Boolean);
+    procedure PageEditorMouseLeave(Sender: TObject);
+    procedure PageEditorMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure PageEditorMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
     procedure BtnDelTabClick(Sender: TObject);
     procedure PageEditorMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
@@ -108,7 +116,6 @@ type
     procedure CreateCloseBtn;
   private
   public
-
   end;
 
 var
@@ -116,10 +123,12 @@ var
   FName, tabName, FileLoader: string;
   NewTab: TTabSheet;
   NewSynEdit: TSynEdit;
-  const size = 2;
 
 implementation
-  uses CommCtrl, Themes, Types;
+uses
+  UxTheme,
+  Themes,
+Math;
 {$R *.dfm}
 
 procedure TMain.MenuItemNewClick(Sender: TObject);
@@ -150,17 +159,10 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).perform(EM_LINESCROLL,0,
   (PageEditor.ActivePage.Components[0] as TSynEdit).lines.count);
   (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
-with tbutton.create(self) do
-begin
-caption := 'Кнопка 1';
-//onclick := testmethod; // Назначаем обработчик события
-parent := NewTab;
 end;
-end;
-
 
 procedure TMain.CreateCloseBtn;
-begin
+begin  {
      with tbutton.Create(application) do
   begin
     Parent := NewTab;
@@ -170,51 +172,35 @@ begin
     Width := 20;
     Top := 0;
     Visible := True;
-  end;
+  end; }
 end;
+
 
 procedure TMain.PageEditorDrawTab(Control: TCustomTabControl; TabIndex: Integer;
   const Rect: TRect; Active: Boolean);
 var
-AText: string;
-APoint: TPoint;
-i: integer;
+ TabText: string;
+ OutRect: TRect;
 begin
-
-with (Control as TPageControl).Canvas do
-begin
-AText:= TPageControl(Control).Pages[TabIndex].Caption;
-APoint.x := 9+(Rect.Left - Rect.Right) div 2 + TextWidth(AText) div 2;
-APoint.y := (Rect.Bottom - Rect.Top) div 2 - TextHeight(AText) div 2;
-i:= TPageControl(Control).Pages[TabIndex].ImageIndex;
-if TabIndex = (Control as TPageControl).TabIndex
-then
-begin
-Font.Color:= clBlue; Font.Style:= [fsBold];
-end
-else
-begin
-Font.Color:= clWindowText; Font.Style:= [];
-end;
-
-TextRect(Rect, Rect.Left + APoint.x, Rect.Top + APoint.y, AText);
-ImageList1.Draw(TPageControl(NewTab).Canvas, Rect.Right + APoint.x - 17, Rect.Top + APoint.y, i);
-end;
-
+//
 end;
 
 procedure TMain.PageEditorMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
-var
-  MousePos:TPoint;
-  HI:TTCHitTestInfo;
-  ret:integer;
-  r: TRect;
-  begin
- //
+begin
+  PageEditor.BeginDrag(False);
 end;
 
+procedure TMain.PageEditorMouseLeave(Sender: TObject);
+begin
+//
+end;
 
+procedure TMain.PageEditorMouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
+begin
+//
+end;
 
 procedure TMain.BtnTerminalClick(Sender: TObject);
 begin
@@ -248,10 +234,10 @@ begin
 end;
 
 procedure TMain.FormCreate(Sender: TObject);
-var I: Integer;
-    NT:TMain;
+var ts: TTabSheet;
+ pc: TPageControl;
 begin
- //
+//
 end;
 
 procedure TMain.MenuItemHTMLClick(Sender: TObject);
@@ -557,6 +543,31 @@ begin
 //
 end;
 
+procedure TMain.PageEditorDragDrop(Sender, Source: TObject; X, Y: Integer);
+const
+  TCM_GETITEMRECT = $130A;
+var
+  TabRect: TRect;
+  j: Integer;
+begin
+  if (Sender is TPageControl) then
+  for j := 0 to PageEditor.PageCount - 1 do
+    begin
+      PageEditor.Perform(TCM_GETITEMRECT, j, LParam(@TabRect));
+      if PtInRect(TabRect, Point(X, Y)) then
+        begin
+          if PageEditor.ActivePage.PageIndex <> j then PageEditor.ActivePage.PageIndex := j;
+          Exit;
+        end;
+    end;
+end;
+
+procedure TMain.PageEditorDragOver(Sender, Source: TObject; X, Y: Integer;
+  State: TDragState; var Accept: Boolean);
+begin
+  if (Sender is TPageControl) then Accept := True;
+end;
+
 procedure TMain.MenuItemSaveasClick(Sender: TObject);
 begin
   SaveFile.FileName := FName;
@@ -770,6 +781,12 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).lines.count);
   (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
   NewSynEdit.Highlighter:=SynXmlSyn;
+end;
+
+procedure TMain.PageEditorMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+//
 end;
 
 end.

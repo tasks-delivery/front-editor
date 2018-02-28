@@ -12585,8 +12585,13 @@ object Main: TMain
     HotTrack = True
     TabOrder = 2
     OnChange = PageEditorChange
+    OnDragDrop = PageEditorDragDrop
+    OnDragOver = PageEditorDragOver
     OnDrawTab = PageEditorDrawTab
     OnMouseDown = PageEditorMouseDown
+    OnMouseLeave = PageEditorMouseLeave
+    OnMouseMove = PageEditorMouseMove
+    OnMouseUp = PageEditorMouseUp
   end
   object Tree: TShellTreeView
     Left = 24
