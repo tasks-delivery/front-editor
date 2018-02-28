@@ -11582,6 +11582,7 @@ object Main: TMain
   Menu = MainMenu
   OldCreateOrder = False
   WindowState = wsMaximized
+  OnCreate = FormCreate
   DesignSize = (
     684
     581)
@@ -12584,6 +12585,16 @@ object Main: TMain
     HotTrack = True
     TabOrder = 2
     OnChange = PageEditorChange
+<<<<<<< HEAD
+=======
+    OnDragDrop = PageEditorDragDrop
+    OnDragOver = PageEditorDragOver
+    OnDrawTab = PageEditorDrawTab
+    OnMouseDown = PageEditorMouseDown
+    OnMouseLeave = PageEditorMouseLeave
+    OnMouseMove = PageEditorMouseMove
+    OnMouseUp = PageEditorMouseUp
+>>>>>>> dragdrop-tabs2
   end
   object Tree: TShellTreeView
     Left = 24
@@ -12601,6 +12612,15 @@ object Main: TMain
     ShowRoot = False
     TabOrder = 3
     OnClick = TreeClick
+  end
+  object BtnDelTab: TButton
+    Left = 512
+    Top = 408
+    Width = 75
+    Height = 25
+    Caption = 'X'
+    TabOrder = 4
+    OnClick = BtnDelTabClick
   end
   object MainMenu: TMainMenu
     object MenuFile: TMenuItem
@@ -12657,11 +12677,19 @@ object Main: TMain
           Caption = 'JavaScript'
           OnClick = SubMenuItemJSClick
         end
+<<<<<<< HEAD
       end
       object MenuItemJava: TMenuItem
         Caption = 'Java'
         OnClick = MenuItemJavaClick
       end
+=======
+      end
+      object MenuItemJava: TMenuItem
+        Caption = 'Java'
+        OnClick = MenuItemJavaClick
+      end
+>>>>>>> dragdrop-tabs2
       object MenuItemSQL: TMenuItem
         Caption = 'SQL'
         OnClick = MenuItemSQLClick
@@ -13199,4 +13227,11 @@ object Main: TMain
     Left = 480
     Top = 264
   end
+<<<<<<< HEAD
+=======
+  object ImageList1: TImageList
+    Left = 376
+    Top = 352
+  end
+>>>>>>> dragdrop-tabs2
 end

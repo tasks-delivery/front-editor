@@ -64,6 +64,25 @@ type
     SubMenuItemJS: TMenuItem;
     ManuItemAbout: TMenuItem;
     MenuItemSupport: TMenuItem;
+<<<<<<< HEAD
+=======
+    BtnDelTab: TButton;
+    ImageList1: TImageList;
+    procedure PageEditorDragDrop(Sender, Source: TObject; X, Y: Integer);
+    procedure PageEditorDragOver(Sender, Source: TObject; X, Y: Integer;
+      State: TDragState; var Accept: Boolean);
+    procedure PageEditorMouseLeave(Sender: TObject);
+    procedure PageEditorMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure PageEditorMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure BtnDelTabClick(Sender: TObject);
+    procedure PageEditorMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure PageEditorDrawTab(Control: TCustomTabControl; TabIndex: Integer;
+      const Rect: TRect; Active: Boolean);
+    procedure FormCreate(Sender: TObject);
+>>>>>>> dragdrop-tabs2
     procedure ManuItemAboutClick(Sender: TObject);
     procedure MenuItemSupportClick(Sender: TObject);
     procedure MenuItemOpenTerminalClick(Sender: TObject);
@@ -97,6 +116,10 @@ type
     procedure BtnHtmlTemplateClick(Sender: TObject);
     procedure MenuItemHTMLClick(Sender: TObject);
     procedure MenuItemOpenFileClick(Sender: TObject);
+<<<<<<< HEAD
+=======
+    procedure CreateCloseBtn;
+>>>>>>> dragdrop-tabs2
   private
   public
   end;
@@ -108,7 +131,14 @@ var
   NewSynEdit: TSynEdit;
 
 implementation
+<<<<<<< HEAD
 
+=======
+uses
+  UxTheme,
+  Themes,
+Math;
+>>>>>>> dragdrop-tabs2
 {$R *.dfm}
 
 procedure TMain.MenuItemNewClick(Sender: TObject);
@@ -140,7 +170,52 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).lines.count);
   (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
 end;
+<<<<<<< HEAD
 
+=======
+
+procedure TMain.CreateCloseBtn;
+begin  {
+     with tbutton.Create(application) do
+  begin
+    Parent := NewTab;
+    Caption := 'X';
+    Left := 0;
+    Height := 20;
+    Width := 20;
+    Top := 0;
+    Visible := True;
+  end; }
+end;
+
+
+procedure TMain.PageEditorDrawTab(Control: TCustomTabControl; TabIndex: Integer;
+  const Rect: TRect; Active: Boolean);
+var
+ TabText: string;
+ OutRect: TRect;
+begin
+//
+end;
+
+procedure TMain.PageEditorMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  PageEditor.BeginDrag(False);
+end;
+
+procedure TMain.PageEditorMouseLeave(Sender: TObject);
+begin
+//
+end;
+
+procedure TMain.PageEditorMouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
+begin
+//
+end;
+
+>>>>>>> dragdrop-tabs2
 procedure TMain.BtnTerminalClick(Sender: TObject);
 begin
 WinExec('cmd /c start cmd.exe', SW_SHOW)
@@ -172,6 +247,16 @@ begin
 //
 end;
 
+<<<<<<< HEAD
+=======
+procedure TMain.FormCreate(Sender: TObject);
+var ts: TTabSheet;
+ pc: TPageControl;
+begin
+//
+end;
+
+>>>>>>> dragdrop-tabs2
 procedure TMain.MenuItemHTMLClick(Sender: TObject);
 begin
 if PageEditor.PageCount = 0 then
@@ -244,6 +329,15 @@ begin
   NewSynEdit.Highlighter:=SynCssSyn;
 end;
 
+<<<<<<< HEAD
+=======
+procedure TMain.BtnDelTabClick(Sender: TObject);
+begin
+  if (PageEditor.PageCount>1) and (PageEditor.ActivePageIndex>0) then
+PageEditor.ActivePage.Destroy;
+end;
+
+>>>>>>> dragdrop-tabs2
 procedure TMain.BtnHtmlTemplateClick(Sender: TObject);
 begin
    MenuItemHTML.Click;
@@ -252,6 +346,7 @@ end;
 procedure TMain.BtnJavaTemplateClick(Sender: TObject);
 begin
 if PageEditor.PageCount = 0 then
+<<<<<<< HEAD
 begin
   BtnNewFile.Click;
   Editor.Enabled := True;
@@ -276,6 +371,32 @@ end;
 
 procedure TMain.BtnJsTemplateClick(Sender: TObject);
 begin
+=======
+begin
+  BtnNewFile.Click;
+  Editor.Enabled := True;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Clear;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('public class '+tabName + ' {');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
+  NewSynEdit.Highlighter:=SynJavaSyn;
+  end
+  else
+  Editor.Enabled := True;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Gutter.ShowLineNumbers := True;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Clear;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('public class '+tabName+ ' {');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
+  (PageEditor.ActivePage.Components[0] as  TSynEdit).SelStart:=
+  Length((PageEditor.ActivePage.Components[0] as TSynEdit).lines.text);
+  (PageEditor.ActivePage.Components[0] as TSynEdit).perform(EM_LINESCROLL,0,
+  (PageEditor.ActivePage.Components[0] as TSynEdit).lines.count);
+  (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
+  NewSynEdit.Highlighter:=SynJavaSyn;
+end;
+
+procedure TMain.BtnJsTemplateClick(Sender: TObject);
+begin
+>>>>>>> dragdrop-tabs2
  SubMenuItemJS.Click;
 end;
 
@@ -327,11 +448,19 @@ if OpenFile.Execute then begin
   if (FileLoader = tabName + '.java') or (FileLoader = tabName + '.jsp')then
   begin
   NewSynEdit.Highlighter:=SynJavaSyn;
+<<<<<<< HEAD
   end;
   if (FileLoader = tabName + '.js') or (FileLoader = tabName + '.json') then
   begin
   NewSynEdit.Highlighter:=SynJScriptSyn;
   end;
+=======
+  end;
+  if (FileLoader = tabName + '.js') or (FileLoader = tabName + '.json') then
+  begin
+  NewSynEdit.Highlighter:=SynJScriptSyn;
+  end;
+>>>>>>> dragdrop-tabs2
   if FileLoader = tabName + '.sql' then
   begin
   NewSynEdit.Highlighter:=SynSQLSyn;
@@ -469,6 +598,34 @@ begin
 //
 end;
 
+<<<<<<< HEAD
+=======
+procedure TMain.PageEditorDragDrop(Sender, Source: TObject; X, Y: Integer);
+const
+  TCM_GETITEMRECT = $130A;
+var
+  TabRect: TRect;
+  j: Integer;
+begin
+  if (Sender is TPageControl) then
+  for j := 0 to PageEditor.PageCount - 1 do
+    begin
+      PageEditor.Perform(TCM_GETITEMRECT, j, LParam(@TabRect));
+      if PtInRect(TabRect, Point(X, Y)) then
+        begin
+          if PageEditor.ActivePage.PageIndex <> j then PageEditor.ActivePage.PageIndex := j;
+          Exit;
+        end;
+    end;
+end;
+
+procedure TMain.PageEditorDragOver(Sender, Source: TObject; X, Y: Integer;
+  State: TDragState; var Accept: Boolean);
+begin
+  if (Sender is TPageControl) then Accept := True;
+end;
+
+>>>>>>> dragdrop-tabs2
 procedure TMain.MenuItemSaveasClick(Sender: TObject);
 begin
   SaveFile.FileName := FName;
@@ -480,7 +637,11 @@ begin
     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.SaveToFile(FName);
     FileLoader:=copy(ExtractFileName(FName),0,pos('.',FName)-1);
     tabName:=ChangeFileExt(ExtractFileName(FName),'');
+<<<<<<< HEAD
     NewTab.Caption := FileLoader;
+=======
+    NewTab.Caption := FileLoader + '                     ';
+>>>>>>> dragdrop-tabs2
   if (FileLoader = tabName + '.css') or (FileLoader = tabName + '.less') then
   begin
   NewSynEdit.Highlighter:=SynCssSyn;
@@ -684,4 +845,13 @@ begin
   NewSynEdit.Highlighter:=SynXmlSyn;
 end;
 
+<<<<<<< HEAD
+=======
+procedure TMain.PageEditorMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+//
+end;
+
+>>>>>>> dragdrop-tabs2
 end.
