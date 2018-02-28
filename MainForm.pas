@@ -64,6 +64,14 @@ type
     SubMenuItemJS: TMenuItem;
     ManuItemAbout: TMenuItem;
     MenuItemSupport: TMenuItem;
+    BtnDelTab: TButton;
+    ImageList1: TImageList;
+    procedure BtnDelTabClick(Sender: TObject);
+    procedure PageEditorMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure PageEditorDrawTab(Control: TCustomTabControl; TabIndex: Integer;
+      const Rect: TRect; Active: Boolean);
+    procedure FormCreate(Sender: TObject);
     procedure ManuItemAboutClick(Sender: TObject);
     procedure MenuItemSupportClick(Sender: TObject);
     procedure MenuItemOpenTerminalClick(Sender: TObject);
@@ -97,8 +105,10 @@ type
     procedure BtnHtmlTemplateClick(Sender: TObject);
     procedure MenuItemHTMLClick(Sender: TObject);
     procedure MenuItemOpenFileClick(Sender: TObject);
+    procedure CreateCloseBtn;
   private
   public
+
   end;
 
 var
@@ -106,9 +116,10 @@ var
   FName, tabName, FileLoader: string;
   NewTab: TTabSheet;
   NewSynEdit: TSynEdit;
+  const size = 2;
 
 implementation
-
+  uses CommCtrl, Themes, Types;
 {$R *.dfm}
 
 procedure TMain.MenuItemNewClick(Sender: TObject);
@@ -139,7 +150,71 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).perform(EM_LINESCROLL,0,
   (PageEditor.ActivePage.Components[0] as TSynEdit).lines.count);
   (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
+with tbutton.create(self) do
+begin
+caption := 'Кнопка 1';
+//onclick := testmethod; // Назначаем обработчик события
+parent := NewTab;
 end;
+end;
+
+
+procedure TMain.CreateCloseBtn;
+begin
+     with tbutton.Create(application) do
+  begin
+    Parent := NewTab;
+    Caption := 'X';
+    Left := 0;
+    Height := 20;
+    Width := 20;
+    Top := 0;
+    Visible := True;
+  end;
+end;
+
+procedure TMain.PageEditorDrawTab(Control: TCustomTabControl; TabIndex: Integer;
+  const Rect: TRect; Active: Boolean);
+var
+AText: string;
+APoint: TPoint;
+i: integer;
+begin
+
+with (Control as TPageControl).Canvas do
+begin
+AText:= TPageControl(Control).Pages[TabIndex].Caption;
+APoint.x := 9+(Rect.Left - Rect.Right) div 2 + TextWidth(AText) div 2;
+APoint.y := (Rect.Bottom - Rect.Top) div 2 - TextHeight(AText) div 2;
+i:= TPageControl(Control).Pages[TabIndex].ImageIndex;
+if TabIndex = (Control as TPageControl).TabIndex
+then
+begin
+Font.Color:= clBlue; Font.Style:= [fsBold];
+end
+else
+begin
+Font.Color:= clWindowText; Font.Style:= [];
+end;
+
+TextRect(Rect, Rect.Left + APoint.x, Rect.Top + APoint.y, AText);
+ImageList1.Draw(TPageControl(NewTab).Canvas, Rect.Right + APoint.x - 17, Rect.Top + APoint.y, i);
+end;
+
+end;
+
+procedure TMain.PageEditorMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+var
+  MousePos:TPoint;
+  HI:TTCHitTestInfo;
+  ret:integer;
+  r: TRect;
+  begin
+ //
+end;
+
+
 
 procedure TMain.BtnTerminalClick(Sender: TObject);
 begin
@@ -170,6 +245,13 @@ end;
 procedure TMain.EditorChange(Sender: TObject);
 begin
 //
+end;
+
+procedure TMain.FormCreate(Sender: TObject);
+var I: Integer;
+    NT:TMain;
+begin
+ //
 end;
 
 procedure TMain.MenuItemHTMLClick(Sender: TObject);
@@ -242,6 +324,12 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).lines.count);
   (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
   NewSynEdit.Highlighter:=SynCssSyn;
+end;
+
+procedure TMain.BtnDelTabClick(Sender: TObject);
+begin
+  if (PageEditor.PageCount>1) and (PageEditor.ActivePageIndex>0) then
+PageEditor.ActivePage.Destroy;
 end;
 
 procedure TMain.BtnHtmlTemplateClick(Sender: TObject);
@@ -480,7 +568,7 @@ begin
     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.SaveToFile(FName);
     FileLoader:=copy(ExtractFileName(FName),0,pos('.',FName)-1);
     tabName:=ChangeFileExt(ExtractFileName(FName),'');
-    NewTab.Caption := FileLoader;
+    NewTab.Caption := FileLoader + '                     ';
   if (FileLoader = tabName + '.css') or (FileLoader = tabName + '.less') then
   begin
   NewSynEdit.Highlighter:=SynCssSyn;

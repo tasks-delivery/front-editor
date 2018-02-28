@@ -11582,6 +11582,7 @@ object Main: TMain
   Menu = MainMenu
   OldCreateOrder = False
   WindowState = wsMaximized
+  OnCreate = FormCreate
   DesignSize = (
     684
     581)
@@ -12584,6 +12585,8 @@ object Main: TMain
     HotTrack = True
     TabOrder = 2
     OnChange = PageEditorChange
+    OnDrawTab = PageEditorDrawTab
+    OnMouseDown = PageEditorMouseDown
   end
   object Tree: TShellTreeView
     Left = 24
@@ -12601,6 +12604,15 @@ object Main: TMain
     ShowRoot = False
     TabOrder = 3
     OnClick = TreeClick
+  end
+  object BtnDelTab: TButton
+    Left = 512
+    Top = 408
+    Width = 75
+    Height = 25
+    Caption = 'X'
+    TabOrder = 4
+    OnClick = BtnDelTabClick
   end
   object MainMenu: TMainMenu
     object MenuFile: TMenuItem
@@ -13198,5 +13210,9 @@ object Main: TMain
     WantBracesParsed = False
     Left = 480
     Top = 264
+  end
+  object ImageList1: TImageList
+    Left = 376
+    Top = 352
   end
 end
