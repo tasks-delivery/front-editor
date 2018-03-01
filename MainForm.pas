@@ -178,9 +178,6 @@ end;
 
 procedure TMain.PageEditorDrawTab(Control: TCustomTabControl; TabIndex: Integer;
   const Rect: TRect; Active: Boolean);
-var
- TabText: string;
- OutRect: TRect;
 begin
 //
 end;
@@ -209,9 +206,12 @@ end;
 
 procedure TMain.BtnClearEditorClick(Sender: TObject);
 begin
+  if PageEditor.PageCount > 0 then
+begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Clear;
   (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
 end;
+end;
 
 procedure TMain.ManuItemAboutClick(Sender: TObject);
 begin
@@ -234,8 +234,6 @@ begin
 end;
 
 procedure TMain.FormCreate(Sender: TObject);
-var ts: TTabSheet;
- pc: TPageControl;
 begin
 //
 end;
@@ -705,8 +703,11 @@ procedure TMain.MenuItemViewClick(Sender: TObject);
 begin
 if FontDialog.Execute then
 Editor.Font := FontDialog.Font;
+begin
+  if PageEditor.PageCount > 0 then
 (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
 end;
+end;
 
 procedure TMain.SubMenuItemXmlClick(Sender: TObject);
 begin
