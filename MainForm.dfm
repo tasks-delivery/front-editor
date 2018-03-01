@@ -2,7 +2,7 @@ object Main: TMain
   Left = 210
   Top = 144
   Caption = 'Front-Editor'
-  ClientHeight = 581
+  ClientHeight = 601
   ClientWidth = 684
   Color = clActiveCaption
   Constraints.MinHeight = 500
@@ -11585,12 +11585,12 @@ object Main: TMain
   OnCreate = FormCreate
   DesignSize = (
     684
-    581)
+    601)
   PixelsPerInch = 96
   TextHeight = 13
   object Editor: TSynMemo
     Left = 422
-    Top = 144
+    Top = 150
     Width = 120
     Height = 84
     Anchors = []
@@ -11613,6 +11613,7 @@ object Main: TMain
     RightEdgeColor = clActiveBorder
     OnChange = EditorChange
     FontSmoothing = fsmNone
+    ExplicitTop = 144
   end
   object NavigationPanel: TToolBar
     Left = 0
@@ -12579,7 +12580,7 @@ object Main: TMain
     Left = 296
     Top = 71
     Width = 361
-    Height = 474
+    Height = 494
     Anchors = [akLeft, akTop, akRight, akBottom]
     DockSite = True
     HotTrack = True
@@ -12592,12 +12593,13 @@ object Main: TMain
     OnMouseLeave = PageEditorMouseLeave
     OnMouseMove = PageEditorMouseMove
     OnMouseUp = PageEditorMouseUp
+    ExplicitHeight = 474
   end
   object Tree: TShellTreeView
     Left = 24
     Top = 71
     Width = 250
-    Height = 474
+    Height = 494
     ObjectTypes = [otFolders, otNonFolders]
     Root = 'rfMyComputer'
     UseShellImages = True
@@ -12609,6 +12611,7 @@ object Main: TMain
     ShowRoot = False
     TabOrder = 3
     OnClick = TreeClick
+    ExplicitHeight = 474
   end
   object BtnDelTab: TButton
     Left = 512
@@ -12646,24 +12649,84 @@ object Main: TMain
     object MenuEdit: TMenuItem
       Caption = '&Edit'
       GroupIndex = 2
-      object MenuItemView: TMenuItem
-        Caption = 'View'
-        OnClick = MenuItemViewClick
-      end
-      object MenuItemOpenTerminal: TMenuItem
-        Caption = 'Terminal'
+      object Browsers1: TMenuItem
+        Caption = 'Browsers'
         GroupIndex = 2
-        OnClick = MenuItemOpenTerminalClick
+        object Chrome1: TMenuItem
+          Caption = 'Chrome'
+        end
+        object Firefox1: TMenuItem
+          Caption = 'Firefox'
+        end
+        object Opera1: TMenuItem
+          Caption = 'Opera'
+        end
+        object Safari1: TMenuItem
+          Caption = 'Safari'
+        end
+        object Edge1: TMenuItem
+          Caption = 'Edge'
+        end
+        object IE1: TMenuItem
+          Caption = 'IE'
+        end
+      end
+      object Settings1: TMenuItem
+        Caption = 'Settings'
+        GroupIndex = 2
+        object Keymap3: TMenuItem
+          Caption = 'Keymap'
+        end
+        object CodeColor1: TMenuItem
+          Caption = 'Code Color'
+        end
+      end
+      object ools1: TMenuItem
+        Caption = 'Tools'
+        GroupIndex = 2
+        object MenuItemView: TMenuItem
+          Caption = 'Text Style'
+          OnClick = MenuItemViewClick
+        end
+        object MenuItemOpenTerminal: TMenuItem
+          Caption = 'Terminal'
+          OnClick = MenuItemOpenTerminalClick
+        end
+        object Proxy1: TMenuItem
+          Caption = 'Proxy'
+        end
+        object MenuSubItemTodo: TMenuItem
+          Caption = 'TODO'
+          ShortCut = 16468
+          OnClick = MenuSubItemTodoClick
+        end
+      end
+      object Structure1: TMenuItem
+        Caption = '-'
+        GroupIndex = 2
+      end
+      object ProjectTree1: TMenuItem
+        AutoCheck = True
+        Caption = 'Project Tree'
+        Checked = True
+        GroupIndex = 2
+      end
+      object Folders1: TMenuItem
+        AutoCheck = True
+        Caption = 'Project Files'
+        Checked = True
+        GroupIndex = 2
+      end
+      object ProjectFolders1: TMenuItem
+        AutoCheck = True
+        Caption = 'Project Folders'
+        Checked = True
+        GroupIndex = 2
       end
     end
     object MenuTemplate: TMenuItem
-      Caption = '&Template'
+      Caption = 'Code'
       GroupIndex = 2
-      object MenuItemHTML: TMenuItem
-        Caption = 'HTML'
-        Hint = 'Add html template'
-        OnClick = MenuItemHTMLClick
-      end
       object MenuItemJS: TMenuItem
         Caption = 'JavaScrpit'
         object SubMenuItemPackageJson: TMenuItem
@@ -12675,6 +12738,15 @@ object Main: TMain
           OnClick = SubMenuItemJSClick
         end
       end
+      object MenuItemCSS: TMenuItem
+        Caption = 'CSS/Less'
+        OnClick = MenuItemCSSClick
+      end
+      object MenuItemHTML: TMenuItem
+        Caption = 'HTML'
+        Hint = 'Add html template'
+        OnClick = MenuItemHTMLClick
+      end
       object MenuItemJava: TMenuItem
         Caption = 'Java'
         OnClick = MenuItemJavaClick
@@ -12685,6 +12757,10 @@ object Main: TMain
       end
       object MenuItemXML: TMenuItem
         Caption = 'XML'
+        object SubMenuItemTestNGXml: TMenuItem
+          Caption = 'TestNG.xml'
+          OnClick = SubMenuItemTestNGXmlClick
+        end
         object SubMenuItemPomXml: TMenuItem
           Caption = 'Pom.xml'
           OnClick = SubMenuItemPomXmlClick
@@ -12693,30 +12769,34 @@ object Main: TMain
           Caption = 'Wro.xml'
           OnClick = SubMenuItemWroXmlClick
         end
-        object SubMenuItemTestNGXml: TMenuItem
-          Caption = 'TestNG.xml'
-          OnClick = SubMenuItemTestNGXmlClick
-        end
         object SubMenuItemXml: TMenuItem
-          Caption = 'XML'
+          Caption = 'xml'
           OnClick = SubMenuItemXmlClick
         end
       end
-      object MenuItemCSS: TMenuItem
-        Caption = 'CSS/Less'
-        OnClick = MenuItemCSSClick
+      object CustromTemplate1: TMenuItem
+        Caption = 'Custrom Template'
       end
     end
     object MenuHelp: TMenuItem
       Caption = '&Help'
       GroupIndex = 2
-      object ManuItemAbout: TMenuItem
-        Caption = 'About'
-        OnClick = ManuItemAboutClick
+      object CodeStyle1: TMenuItem
+        Caption = 'Code Style'
+      end
+      object Keymap1: TMenuItem
+        Caption = 'Keymap'
       end
       object MenuItemSupport: TMenuItem
         Caption = 'Support'
         OnClick = MenuItemSupportClick
+      end
+      object Update1: TMenuItem
+        Caption = 'Update'
+      end
+      object ManuItemAbout: TMenuItem
+        Caption = 'About'
+        OnClick = ManuItemAboutClick
       end
     end
   end
