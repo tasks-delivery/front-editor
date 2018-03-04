@@ -2,7 +2,7 @@ object Main: TMain
   Left = 210
   Top = 144
   Caption = 'Front-Editor'
-  ClientHeight = 601
+  ClientHeight = 621
   ClientWidth = 684
   Color = clActiveCaption
   Constraints.MinHeight = 500
@@ -11582,15 +11582,16 @@ object Main: TMain
   Menu = MainMenu
   OldCreateOrder = False
   WindowState = wsMaximized
+  OnClose = FormClose
   OnCreate = FormCreate
   DesignSize = (
     684
-    601)
+    621)
   PixelsPerInch = 96
   TextHeight = 13
   object Editor: TSynMemo
     Left = 422
-    Top = 150
+    Top = 156
     Width = 120
     Height = 84
     Anchors = []
@@ -11613,7 +11614,7 @@ object Main: TMain
     RightEdgeColor = clActiveBorder
     OnChange = EditorChange
     FontSmoothing = fsmNone
-    ExplicitTop = 144
+    ExplicitTop = 150
   end
   object NavigationPanel: TToolBar
     Left = 0
@@ -12577,10 +12578,10 @@ object Main: TMain
     end
   end
   object PageEditor: TPageControl
-    Left = 296
+    Left = 288
     Top = 71
-    Width = 361
-    Height = 494
+    Width = 365
+    Height = 514
     Anchors = [akLeft, akTop, akRight, akBottom]
     DockSite = True
     HotTrack = True
@@ -12593,25 +12594,23 @@ object Main: TMain
     OnMouseLeave = PageEditorMouseLeave
     OnMouseMove = PageEditorMouseMove
     OnMouseUp = PageEditorMouseUp
-    ExplicitHeight = 474
   end
   object Tree: TShellTreeView
     Left = 24
     Top = 71
     Width = 250
-    Height = 494
+    Height = 514
     ObjectTypes = [otFolders, otNonFolders]
     Root = 'rfMyComputer'
     UseShellImages = True
     Anchors = [akLeft, akTop, akBottom]
-    AutoRefresh = False
+    AutoRefresh = True
     Indent = 19
     ParentColor = False
     RightClickSelect = True
     ShowRoot = False
     TabOrder = 3
     OnClick = TreeClick
-    ExplicitHeight = 474
   end
   object BtnDelTab: TButton
     Left = 512
@@ -12705,23 +12704,11 @@ object Main: TMain
         Caption = '-'
         GroupIndex = 2
       end
-      object ProjectTree1: TMenuItem
+      object MenuItemProjectRoot: TMenuItem
         AutoCheck = True
-        Caption = 'Project Tree'
-        Checked = True
+        Caption = 'Project Root Dir'
         GroupIndex = 2
-      end
-      object Folders1: TMenuItem
-        AutoCheck = True
-        Caption = 'Project Files'
-        Checked = True
-        GroupIndex = 2
-      end
-      object ProjectFolders1: TMenuItem
-        AutoCheck = True
-        Caption = 'Project Folders'
-        Checked = True
-        GroupIndex = 2
+        OnClick = MenuItemProjectRootClick
       end
     end
     object MenuTemplate: TMenuItem
