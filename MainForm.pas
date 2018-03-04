@@ -74,18 +74,24 @@ type
     Settings1: TMenuItem;
     Keymap3: TMenuItem;
     CodeColor1: TMenuItem;
-    Browsers1: TMenuItem;
-    Chrome1: TMenuItem;
-    Firefox1: TMenuItem;
-    Edge1: TMenuItem;
-    Safari1: TMenuItem;
-    IE1: TMenuItem;
-    Opera1: TMenuItem;
+    MenuItemBrowsers: TMenuItem;
+    MenuSubItemChrome: TMenuItem;
+    MenuSubItemFirefox: TMenuItem;
+    MenuSubItemEdge: TMenuItem;
+    MenuSubItemSafari: TMenuItem;
+    MenuSubItemIE: TMenuItem;
+    MenuSubItemOpera: TMenuItem;
     CodeStyle1: TMenuItem;
     Structure1: TMenuItem;
     MenuItemView: TMenuItem;
     MenuItemOpenTerminal: TMenuItem;
     MenuItemProjectRoot: TMenuItem;
+    procedure MenuSubItemIEClick(Sender: TObject);
+    procedure MenuSubItemEdgeClick(Sender: TObject);
+    procedure MenuSubItemSafariClick(Sender: TObject);
+    procedure MenuSubItemOperaClick(Sender: TObject);
+    procedure MenuSubItemFirefoxClick(Sender: TObject);
+    procedure MenuSubItemChromeClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure MenuItemProjectRootClick(Sender: TObject);
     procedure MenuSubItemTodoClick(Sender: TObject);
@@ -139,17 +145,19 @@ type
     procedure CreateCloseBtn;
     procedure SetFocusToLastString;
     procedure SetLineNumbers;
-    procedure SetCodeHighlighter;
+    procedure SetCodeHighlighter(FName, FTabName, FFileLoard:string);
     procedure SetFocusIfPageExists;
+    procedure OpenBrowser(browser:string);
   private
   public
   end;
 
 var
   Main: TMain;
-  FName, tabName, FileLoader: string;
+  FName, FTabName, FFileLoader: string;
   NewTab: TTabSheet;
   NewSynEdit: TSynEdit;
+  mresult : TModalResult;
 
 implementation
 
@@ -179,6 +187,50 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Gutter.ShowLineNumbers := True;
   MenuItemSaveas.Click;
   SetFocusToLastString;
+  MenuSubItemChrome.Enabled := True;
+  MenuSubItemFirefox.Enabled := True;
+  MenuSubItemSafari.Enabled := True;
+  MenuSubItemOpera.Enabled := True;
+  MenuSubItemIE.Enabled := True;
+  MenuSubItemEdge.Enabled := True;
+end;
+
+procedure TMain.MenuSubItemChromeClick(Sender: TObject);
+begin
+  OpenBrowser('chrome.exe');
+end;
+
+procedure TMain.MenuSubItemOperaClick(Sender: TObject);
+begin
+  OpenBrowser('opera.exe');
+end;
+
+procedure TMain.MenuSubItemSafariClick(Sender: TObject);
+begin
+  OpenBrowser('safari.exe');
+end;
+
+procedure TMain.MenuSubItemEdgeClick(Sender: TObject);
+begin
+  if (PageEditor.PageCount > 0) and (PageEditor.ActivePage.Hint <> '') and
+  ((PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter = SynHTMLSyn) then
+  ShellExecute(Handle,'open', PChar('LaunchWinApp.exe'), PChar('"file:///'+PageEditor.ActivePage.Hint+'#cshid=1110"'), nil, SW_SHOWNORMAL);
+  if PageEditor.ActivePage.Hint = '' then
+  begin
+  mresult := MessageDlg('The file should be saved'+#13+'Would you like to save the file?', mtConfirmation , [mbOk,mbCancel],0 );
+  if mresult = mrOk then
+     MenuItemSaveas.Click;
+end;
+end;
+
+procedure TMain.MenuSubItemIEClick(Sender: TObject);
+begin
+  OpenBrowser('iexplore.exe');
+end;
+
+procedure TMain.MenuSubItemFirefoxClick(Sender: TObject);
+begin
+  OpenBrowser('firefox.exe');
 end;
 
 procedure TMain.CreateCloseBtn;
@@ -306,7 +358,7 @@ begin
   BtnNewFile.Click;
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('/*');
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(tabName+' css stylesheet');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(PageEditor.ActivePage.HelpKeyword+' css stylesheet');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('author: User');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('description: none');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('*/');
@@ -316,7 +368,7 @@ if PageEditor.PageCount > 0 then
 begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('/*');
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(tabName+' css stylesheet');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(PageEditor.ActivePage.HelpKeyword+' css stylesheet');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('author: User');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('description: none');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('*/');
@@ -342,14 +394,14 @@ if PageEditor.PageCount = 0 then
 begin
   BtnNewFile.Click;
   SetLineNumbers;
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('public class '+tabName + ' {');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('public class '+PageEditor.ActivePage.HelpKeyword+' {');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
   NewSynEdit.Highlighter:=SynJavaSyn;
   end;
 if PageEditor.PageCount > 0 then
 begin
   SetLineNumbers;
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('public class '+tabName+ ' {');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('public class '+PageEditor.ActivePage.HelpKeyword+' {');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
   SetFocusToLastString;
   NewSynEdit.Highlighter:=SynJavaSyn;
@@ -368,6 +420,7 @@ begin
 end;
 
 procedure TMain.MenuItemOpenFileClick(Sender: TObject);
+var  OFName, OTabName, OFileLoard: string;
 begin
 if OpenFile.Execute then begin
   NewTab := TTabSheet.Create(PageEditor);
@@ -382,11 +435,19 @@ if OpenFile.Execute then begin
     Parent := NewTab;
     Align := alClient;
    begin
-  FName := OpenFile.FileName;
+  OFName := OpenFile.FileName;
   Editor.Enabled := True;
   PageEditor.ActivePageIndex := PageEditor.PageCount - 1;
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.LoadFromFile(FName);
-  SetCodeHighlighter;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.LoadFromFile(OFName);
+  begin
+  OFileLoard:=copy(ExtractFileName(OFName),0,pos('.',OFName)-1);
+  OTabName:=ChangeFileExt(ExtractFileName(OFName),'');
+  PageEditor.ActivePage.Hint := OFName;
+  PageEditor.ActivePage.HelpKeyword := OTabName;
+  PageEditor.ActivePage.Caption := OFileLoard;
+  SetCodeHighlighter(OFName, OTabName, OFileLoard);
+  SetFocusToLastString;
+end;
 end;
 end;
 end;
@@ -526,18 +587,27 @@ begin
 end;
 
 procedure TMain.MenuItemSaveasClick(Sender: TObject);
+var SFileLoard, STabName, SFName : string;
 begin
-  SaveFile.FileName := FName;
+  SaveFile.FileName := SFName;
   if PageEditor.ActivePageIndex >= 0 then
-  if SaveFile.Execute then begin
+  if SaveFile.Execute then
   begin
-    FName := SaveFile.FileName;
+    SFName := SaveFile.FileName;
     Editor.Enabled := True;
-    (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.SaveToFile(FName);
-    SetCodeHighlighter;
-  end;
-  end;
+    (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.SaveToFile(SFName);
+    begin
+    SFileLoard:=copy(ExtractFileName(SFName),0,pos('.',SFName)-1);
+    STabName:=ChangeFileExt(ExtractFileName(SFName),'');
+    PageEditor.ActivePage.Hint := SFName;
+    PageEditor.ActivePage.HelpKeyword := STabName;
+    PageEditor.ActivePage.Caption := SFileLoard;
+    SetCodeHighlighter(SFName, STabName, SFileLoard);
 end;
+end;
+end;
+
+
 
 procedure TMain.MenuItemSQLClick(Sender: TObject);
 begin
@@ -563,10 +633,10 @@ begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('--');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('-- author: User');
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('-- description: Table structure for `'+tabname+'`');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('-- description: Table structure for `'+PageEditor.ActivePage.HelpKeyword+'`');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('--');
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('CREATE DATABASE  IF NOT EXISTS `'+tabname+'`;');
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('USE `'+tabName+'`;');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('CREATE DATABASE  IF NOT EXISTS `'+PageEditor.ActivePage.HelpKeyword+'`;');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('USE `'+PageEditor.ActivePage.HelpKeyword+'`;');
   NewSynEdit.Highlighter:=SynSqlSyn;
   end;
 if PageEditor.PageCount > 0 then
@@ -574,10 +644,10 @@ begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('--');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('-- author: User');
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('-- description: Table structure for `'+tabname+'`');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('-- description: Table structure for `'+PageEditor.ActivePage.HelpKeyword+'`');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('--');
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('CREATE DATABASE  IF NOT EXISTS `'+tabname+'`;');
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('USE `'+tabName+'`;');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('CREATE DATABASE  IF NOT EXISTS `'+PageEditor.ActivePage.HelpKeyword+'`;');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('USE `'+PageEditor.ActivePage.HelpKeyword+'`;');
   SetFocusToLastString;
   NewSynEdit.Highlighter:=SynSqlSyn;
 end;
@@ -704,7 +774,6 @@ else
 end;
 
 procedure TMain.MenuSubItemTodoClick(Sender: TObject);
-
 begin
 if PageEditor.PageCount > 0  then
 begin
@@ -736,37 +805,40 @@ begin
   (NewTab.PageControl.ActivePage.Components[0] as TSynEdit).SetFocus;
 end;
 
-procedure TMain.SetCodeHighlighter;
+procedure TMain.SetCodeHighlighter(FName, FTabName, FFileLoard:string);
 begin
-  FileLoader:=copy(ExtractFileName(FName),0,pos('.',FName)-1);
-    tabName:=ChangeFileExt(ExtractFileName(FName),'');
-    NewTab.Caption := FileLoader + '                     ';
-  if (FileLoader = tabName + '.css') or (FileLoader = tabName + '.less') then
+  if (FFileLoard = FTabName + '.css') or (FFileLoard = FTabName + '.less') then
   begin
   NewSynEdit.Highlighter:=SynCssSyn;
   end;
-     if (FileLoader = tabName + '.html') or (FileLoader = tabName + '.htm') then
+     if (FFileLoard = FTabName + '.html') or (FFileLoard = FTabName + '.htm') then
   begin
   NewSynEdit.Highlighter:=SynHTMLSyn;
   end;
-     if (FileLoader = tabName + '.java') or (FileLoader = tabName + '.jsp')then
+     if (FFileLoard = FTabName + '.java') or (FFileLoard = FTabName + '.jsp')then
   begin
   NewSynEdit.Highlighter:=SynJavaSyn;
   end;
-     if (FileLoader = tabName + '.js') or (FileLoader = tabName + '.json') then
+     if (FFileLoard = FTabName + '.js') or (FFileLoard = FTabName + '.json') then
   begin
   NewSynEdit.Highlighter:=SynJScriptSyn;
   end;
-     if FileLoader = tabName + '.sql' then
+     if FFileLoard = FTabName + '.sql' then
   begin
   NewSynEdit.Highlighter:=SynSQLSyn;
   end;
-     if (FileLoader = tabName + '.xml') or (FileLoader = tabName + '.xsd') or
-     (FileLoader = tabName + '.xsl') or (FileLoader = tabName + '.xslt') or
-     (FileLoader = tabName + '.dtd')  then
+     if (FFileLoard = FTabName + '.xml') or (FFileLoard = FTabName + '.xsd') or
+     (FFileLoard = FTabName + '.xsl') or (FFileLoard = FTabName + '.xslt') or
+     (FFileLoard = FTabName + '.dtd')  then
   begin
   NewSynEdit.Highlighter:=SynXMLSyn;
   end;
+  MenuSubItemChrome.Enabled := True;
+  MenuSubItemFirefox.Enabled := True;
+  MenuSubItemSafari.Enabled := True;
+  MenuSubItemOpera.Enabled := True;
+  MenuSubItemIE.Enabled := True;
+  MenuSubItemEdge.Enabled := True;
 end;
 
 procedure TMain.SetFocusIfPageExists;
@@ -774,6 +846,18 @@ begin
     if PageEditor.PageCount > 0 then
   begin
    (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
+  end;
+end;
+
+procedure TMain.OpenBrowser(browser:string);
+begin
+  if (PageEditor.PageCount > 0) and (PageEditor.ActivePage.Hint <> '') then
+  ShellExecute(Handle,'open', PChar(browser), PChar('file:///'+PageEditor.ActivePage.Hint), nil, SW_SHOWNORMAL);
+  if PageEditor.ActivePage.Hint = '' then
+  begin
+  mresult := MessageDlg('The file should be saved'+#13+'Would you like to save the file?', mtConfirmation , [mbOk,mbCancel],0 );
+  if mresult = mrOk then
+  MenuItemSaveas.Click;
   end;
 end;
 
