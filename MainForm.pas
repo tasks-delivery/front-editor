@@ -85,9 +85,9 @@ type
     Structure1: TMenuItem;
     MenuItemView: TMenuItem;
     MenuItemOpenTerminal: TMenuItem;
-    ProjectTree1: TMenuItem;
-    Folders1: TMenuItem;
-    ProjectFolders1: TMenuItem;
+    MenuItemProjectRoot: TMenuItem;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure MenuItemProjectRootClick(Sender: TObject);
     procedure MenuSubItemTodoClick(Sender: TObject);
     procedure PageEditorDragDrop(Sender, Source: TObject; X, Y: Integer);
     procedure PageEditorDragOver(Sender, Source: TObject; X, Y: Integer;
@@ -239,7 +239,8 @@ end;
 
 procedure TMain.MenuItemCloseAppClick(Sender: TObject);
 begin
-Close;
+  PageEditor.Free;
+  Application.Terminate;
 end;
 
 procedure TMain.MenuItemCSSClick(Sender: TObject);
@@ -250,6 +251,11 @@ end;
 procedure TMain.EditorChange(Sender: TObject);
 begin
 //
+end;
+
+procedure TMain.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+   PageEditor.Free;
 end;
 
 procedure TMain.FormCreate(Sender: TObject);
@@ -685,6 +691,16 @@ procedure TMain.PageEditorMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
 //
+end;
+
+procedure TMain.MenuItemProjectRootClick(Sender: TObject);
+begin
+if MenuItemProjectRoot.Checked = true then
+begin
+  Tree.ShowRoot := True;
+end
+else
+  Tree.ShowRoot := False;
 end;
 
 procedure TMain.MenuSubItemTodoClick(Sender: TObject);
