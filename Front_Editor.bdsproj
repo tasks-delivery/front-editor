@@ -3,9 +3,9 @@
 	<PersonalityInfo>
 		<Option>
 			<Option Name="Personality">Delphi.Personality</Option>
-			<Option Name="ProjectType"></Option>
+			<Option Name="ProjectType">VCLApplication</Option>
 			<Option Name="Version">1.0</Option>
-			<Option Name="GUID">{FCEE92A8-FDEC-490E-93F3-C25D3BDCB5B1}</Option>
+			<Option Name="GUID">{461A3DE8-718C-4BCB-ABF4-C44B50A67DC9}</Option>
 		</Option>
 	</PersonalityInfo>
 	<Delphi.Personality>
@@ -124,7 +124,7 @@
 			<Directories Name="PackageDLLOutputDir"></Directories>
 			<Directories Name="PackageDCPOutputDir"></Directories>
 			<Directories Name="SearchPath"></Directories>
-			<Directories Name="Packages">vcl;rtl;vclx;dbrtl;vcldb;vclactnband;ABLR_D7</Directories>
+			<Directories Name="Packages"></Directories>
 			<Directories Name="Conditionals"></Directories>
 			<Directories Name="DebugSourceDirs"></Directories>
 			<Directories Name="UsePackages">False</Directories>

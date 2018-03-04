@@ -1,9 +1,11 @@
 object About: TAbout
   Left = 0
   Top = 0
+  BorderIcons = []
+  BorderStyle = bsSingle
   Caption = 'About'
-  ClientHeight = 281
-  ClientWidth = 418
+  ClientHeight = 291
+  ClientWidth = 428
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +21,7 @@ object About: TAbout
     Top = 213
     Width = 64
     Height = 13
-    Caption = 'Version 0.0.4'
+    Caption = 'Version 0.0.5'
   end
   object AboutIconApp: TImage
     Left = 8

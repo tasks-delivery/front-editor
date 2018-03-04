@@ -2,7 +2,7 @@ object Main: TMain
   Left = 210
   Top = 144
   Caption = 'Front-Editor'
-  ClientHeight = 581
+  ClientHeight = 621
   ClientWidth = 684
   Color = clActiveCaption
   Constraints.MinHeight = 500
@@ -11582,14 +11582,16 @@ object Main: TMain
   Menu = MainMenu
   OldCreateOrder = False
   WindowState = wsMaximized
+  OnClose = FormClose
+  OnCreate = FormCreate
   DesignSize = (
     684
-    581)
+    621)
   PixelsPerInch = 96
   TextHeight = 13
   object Editor: TSynMemo
     Left = 422
-    Top = 144
+    Top = 156
     Width = 120
     Height = 84
     Anchors = []
@@ -11612,6 +11614,7 @@ object Main: TMain
     RightEdgeColor = clActiveBorder
     OnChange = EditorChange
     FontSmoothing = fsmNone
+    ExplicitTop = 150
   end
   object NavigationPanel: TToolBar
     Left = 0
@@ -12575,32 +12578,49 @@ object Main: TMain
     end
   end
   object PageEditor: TPageControl
-    Left = 296
+    Left = 288
     Top = 71
-    Width = 361
-    Height = 474
+    Width = 365
+    Height = 514
     Anchors = [akLeft, akTop, akRight, akBottom]
     DockSite = True
     HotTrack = True
     TabOrder = 2
     OnChange = PageEditorChange
+    OnDragDrop = PageEditorDragDrop
+    OnDragOver = PageEditorDragOver
+    OnDrawTab = PageEditorDrawTab
+    OnMouseDown = PageEditorMouseDown
+    OnMouseLeave = PageEditorMouseLeave
+    OnMouseMove = PageEditorMouseMove
+    OnMouseUp = PageEditorMouseUp
   end
   object Tree: TShellTreeView
     Left = 24
     Top = 71
     Width = 250
-    Height = 474
+    Height = 514
     ObjectTypes = [otFolders, otNonFolders]
     Root = 'rfMyComputer'
     UseShellImages = True
     Anchors = [akLeft, akTop, akBottom]
-    AutoRefresh = False
+    AutoRefresh = True
     Indent = 19
     ParentColor = False
     RightClickSelect = True
     ShowRoot = False
     TabOrder = 3
     OnClick = TreeClick
+  end
+  object BtnDelTab: TButton
+    Left = 512
+    Top = 408
+    Width = 75
+    Height = 25
+    Caption = 'X'
+    TabOrder = 4
+    Visible = False
+    OnClick = BtnDelTabClick
   end
   object MainMenu: TMainMenu
     object MenuFile: TMenuItem
@@ -12629,24 +12649,84 @@ object Main: TMain
     object MenuEdit: TMenuItem
       Caption = '&Edit'
       GroupIndex = 2
-      object MenuItemView: TMenuItem
-        Caption = 'View'
-        OnClick = MenuItemViewClick
-      end
-      object MenuItemOpenTerminal: TMenuItem
-        Caption = 'Terminal'
+      object MenuItemBrowsers: TMenuItem
+        Caption = 'Browsers'
         GroupIndex = 2
-        OnClick = MenuItemOpenTerminalClick
+        object MenuSubItemChrome: TMenuItem
+          Caption = 'Chrome'
+          Enabled = False
+          OnClick = MenuSubItemChromeClick
+        end
+        object MenuSubItemFirefox: TMenuItem
+          Caption = 'Firefox'
+          Enabled = False
+          OnClick = MenuSubItemFirefoxClick
+        end
+        object MenuSubItemOpera: TMenuItem
+          Caption = 'Opera'
+          Enabled = False
+          OnClick = MenuSubItemOperaClick
+        end
+        object MenuSubItemSafari: TMenuItem
+          Caption = 'Safari'
+          Enabled = False
+          OnClick = MenuSubItemSafariClick
+        end
+        object MenuSubItemEdge: TMenuItem
+          Caption = 'Edge'
+          Enabled = False
+          OnClick = MenuSubItemEdgeClick
+        end
+        object MenuSubItemIE: TMenuItem
+          Caption = 'IE'
+          Enabled = False
+          OnClick = MenuSubItemIEClick
+        end
+      end
+      object Settings1: TMenuItem
+        Caption = 'Settings'
+        GroupIndex = 2
+        object Keymap3: TMenuItem
+          Caption = 'Keymap'
+        end
+        object CodeColor1: TMenuItem
+          Caption = 'Code Color'
+        end
+      end
+      object ools1: TMenuItem
+        Caption = 'Tools'
+        GroupIndex = 2
+        object MenuItemView: TMenuItem
+          Caption = 'Text Style'
+          OnClick = MenuItemViewClick
+        end
+        object MenuItemOpenTerminal: TMenuItem
+          Caption = 'Terminal'
+          OnClick = MenuItemOpenTerminalClick
+        end
+        object Proxy1: TMenuItem
+          Caption = 'Proxy'
+        end
+        object MenuSubItemTodo: TMenuItem
+          Caption = 'TODO'
+          ShortCut = 16468
+          OnClick = MenuSubItemTodoClick
+        end
+      end
+      object Structure1: TMenuItem
+        Caption = '-'
+        GroupIndex = 2
+      end
+      object MenuItemProjectRoot: TMenuItem
+        AutoCheck = True
+        Caption = 'Project Root Dir'
+        GroupIndex = 2
+        OnClick = MenuItemProjectRootClick
       end
     end
     object MenuTemplate: TMenuItem
-      Caption = '&Template'
+      Caption = 'Code'
       GroupIndex = 2
-      object MenuItemHTML: TMenuItem
-        Caption = 'HTML'
-        Hint = 'Add html template'
-        OnClick = MenuItemHTMLClick
-      end
       object MenuItemJS: TMenuItem
         Caption = 'JavaScrpit'
         object SubMenuItemPackageJson: TMenuItem
@@ -12658,6 +12738,15 @@ object Main: TMain
           OnClick = SubMenuItemJSClick
         end
       end
+      object MenuItemCSS: TMenuItem
+        Caption = 'CSS/Less'
+        OnClick = MenuItemCSSClick
+      end
+      object MenuItemHTML: TMenuItem
+        Caption = 'HTML'
+        Hint = 'Add html template'
+        OnClick = MenuItemHTMLClick
+      end
       object MenuItemJava: TMenuItem
         Caption = 'Java'
         OnClick = MenuItemJavaClick
@@ -12668,6 +12757,10 @@ object Main: TMain
       end
       object MenuItemXML: TMenuItem
         Caption = 'XML'
+        object SubMenuItemTestNGXml: TMenuItem
+          Caption = 'TestNG.xml'
+          OnClick = SubMenuItemTestNGXmlClick
+        end
         object SubMenuItemPomXml: TMenuItem
           Caption = 'Pom.xml'
           OnClick = SubMenuItemPomXmlClick
@@ -12676,30 +12769,34 @@ object Main: TMain
           Caption = 'Wro.xml'
           OnClick = SubMenuItemWroXmlClick
         end
-        object SubMenuItemTestNGXml: TMenuItem
-          Caption = 'TestNG.xml'
-          OnClick = SubMenuItemTestNGXmlClick
-        end
         object SubMenuItemXml: TMenuItem
-          Caption = 'XML'
+          Caption = 'xml'
           OnClick = SubMenuItemXmlClick
         end
       end
-      object MenuItemCSS: TMenuItem
-        Caption = 'CSS/Less'
-        OnClick = MenuItemCSSClick
+      object CustromTemplate1: TMenuItem
+        Caption = 'Custrom Template'
       end
     end
     object MenuHelp: TMenuItem
       Caption = '&Help'
       GroupIndex = 2
-      object ManuItemAbout: TMenuItem
-        Caption = 'About'
-        OnClick = ManuItemAboutClick
+      object CodeStyle1: TMenuItem
+        Caption = 'Code Style'
+      end
+      object Keymap1: TMenuItem
+        Caption = 'Keymap'
       end
       object MenuItemSupport: TMenuItem
         Caption = 'Support'
         OnClick = MenuItemSupportClick
+      end
+      object Update1: TMenuItem
+        Caption = 'Update'
+      end
+      object ManuItemAbout: TMenuItem
+        Caption = 'About'
+        OnClick = ManuItemAboutClick
       end
     end
   end
@@ -13198,5 +13295,9 @@ object Main: TMain
     WantBracesParsed = False
     Left = 480
     Top = 264
+  end
+  object ImageList1: TImageList
+    Left = 376
+    Top = 352
   end
 end
