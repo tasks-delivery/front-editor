@@ -607,8 +607,6 @@ end;
 end;
 end;
 
-
-
 procedure TMain.MenuItemSQLClick(Sender: TObject);
 begin
   BtnSqlTemplate.Click;
