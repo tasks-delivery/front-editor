@@ -12619,6 +12619,7 @@ object Main: TMain
     Height = 25
     Caption = 'X'
     TabOrder = 4
+    Visible = False
     OnClick = BtnDelTabClick
   end
   object MainMenu: TMainMenu
@@ -12648,26 +12649,38 @@ object Main: TMain
     object MenuEdit: TMenuItem
       Caption = '&Edit'
       GroupIndex = 2
-      object Browsers1: TMenuItem
+      object MenuItemBrowsers: TMenuItem
         Caption = 'Browsers'
         GroupIndex = 2
-        object Chrome1: TMenuItem
+        object MenuSubItemChrome: TMenuItem
           Caption = 'Chrome'
+          Enabled = False
+          OnClick = MenuSubItemChromeClick
         end
-        object Firefox1: TMenuItem
+        object MenuSubItemFirefox: TMenuItem
           Caption = 'Firefox'
+          Enabled = False
+          OnClick = MenuSubItemFirefoxClick
         end
-        object Opera1: TMenuItem
+        object MenuSubItemOpera: TMenuItem
           Caption = 'Opera'
+          Enabled = False
+          OnClick = MenuSubItemOperaClick
         end
-        object Safari1: TMenuItem
+        object MenuSubItemSafari: TMenuItem
           Caption = 'Safari'
+          Enabled = False
+          OnClick = MenuSubItemSafariClick
         end
-        object Edge1: TMenuItem
+        object MenuSubItemEdge: TMenuItem
           Caption = 'Edge'
+          Enabled = False
+          OnClick = MenuSubItemEdgeClick
         end
-        object IE1: TMenuItem
+        object MenuSubItemIE: TMenuItem
           Caption = 'IE'
+          Enabled = False
+          OnClick = MenuSubItemIEClick
         end
       end
       object Settings1: TMenuItem
