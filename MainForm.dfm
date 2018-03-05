@@ -12580,7 +12580,7 @@ object Main: TMain
     Left = 288
     Top = 71
     Width = 365
-    Height = 514
+    Height = 515
     Anchors = [akLeft, akTop, akRight, akBottom]
     DockSite = True
     HotTrack = True
@@ -12598,7 +12598,7 @@ object Main: TMain
     Left = 24
     Top = 71
     Width = 250
-    Height = 494
+    Height = 515
     ObjectTypes = [otFolders, otNonFolders]
     Root = 'rfMyComputer'
     UseShellImages = True
