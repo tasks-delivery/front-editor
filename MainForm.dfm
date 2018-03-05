@@ -11614,7 +11614,6 @@ object Main: TMain
     RightEdgeColor = clActiveBorder
     OnChange = EditorChange
     FontSmoothing = fsmNone
-    ExplicitTop = 150
   end
   object NavigationPanel: TToolBar
     Left = 0
@@ -12599,12 +12598,12 @@ object Main: TMain
     Left = 24
     Top = 71
     Width = 250
-    Height = 514
+    Height = 494
     ObjectTypes = [otFolders, otNonFolders]
     Root = 'rfMyComputer'
     UseShellImages = True
     Anchors = [akLeft, akTop, akBottom]
-    AutoRefresh = True
+    AutoRefresh = False
     Indent = 19
     ParentColor = False
     RightClickSelect = True
