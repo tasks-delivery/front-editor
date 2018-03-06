@@ -8,7 +8,7 @@ uses
   SynEdit, SynMemo, SynEditHighlighter, SynHighlighterHtml, ImgList, AboutModalWindow,
   ToolWin, SynHighlighterCSS, Buttons, ShellCtrls, ShellApi, SynHighlighterJava,
   SynHighlighterXML, SynHighlighterSQL, SynHighlighterJScript, UxTheme, Themes,
-  Math;
+  Math, SynCompletionProposal, SynEditOptionsDialog;
 
 type
   TMain = class(TForm)
@@ -67,7 +67,7 @@ type
     ImageList1: TImageList;
     ools1: TMenuItem;
     MenuSubItemTodo: TMenuItem;
-    Keymap1: TMenuItem;
+    MenuItemKeymapInfo: TMenuItem;
     Update1: TMenuItem;
     Proxy1: TMenuItem;
     CustromTemplate1: TMenuItem;
@@ -82,10 +82,9 @@ type
     MenuSubItemIE: TMenuItem;
     MenuSubItemOpera: TMenuItem;
     CodeStyle1: TMenuItem;
-    Structure1: TMenuItem;
     MenuItemView: TMenuItem;
     MenuItemOpenTerminal: TMenuItem;
-    MenuItemProjectRoot: TMenuItem;
+    procedure MenuItemKeymapInfoClick(Sender: TObject);
     procedure MenuSubItemIEClick(Sender: TObject);
     procedure MenuSubItemEdgeClick(Sender: TObject);
     procedure MenuSubItemSafariClick(Sender: TObject);
@@ -93,7 +92,6 @@ type
     procedure MenuSubItemFirefoxClick(Sender: TObject);
     procedure MenuSubItemChromeClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure MenuItemProjectRootClick(Sender: TObject);
     procedure MenuSubItemTodoClick(Sender: TObject);
     procedure PageEditorDragDrop(Sender, Source: TObject; X, Y: Integer);
     procedure PageEditorDragOver(Sender, Source: TObject; X, Y: Integer;
@@ -160,6 +158,8 @@ var
   mresult : TModalResult;
 
 implementation
+
+uses KeymapInfoModalWindow;
 
 {$R *.dfm}
 
@@ -219,7 +219,7 @@ begin
   begin
   mresult := MessageDlg('The file should be saved'+#13+'Would you like to save the file?', mtConfirmation , [mbOk,mbCancel],0 );
   if mresult = mrOk then
-     MenuItemSaveas.Click;
+  MenuItemSaveas.Click;
 end;
 end;
 
@@ -272,7 +272,7 @@ end;
 
 procedure TMain.BtnTerminalClick(Sender: TObject);
 begin
-WinExec('cmd /c start cmd.exe', SW_SHOW)
+WinExec('cmd /c start runas /trustlevel:0x20000 cmd.exe', SW_SHOW)
 end;
 
 procedure TMain.BtnClearEditorClick(Sender: TObject);
@@ -286,7 +286,7 @@ end;
 
 procedure TMain.ManuItemAboutClick(Sender: TObject);
 begin
-  About.ShowModal ;
+  About.ShowModal;
 end;
 
 procedure TMain.MenuItemCloseAppClick(Sender: TObject);
@@ -462,6 +462,11 @@ end;
 procedure TMain.MenuItemJavaClick(Sender: TObject);
 begin
     BtnJavaTemplate.Click
+end;
+
+procedure TMain.MenuItemKeymapInfoClick(Sender: TObject);
+begin
+   KeymapInfo.ShowModal;
 end;
 
 procedure TMain.SubMenuItemJSClick(Sender: TObject);
@@ -759,16 +764,6 @@ procedure TMain.PageEditorMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
 //
-end;
-
-procedure TMain.MenuItemProjectRootClick(Sender: TObject);
-begin
-if MenuItemProjectRoot.Checked = true then
-begin
-  Tree.ShowRoot := True;
-end
-else
-  Tree.ShowRoot := False;
 end;
 
 procedure TMain.MenuSubItemTodoClick(Sender: TObject);

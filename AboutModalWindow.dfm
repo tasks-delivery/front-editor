@@ -5,7 +5,7 @@ object About: TAbout
   BorderStyle = bsSingle
   Caption = 'About'
   ClientHeight = 291
-  ClientWidth = 428
+  ClientWidth = 444
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

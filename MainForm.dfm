@@ -2,7 +2,7 @@ object Main: TMain
   Left = 210
   Top = 144
   Caption = 'Front-Editor'
-  ClientHeight = 621
+  ClientHeight = 494
   ClientWidth = 684
   Color = clActiveCaption
   Constraints.MinHeight = 500
@@ -11586,12 +11586,12 @@ object Main: TMain
   OnCreate = FormCreate
   DesignSize = (
     684
-    621)
+    494)
   PixelsPerInch = 96
   TextHeight = 13
   object Editor: TSynMemo
     Left = 422
-    Top = 156
+    Top = 116
     Width = 120
     Height = 84
     Anchors = []
@@ -11614,7 +11614,7 @@ object Main: TMain
     RightEdgeColor = clActiveBorder
     OnChange = EditorChange
     FontSmoothing = fsmNone
-    ExplicitTop = 150
+    ExplicitTop = 156
   end
   object NavigationPanel: TToolBar
     Left = 0
@@ -12578,10 +12578,10 @@ object Main: TMain
     end
   end
   object PageEditor: TPageControl
-    Left = 288
+    Left = 280
     Top = 71
     Width = 365
-    Height = 514
+    Height = 388
     Anchors = [akLeft, akTop, akRight, akBottom]
     DockSite = True
     HotTrack = True
@@ -12599,18 +12599,19 @@ object Main: TMain
     Left = 24
     Top = 71
     Width = 250
-    Height = 514
+    Height = 388
     ObjectTypes = [otFolders, otNonFolders]
     Root = 'rfMyComputer'
     UseShellImages = True
     Anchors = [akLeft, akTop, akBottom]
-    AutoRefresh = True
+    AutoRefresh = False
     Indent = 19
     ParentColor = False
     RightClickSelect = True
     ShowRoot = False
     TabOrder = 3
     OnClick = TreeClick
+    ExplicitHeight = 515
   end
   object BtnDelTab: TButton
     Left = 512
@@ -12702,6 +12703,7 @@ object Main: TMain
         end
         object MenuItemOpenTerminal: TMenuItem
           Caption = 'Terminal'
+          ShortCut = 16468
           OnClick = MenuItemOpenTerminalClick
         end
         object Proxy1: TMenuItem
@@ -12709,19 +12711,8 @@ object Main: TMain
         end
         object MenuSubItemTodo: TMenuItem
           Caption = 'TODO'
-          ShortCut = 16468
           OnClick = MenuSubItemTodoClick
         end
-      end
-      object Structure1: TMenuItem
-        Caption = '-'
-        GroupIndex = 2
-      end
-      object MenuItemProjectRoot: TMenuItem
-        AutoCheck = True
-        Caption = 'Project Root Dir'
-        GroupIndex = 2
-        OnClick = MenuItemProjectRootClick
       end
     end
     object MenuTemplate: TMenuItem
@@ -12784,8 +12775,9 @@ object Main: TMain
       object CodeStyle1: TMenuItem
         Caption = 'Code Style'
       end
-      object Keymap1: TMenuItem
+      object MenuItemKeymapInfo: TMenuItem
         Caption = 'Keymap'
+        OnClick = MenuItemKeymapInfoClick
       end
       object MenuItemSupport: TMenuItem
         Caption = 'Support'
