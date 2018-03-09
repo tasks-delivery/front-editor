@@ -146,7 +146,6 @@ type
     procedure SetCodeHighlighter(FName, FTabName, FFileLoard:string);
     procedure SetFocusIfPageExists;
     procedure OpenBrowser(browser:string);
-    procedure AutoCreateNewFile;
   private
   public
   end;
@@ -333,11 +332,11 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('   </body>');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' </html>');
   NewSynEdit.Highlighter:=SynHtmlSyn;
-end
+  SetFocusToLastString;
+  end
 else
 begin
   SetLineNumbers;
-  AutoCreateNewFile;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<!doctype html>');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' <html lang="en">');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('  <head>');
@@ -365,17 +364,17 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('description: none');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('*/');
   NewSynEdit.Highlighter:=SynCssSyn;
+  SetFocusToLastString;
 end
 else
 begin
   SetLineNumbers;
-  AutoCreateNewFile;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('/*');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(PageEditor.ActivePage.HelpKeyword+' css stylesheet');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('author: User');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('description: none');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('*/');
-   SetFocusToLastString;
+  SetFocusToLastString;
   NewSynEdit.Highlighter:=SynCssSyn;
 end;
 end;
@@ -400,11 +399,11 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('public class '+PageEditor.ActivePage.HelpKeyword+' {');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
   NewSynEdit.Highlighter:=SynJavaSyn;
+  SetFocusToLastString;
 end
 else
 begin
   SetLineNumbers;
-  AutoCreateNewFile;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('public class '+PageEditor.ActivePage.HelpKeyword+' {');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
   SetFocusToLastString;
@@ -484,11 +483,11 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('description: none');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('*/');
   NewSynEdit.Highlighter:=SynCssSyn;
+  SetFocusToLastString;
 end
 else
 begin
   SetLineNumbers;
-  AutoCreateNewFile;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('/*');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('author: User');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('description: none');
@@ -519,11 +518,11 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             }');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
   NewSynEdit.Highlighter:=SynJScriptSyn;
+  SetFocusToLastString;
 end
 else
 begin
   SetLineNumbers;
-  AutoCreateNewFile;
  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('{');
  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "name": "",');
  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "private": true,');
@@ -554,11 +553,11 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<suite name="">');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('</suite>');
   NewSynEdit.Highlighter:=SynXmlSyn;
+  SetFocusToLastString;
 end
 else
 begin
   SetLineNumbers;
-  AutoCreateNewFile;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<?xml version="1.0" encoding="UTF-8"?>');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<suite name="">');
@@ -648,11 +647,11 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('CREATE DATABASE  IF NOT EXISTS `'+PageEditor.ActivePage.HelpKeyword+'`;');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('USE `'+PageEditor.ActivePage.HelpKeyword+'`;');
   NewSynEdit.Highlighter:=SynSqlSyn;
+  SetFocusToLastString;
 end
 else
 begin
   SetLineNumbers;
-  AutoCreateNewFile;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('--');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('-- author: User');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('-- description: Table structure for `'+PageEditor.ActivePage.HelpKeyword+'`');
@@ -677,11 +676,11 @@ begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<?xml version="1.0" encoding="UTF-8"?>');
   NewSynEdit.Highlighter:=SynXmlSyn;
+  SetFocusToLastString;
 end
 else
 begin
   SetLineNumbers;
-  AutoCreateNewFile;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<?xml version="1.0" encoding="UTF-8"?>');
   SetFocusToLastString;
   NewSynEdit.Highlighter:=SynXmlSyn;
@@ -723,11 +722,11 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('  </group>');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('</groups>');
   NewSynEdit.Highlighter:=SynXmlSyn;
+  SetFocusToLastString;
 end
 else
 begin
   SetLineNumbers;
-  AutoCreateNewFile;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<groups xmlns="http://www.isdc.ro/wro">');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<group name="">');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<css></css>');
@@ -754,11 +753,11 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('    <version></version>');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('</project>');
   NewSynEdit.Highlighter:=SynXmlSyn;
+  SetFocusToLastString;
 end
 else
 begin
   SetLineNumbers;
-  AutoCreateNewFile;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<?xml version="1.0" encoding="UTF-8"?>');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<project xmlns="http://maven.apache.org/POM/4.0.0"');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"');
@@ -780,6 +779,7 @@ begin
 end;
 
 procedure TMain.MenuSubItemTodoClick(Sender: TObject);
+var LineNum : word;
 begin
 if PageEditor.PageCount > 0  then
 begin
@@ -787,9 +787,10 @@ if (NewSynEdit.Highlighter = SynJavaSyn) or
    (NewSynEdit.Highlighter = SynJScriptSyn) or
    (NewSynEdit.Highlighter = SynCssSyn) then
 begin
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('/*');
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('TODO:');
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('*/');
+  LineNum := (NewTab.PageControl.ActivePage.Components[0] as  TSynEdit).CaretY;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Insert(LineNum,'*/');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Insert(LineNum,'TODO:');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Insert(LineNum,'/*');
   (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
 end;
 end;
@@ -865,14 +866,6 @@ begin
   if mresult = mrOk then
   MenuItemSaveas.Click;
   end;
-end;
-
-procedure TMain.AutoCreateNewFile;
-var  mfresult : TModalResult;
-begin
-  mfresult := MessageDlg('Create new file?', mtConfirmation , [mbOk,mbCancel],0 );
-  if mfresult = mrOk then
-  BtnNewFile.Click;
 end;
 
 end.

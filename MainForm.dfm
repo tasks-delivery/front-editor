@@ -11614,7 +11614,6 @@ object Main: TMain
     RightEdgeColor = clActiveBorder
     OnChange = EditorChange
     FontSmoothing = fsmNone
-    ExplicitTop = 156
   end
   object NavigationPanel: TToolBar
     Left = 0
@@ -12611,7 +12610,6 @@ object Main: TMain
     ShowRoot = False
     TabOrder = 3
     OnClick = TreeClick
-    ExplicitHeight = 515
   end
   object BtnDelTab: TButton
     Left = 512
