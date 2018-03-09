@@ -332,8 +332,9 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('   </body>');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' </html>');
   NewSynEdit.Highlighter:=SynHtmlSyn;
-  end;
-if PageEditor.PageCount > 0 then
+  SetFocusToLastString;
+  end
+else
 begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<!doctype html>');
@@ -363,8 +364,9 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('description: none');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('*/');
   NewSynEdit.Highlighter:=SynCssSyn;
-  end;
-if PageEditor.PageCount > 0 then
+  SetFocusToLastString;
+end
+else
 begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('/*');
@@ -372,7 +374,7 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('author: User');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('description: none');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('*/');
-   SetFocusToLastString;
+  SetFocusToLastString;
   NewSynEdit.Highlighter:=SynCssSyn;
 end;
 end;
@@ -397,8 +399,9 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('public class '+PageEditor.ActivePage.HelpKeyword+' {');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
   NewSynEdit.Highlighter:=SynJavaSyn;
-  end;
-if PageEditor.PageCount > 0 then
+  SetFocusToLastString;
+end
+else
 begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('public class '+PageEditor.ActivePage.HelpKeyword+' {');
@@ -480,8 +483,9 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('description: none');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('*/');
   NewSynEdit.Highlighter:=SynCssSyn;
-  end;
-if PageEditor.PageCount > 0 then
+  SetFocusToLastString;
+end
+else
 begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('/*');
@@ -497,43 +501,44 @@ procedure TMain.SubMenuItemPackageJsonClick(Sender: TObject);
 begin
   if PageEditor.PageCount = 0 then
 begin
-     BtnNewFile.Click;
-     SetLineNumbers;
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('{');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "name": "",');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "private": true,');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "version": "",');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "description": "",');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "repository": "",');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "license": "MIT",');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "devDependencies": {');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             "": "^"');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             },');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "scripts": {');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             "": ""');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             }');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
-     NewSynEdit.Highlighter:=SynJScriptSyn;
-    end;
-if PageEditor.PageCount > 0 then
+  BtnNewFile.Click;
+  SetLineNumbers;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('{');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "name": "",');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "private": true,');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "version": "",');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "description": "",');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "repository": "",');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "license": "MIT",');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "devDependencies": {');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             "": "^"');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             },');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "scripts": {');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             "": ""');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             }');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
+  NewSynEdit.Highlighter:=SynJScriptSyn;
+  SetFocusToLastString;
+end
+else
 begin
-     SetLineNumbers;
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('{');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "name": "",');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "private": true,');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "version": "",');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "description": "",');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "repository": "",');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "license": "MIT",');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "devDependencies": {');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             "": "^"');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             },');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "scripts": {');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             "": ""');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             }');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
-     SetFocusToLastString;
-     NewSynEdit.Highlighter:=SynJScriptSyn;
+  SetLineNumbers;
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('{');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "name": "",');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "private": true,');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "version": "",');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "description": "",');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "repository": "",');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "license": "MIT",');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "devDependencies": {');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             "": "^"');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             },');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "scripts": {');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             "": ""');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             }');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
+ SetFocusToLastString;
+ NewSynEdit.Highlighter:=SynJScriptSyn;
 end;
 end;
 
@@ -548,8 +553,9 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<suite name="">');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('</suite>');
   NewSynEdit.Highlighter:=SynXmlSyn;
-  end;
-if PageEditor.PageCount > 0 then
+  SetFocusToLastString;
+end
+else
 begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<?xml version="1.0" encoding="UTF-8"?>');
@@ -641,8 +647,9 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('CREATE DATABASE  IF NOT EXISTS `'+PageEditor.ActivePage.HelpKeyword+'`;');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('USE `'+PageEditor.ActivePage.HelpKeyword+'`;');
   NewSynEdit.Highlighter:=SynSqlSyn;
-  end;
-if PageEditor.PageCount > 0 then
+  SetFocusToLastString;
+end
+else
 begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('--');
@@ -669,12 +676,15 @@ begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<?xml version="1.0" encoding="UTF-8"?>');
   NewSynEdit.Highlighter:=SynXmlSyn;
-  end
-  else
+  SetFocusToLastString;
+end
+else
+begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<?xml version="1.0" encoding="UTF-8"?>');
   SetFocusToLastString;
   NewSynEdit.Highlighter:=SynXmlSyn;
+end;
 end;
 
 procedure TMain.TreeClick(Sender: TObject);
@@ -712,8 +722,9 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('  </group>');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('</groups>');
   NewSynEdit.Highlighter:=SynXmlSyn;
-  end;
-if PageEditor.PageCount > 0 then
+  SetFocusToLastString;
+end
+else
 begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<groups xmlns="http://www.isdc.ro/wro">');
@@ -742,8 +753,9 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('    <version></version>');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('</project>');
   NewSynEdit.Highlighter:=SynXmlSyn;
-  end;
-if PageEditor.PageCount > 0 then
+  SetFocusToLastString;
+end
+else
 begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<?xml version="1.0" encoding="UTF-8"?>');
@@ -767,6 +779,7 @@ begin
 end;
 
 procedure TMain.MenuSubItemTodoClick(Sender: TObject);
+var LineNum : word;
 begin
 if PageEditor.PageCount > 0  then
 begin
@@ -774,9 +787,10 @@ if (NewSynEdit.Highlighter = SynJavaSyn) or
    (NewSynEdit.Highlighter = SynJScriptSyn) or
    (NewSynEdit.Highlighter = SynCssSyn) then
 begin
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('/*');
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('TODO:');
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('*/');
+  LineNum := (NewTab.PageControl.ActivePage.Components[0] as  TSynEdit).CaretY;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Insert(LineNum,'*/');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Insert(LineNum,'TODO:');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Insert(LineNum,'/*');
   (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
 end;
 end;
