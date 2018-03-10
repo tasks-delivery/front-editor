@@ -272,7 +272,7 @@ end;
 
 procedure TMain.BtnTerminalClick(Sender: TObject);
 begin
-WinExec('cmd /c start runas /trustlevel:0x20000 cmd.exe', SW_SHOW)
+  WinExec('cmd /c start cmd.exe', SW_SHOW)
 end;
 
 procedure TMain.BtnClearEditorClick(Sender: TObject);
@@ -735,7 +735,7 @@ begin
   SetFocusToLastString;
   NewSynEdit.Highlighter:=SynXmlSyn;
 end;
-end;
+end;                                                      
 
 procedure TMain.SubMenuItemPomXmlClick(Sender: TObject);
 begin
