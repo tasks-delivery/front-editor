@@ -22,7 +22,7 @@ object About: TAbout
     Top = 213
     Width = 64
     Height = 13
-    Caption = 'Version 0.0.5'
+    Caption = 'Version 0.0.6'
   end
   object AboutIconApp: TImage
     Left = 8

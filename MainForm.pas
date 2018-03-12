@@ -290,6 +290,7 @@ begin
               ) then
              // PageEditor.ActivePage.Free;
               BtnDelTab.Click;
+             // PageEditor.ParentWindow := True;
              //  if (PageEditor.PageCount>1) and (PageEditor.ActivePageIndex>0) then
              //  PageEditor.ActivePage.Destroy;
         end;
