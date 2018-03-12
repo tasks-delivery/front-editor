@@ -5,7 +5,7 @@ object About: TAbout
   BorderStyle = bsSingle
   Caption = 'About'
   ClientHeight = 291
-  ClientWidth = 428
+  ClientWidth = 444
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,6 +13,7 @@ object About: TAbout
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -21,7 +22,7 @@ object About: TAbout
     Top = 213
     Width = 64
     Height = 13
-    Caption = 'Version 0.0.5'
+    Caption = 'Version 0.0.6'
   end
   object AboutIconApp: TImage
     Left = 8
