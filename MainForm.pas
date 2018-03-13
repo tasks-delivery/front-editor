@@ -240,8 +240,9 @@ var
   AText: string;
   APoint: TPoint;
   r: TRect;
+  delIcon : TIcon;
 begin
-  with (Control as TPageControl).Canvas do
+ with (Control as TPageControl).Canvas do
   begin
     FillRect(Rect);
     Brush.Color := clBtnFace;
@@ -252,19 +253,19 @@ begin
       APoint.y := (Rect.Bottom - Rect.Top) div 2 - TextHeight(AText) div 2;
       TextRect(Rect, Rect.Left + APoint.x, Rect.Top + APoint.y, AText);
     end;
-      inherited;
-  Icon := TIcon.Create;
+ inherited;
+  delIcon := TIcon.Create;
   with Control.Canvas do
     begin
       Pen.Color := clBlue;
       Brush.Color :=clBlack;
-      ImageList1.GetIcon(0, Icon);
-      Draw(Rect.Right - 20, Rect.Top + 2, Icon);
+      ImageList1.GetIcon(0, delIcon);
+      Draw(Rect.Right - 20, Rect.Top + 2, delIcon);
     end;
-   // Brush.Color := clRed;
-   // r := {System.}Types.Rect(Rect.Right - size - 4, Rect.Top + 2, rect.Right - 2, rect.Top + Size + 4);
-   { Pen.Color := clWhite;
-    Rectangle(r); }
+//    Brush.Color := clRed;
+//   r := {System.}Types.Rect(Rect.Right - size - 4, Rect.Top + 2, rect.Right - 2, rect.Top + Size + 4);
+//    Pen.Color := clWhite;
+//    Rectangle(r);
   end;
 end;
 
@@ -281,23 +282,30 @@ begin
      HI.pt := PageEditor.ScreenToClient(MousePos);
      ret := SendMessage(PageEditor.Handle,TCM_HITTEST,0,LParam(@HI));
      if (HI.flags and TCHT_ONITEM) <> 0 then begin
-    //  if PageEditor.ActivePageIndex > 0 then begin
         if PageEditor.ActivePageIndex=ret then begin
            r := PageEditor.TabRect(PageEditor.ActivePageIndex);
            if ptInRect(
                  Rect(r.Right - size - 4, r.Top + 2, r.Right - 2, r.Top + Size + 4),
                  HI.pt
               ) then
-             // PageEditor.ActivePage.Free;
               BtnDelTab.Click;
-             // PageEditor.ParentWindow := True;
-             //  if (PageEditor.PageCount>1) and (PageEditor.ActivePageIndex>0) then
-             //  PageEditor.ActivePage.Destroy;
         end;
      end;
   end;
+    PageEditor.BeginDrag(False);
 end;
-//end;
+
+procedure TMain.BtnDelTabClick(Sender: TObject);
+var i: integer;
+begin
+  if PageEditor.PageCount>1 then
+PageEditor.ActivePage.Destroy;
+PageEditor.ActivePage :=  PageEditor.FindNextPage(PageEditor.ActivePage, True, False)
+ // for i := 0 to PageEditor.PageCount - 1 do
+  //  begin
+   // PageEditor.ActivePage := PageEditor.Pages[i];
+  //  end;
+end;
 
 procedure TMain.FormCreate(Sender: TObject);
 begin
@@ -423,12 +431,6 @@ begin
   SetFocusToLastString;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynCssSyn;
 end;
-end;
-
-procedure TMain.BtnDelTabClick(Sender: TObject);
-begin
-  if (PageEditor.PageCount>1) and (PageEditor.ActivePageIndex>0) then
-PageEditor.ActivePage.Destroy;
 end;
 
 procedure TMain.BtnHtmlTemplateClick(Sender: TObject);
