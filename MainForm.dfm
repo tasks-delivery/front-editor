@@ -2,7 +2,7 @@ object Main: TMain
   Left = 210
   Top = 144
   Caption = 'Front-Editor'
-  ClientHeight = 494
+  ClientHeight = 534
   ClientWidth = 684
   Color = clActiveCaption
   Constraints.MinHeight = 500
@@ -11587,12 +11587,12 @@ object Main: TMain
   OnCreate = FormCreate
   DesignSize = (
     684
-    494)
+    534)
   PixelsPerInch = 96
   TextHeight = 13
   object Editor: TSynMemo
     Left = 422
-    Top = 116
+    Top = 128
     Width = 120
     Height = 84
     Anchors = []
@@ -11615,6 +11615,7 @@ object Main: TMain
     RightEdgeColor = clActiveBorder
     OnChange = EditorChange
     FontSmoothing = fsmNone
+    ExplicitTop = 122
   end
   object NavigationPanel: TToolBar
     Left = 0
@@ -12581,7 +12582,7 @@ object Main: TMain
     Left = 280
     Top = 71
     Width = 365
-    Height = 388
+    Height = 428
     Anchors = [akLeft, akTop, akRight, akBottom]
     DockSite = True
     HotTrack = True
@@ -12595,12 +12596,13 @@ object Main: TMain
     OnMouseLeave = PageEditorMouseLeave
     OnMouseMove = PageEditorMouseMove
     OnMouseUp = PageEditorMouseUp
+    ExplicitHeight = 408
   end
   object Tree: TShellTreeView
     Left = 24
     Top = 71
     Width = 250
-    Height = 388
+    Height = 428
     ObjectTypes = [otFolders, otNonFolders]
     Root = 'rfMyComputer'
     UseShellImages = True
@@ -12612,6 +12614,7 @@ object Main: TMain
     ShowRoot = False
     TabOrder = 3
     OnClick = TreeClick
+    ExplicitHeight = 408
   end
   object BtnDelTab: TButton
     Left = 512
@@ -12622,6 +12625,19 @@ object Main: TMain
     TabOrder = 4
     Visible = False
     OnClick = BtnDelTabClick
+  end
+  object WebBrowser1: TWebBrowser
+    Left = 422
+    Top = 264
+    Width = 0
+    Height = 0
+    TabOrder = 5
+    ControlData = {
+      4C00000000000000000000000000000000000000000000000000000000000000
+      000000004C000000000000000000000001000000E0D057007335CF11AE690800
+      2B2E126208000000000000004C0000000114020000000000C000000000000046
+      8000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000100000000000000000000000000000000000000}
   end
   object MainMenu: TMainMenu
     object MenuFile: TMenuItem
@@ -12783,8 +12799,9 @@ object Main: TMain
         Caption = 'Support'
         OnClick = MenuItemSupportClick
       end
-      object Update1: TMenuItem
+      object MenuItemUpdate: TMenuItem
         Caption = 'Update'
+        OnClick = MenuItemUpdateClick
       end
       object ManuItemAbout: TMenuItem
         Caption = 'About'

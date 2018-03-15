@@ -1,7 +1,7 @@
 object KeymapInfo: TKeymapInfo
   Left = 0
   Top = 0
-  BorderIcons = [biMinimize, biMaximize]
+  BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Keymap Info'
   ClientHeight = 291
