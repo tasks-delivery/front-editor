@@ -8,7 +8,7 @@ uses
   SynEdit, SynMemo, SynEditHighlighter, SynHighlighterHtml, ImgList, AboutModalWindow,
   ToolWin, SynHighlighterCSS, Buttons, ShellCtrls, ShellApi, SynHighlighterJava,
   SynHighlighterXML, SynHighlighterSQL, SynHighlighterJScript, UxTheme, Themes,
-  Math, SynCompletionProposal, SynEditOptionsDialog;
+  Math, SynCompletionProposal, SynEditOptionsDialog, OleCtrls, SHDocVw;
 
 type
   TMain = class(TForm)
@@ -68,7 +68,7 @@ type
     ools1: TMenuItem;
     MenuSubItemTodo: TMenuItem;
     MenuItemKeymapInfo: TMenuItem;
-    Update1: TMenuItem;
+    MenuItemUpdate: TMenuItem;
     Proxy1: TMenuItem;
     CustromTemplate1: TMenuItem;
     Settings1: TMenuItem;
@@ -84,6 +84,8 @@ type
     CodeStyle1: TMenuItem;
     MenuItemView: TMenuItem;
     MenuItemOpenTerminal: TMenuItem;
+    WebBrowser1: TWebBrowser;
+    procedure MenuItemUpdateClick(Sender: TObject);
     procedure MenuItemKeymapInfoClick(Sender: TObject);
     procedure MenuSubItemIEClick(Sender: TObject);
     procedure MenuSubItemEdgeClick(Sender: TObject);
@@ -155,12 +157,12 @@ var
   NewTab: TTabSheet;
   NewSynEdit: TSynEdit;
   mresult : TModalResult;
-    NewTabWidth: Integer;
-    const size = 10;
+  NewTabWidth: Integer;
+  const size = 10;
 
 implementation
 
-uses KeymapInfoModalWindow, Types,commctrl;
+uses KeymapInfoModalWindow, Types,commctrl, UpdateModalWindow;
 
 {$R *.dfm}
 
@@ -309,7 +311,17 @@ end;
 
 procedure TMain.FormCreate(Sender: TObject);
 begin
-//
+WebBrowser1.Navigate('https://github.com/tasks-delivery/front-editor/archive/v0.0.7.zip');
+end;
+
+procedure TMain.MenuItemUpdateClick(Sender: TObject);
+var link : string;
+begin
+link := 'https://codeload.github.com/tasks-delivery/front-editor/zip/v0.0.7';
+if  WebBrowser1.LocationName = link then
+ UpdateApp.LabelAppVersion.Visible := False;
+ UpdateApp.DownloadApp.Enabled := False;
+ UpdateApp.ShowModal;
 end;
 
 procedure TMain.PageEditorMouseUp(Sender: TObject; Button: TMouseButton;
@@ -498,6 +510,7 @@ if OpenFile.Execute then begin
   PageEditor.ActivePage.Caption := OFileLoard+ '       ';
   SetCodeHighlighter(OFName, OTabName, OFileLoard);
   SetFocusToLastString;
+(PageEditor.ActivePage.Components[0] as TSynEdit).Gutter.ShowLineNumbers := True;
 end;
 end;
 end;
@@ -745,7 +758,7 @@ begin
    MenuItemOpenFile.Click;
 end;
 end;
-
+
 procedure TMain.MenuItemViewClick(Sender: TObject);
 begin
 if FontDialog.Execute then

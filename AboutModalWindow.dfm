@@ -1,7 +1,7 @@
 object About: TAbout
   Left = 0
   Top = 0
-  BorderIcons = []
+  BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'About'
   ClientHeight = 291
