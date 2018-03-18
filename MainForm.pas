@@ -8,7 +8,8 @@ uses
   SynEdit, SynMemo, SynEditHighlighter, SynHighlighterHtml, ImgList, AboutModalWindow,
   ToolWin, SynHighlighterCSS, Buttons, ShellCtrls, ShellApi, SynHighlighterJava,
   SynHighlighterXML, SynHighlighterSQL, SynHighlighterJScript, UxTheme, Themes,
-  Math, SynCompletionProposal, SynEditOptionsDialog;
+  Math, SynCompletionProposal, SynEditOptionsDialog, OleCtrls, SHDocVw, comobj,
+  MSHTML, ActiveX, IniFiles;
 
 type
   TMain = class(TForm)
@@ -68,7 +69,7 @@ type
     ools1: TMenuItem;
     MenuSubItemTodo: TMenuItem;
     MenuItemKeymapInfo: TMenuItem;
-    Update1: TMenuItem;
+    MenuItemUpdate: TMenuItem;
     Proxy1: TMenuItem;
     CustromTemplate1: TMenuItem;
     Settings1: TMenuItem;
@@ -84,6 +85,14 @@ type
     CodeStyle1: TMenuItem;
     MenuItemView: TMenuItem;
     MenuItemOpenTerminal: TMenuItem;
+    WebBrowser1: TWebBrowser;
+    Timer1: TTimer;
+    HelpNoti: TButton;
+    procedure Timer1Timer(Sender: TObject);
+    procedure FormPaint(Sender: TObject);
+    procedure HelpNotiClick(Sender: TObject);
+    procedure FormMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+    procedure MenuItemUpdateClick(Sender: TObject);
     procedure MenuItemKeymapInfoClick(Sender: TObject);
     procedure MenuSubItemIEClick(Sender: TObject);
     procedure MenuSubItemEdgeClick(Sender: TObject);
@@ -155,12 +164,15 @@ var
   NewTab: TTabSheet;
   NewSynEdit: TSynEdit;
   mresult : TModalResult;
-    NewTabWidth: Integer;
-    const size = 10;
+  NewTabWidth: Integer;
+  document: IHTMLDocument2;
+  Flag: Boolean;
+  const size = 10;
+  const releaseVersion = '0.0.7';
 
 implementation
 
-uses KeymapInfoModalWindow, Types,commctrl;
+uses KeymapInfoModalWindow, Types,commctrl, UpdateModalWindow;
 
 {$R *.dfm}
 
@@ -240,8 +252,9 @@ var
   AText: string;
   APoint: TPoint;
   r: TRect;
+  delIcon : TIcon;
 begin
-  with (Control as TPageControl).Canvas do
+ with (Control as TPageControl).Canvas do
   begin
     FillRect(Rect);
     Brush.Color := clBtnFace;
@@ -252,19 +265,19 @@ begin
       APoint.y := (Rect.Bottom - Rect.Top) div 2 - TextHeight(AText) div 2;
       TextRect(Rect, Rect.Left + APoint.x, Rect.Top + APoint.y, AText);
     end;
-      inherited;
-  Icon := TIcon.Create;
+ inherited;
+  delIcon := TIcon.Create;
   with Control.Canvas do
     begin
       Pen.Color := clBlue;
       Brush.Color :=clBlack;
-      ImageList1.GetIcon(0, Icon);
-      Draw(Rect.Right - 20, Rect.Top + 2, Icon);
+      ImageList1.GetIcon(0, delIcon);
+      Draw(Rect.Right - 20, Rect.Top + 2, delIcon);
     end;
-   // Brush.Color := clRed;
-   // r := {System.}Types.Rect(Rect.Right - size - 4, Rect.Top + 2, rect.Right - 2, rect.Top + Size + 4);
-   { Pen.Color := clWhite;
-    Rectangle(r); }
+//    Brush.Color := clRed;
+//   r := {System.}Types.Rect(Rect.Right - size - 4, Rect.Top + 2, rect.Right - 2, rect.Top + Size + 4);
+//    Pen.Color := clWhite;
+//    Rectangle(r);
   end;
 end;
 
@@ -281,25 +294,96 @@ begin
      HI.pt := PageEditor.ScreenToClient(MousePos);
      ret := SendMessage(PageEditor.Handle,TCM_HITTEST,0,LParam(@HI));
      if (HI.flags and TCHT_ONITEM) <> 0 then begin
-    //  if PageEditor.ActivePageIndex > 0 then begin
         if PageEditor.ActivePageIndex=ret then begin
            r := PageEditor.TabRect(PageEditor.ActivePageIndex);
            if ptInRect(
                  Rect(r.Right - size - 4, r.Top + 2, r.Right - 2, r.Top + Size + 4),
                  HI.pt
               ) then
-             // PageEditor.ActivePage.Free;
               BtnDelTab.Click;
-             // PageEditor.ParentWindow := True;
-             //  if (PageEditor.PageCount>1) and (PageEditor.ActivePageIndex>0) then
-             //  PageEditor.ActivePage.Destroy;
         end;
      end;
   end;
+    PageEditor.BeginDrag(False);
 end;
-//end;
+
+procedure TMain.BtnDelTabClick(Sender: TObject);
+var i: integer;
+begin
+  if PageEditor.PageCount>1 then
+PageEditor.ActivePage.Destroy;
+PageEditor.ActivePage :=  PageEditor.FindNextPage(PageEditor.ActivePage, True, False)
+ // for i := 0 to PageEditor.PageCount - 1 do
+  //  begin
+   // PageEditor.ActivePage := PageEditor.Pages[i];
+  //  end;
+end;
 
 procedure TMain.FormCreate(Sender: TObject);
+begin
+Flag := False;
+WebBrowser1.Navigate('https://raw.githubusercontent.com/tasks-delivery/front-editor/master/Version-'+releaseVersion);
+  document := WebBrowser1.Document as IHTMLDocument2;
+  if Assigned(document) then
+  begin
+  WebBrowser1.Navigate('https://raw.githubusercontent.com/tasks-delivery/front-editor/master/Version-'+releaseVersion);
+end;
+end;
+
+procedure TMain.MenuItemUpdateClick(Sender: TObject);
+begin
+if WebBrowser1.OleObject.Document.documentElement.innerText = 'Version-'+releaseVersion then
+begin
+ UpdateApp.LabelAppVersion.Visible := False;
+ UpdateApp.DownloadApp.Enabled := False;
+  UpdateApp.ShowModal;
+ end
+  else
+ UpdateApp.LabelAppVersion.Visible := True;
+ UpdateApp.DownloadApp.Enabled := True;
+ UpdateApp.ShowModal;
+end;
+
+procedure TMain.FormPaint(Sender: TObject);
+begin
+   HelpNoti.Click;
+end;
+
+procedure TMain.HelpNotiClick(Sender: TObject);
+var IniFile: TIniFile;
+    First : Boolean;
+    A, S:integer;
+    begin
+  IniFile:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'Config.INI');
+  First:=IniFile.ReadBool('CheckBox', 'First', False);
+  if First = True then
+  begin
+  UpdateApp.CheckBoxOffNoti.State:=cbChecked;
+  end
+     else UpdateApp.CheckBoxOffNoti.State:=cbUnchecked;
+  IniFile.Free;
+begin
+If not Flag then
+begin
+  WebBrowser1.Navigate('https://raw.githubusercontent.com/tasks-delivery/front-editor/Release-'+releaseVersion+'/Version-'+releaseVersion);
+  while WebBrowser1.ReadyState<>READYSTATE_COMPLETE do Application.ProcessMessages;
+ if WebBrowser1.OleObject.Document.documentElement.innerText <> 'Version-'+releaseVersion then
+begin
+if UpdateApp.CheckBoxOffNoti.Checked = false then
+  MenuItemUpdate.Click;
+  Flag := true;
+end;
+end;
+end;
+end;
+
+procedure TMain.Timer1Timer(Sender: TObject);
+begin
+//
+end;
+
+procedure TMain.FormMouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
 begin
 //
 end;
@@ -425,12 +509,6 @@ begin
 end;
 end;
 
-procedure TMain.BtnDelTabClick(Sender: TObject);
-begin
-  if (PageEditor.PageCount>1) and (PageEditor.ActivePageIndex>0) then
-PageEditor.ActivePage.Destroy;
-end;
-
 procedure TMain.BtnHtmlTemplateClick(Sender: TObject);
 begin
    MenuItemHTML.Click;
@@ -496,6 +574,7 @@ if OpenFile.Execute then begin
   PageEditor.ActivePage.Caption := OFileLoard+ '       ';
   SetCodeHighlighter(OFName, OTabName, OFileLoard);
   SetFocusToLastString;
+(PageEditor.ActivePage.Components[0] as TSynEdit).Gutter.ShowLineNumbers := True;
 end;
 end;
 end;
@@ -743,7 +822,7 @@ begin
    MenuItemOpenFile.Click;
 end;
 end;
-
+
 procedure TMain.MenuItemViewClick(Sender: TObject);
 begin
 if FontDialog.Execute then

@@ -2,11 +2,12 @@ object Main: TMain
   Left = 210
   Top = 144
   Caption = 'Front-Editor'
-  ClientHeight = 494
+  ClientHeight = 534
   ClientWidth = 684
   Color = clActiveCaption
   Constraints.MinHeight = 500
   Constraints.MinWidth = 700
+  DockSite = True
   DragMode = dmAutomatic
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11584,14 +11585,16 @@ object Main: TMain
   WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate
+  OnMouseMove = FormMouseMove
+  OnPaint = FormPaint
   DesignSize = (
     684
-    494)
+    534)
   PixelsPerInch = 96
   TextHeight = 13
   object Editor: TSynMemo
     Left = 422
-    Top = 116
+    Top = 128
     Width = 120
     Height = 84
     Anchors = []
@@ -12580,7 +12583,7 @@ object Main: TMain
     Left = 280
     Top = 71
     Width = 365
-    Height = 388
+    Height = 428
     Anchors = [akLeft, akTop, akRight, akBottom]
     DockSite = True
     HotTrack = True
@@ -12599,7 +12602,7 @@ object Main: TMain
     Left = 24
     Top = 71
     Width = 250
-    Height = 388
+    Height = 428
     ObjectTypes = [otFolders, otNonFolders]
     Root = 'rfMyComputer'
     UseShellImages = True
@@ -12621,6 +12624,29 @@ object Main: TMain
     TabOrder = 4
     Visible = False
     OnClick = BtnDelTabClick
+  end
+  object WebBrowser1: TWebBrowser
+    Left = 422
+    Top = 264
+    Width = 0
+    Height = 0
+    TabOrder = 5
+    ControlData = {
+      4C00000000000000000000000000000000000000000000000000000000000000
+      000000004C000000000000000000000001000000E0D057007335CF11AE690800
+      2B2E126208000000000000004C0000000114020000000000C000000000000046
+      8000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000100000000000000000000000000000000000000}
+  end
+  object HelpNoti: TButton
+    Left = 544
+    Top = 272
+    Width = 75
+    Height = 25
+    Caption = 'HelpNoti'
+    TabOrder = 6
+    Visible = False
+    OnClick = HelpNotiClick
   end
   object MainMenu: TMainMenu
     object MenuFile: TMenuItem
@@ -12782,8 +12808,9 @@ object Main: TMain
         Caption = 'Support'
         OnClick = MenuItemSupportClick
       end
-      object Update1: TMenuItem
+      object MenuItemUpdate: TMenuItem
         Caption = 'Update'
+        OnClick = MenuItemUpdateClick
       end
       object ManuItemAbout: TMenuItem
         Caption = 'About'
@@ -13292,7 +13319,7 @@ object Main: TMain
     Left = 376
     Top = 352
     Bitmap = {
-      494C010102000400040010001000FFFFFFFFFF00FFFFFFFFFFFFFFFF424D3600
+      494C010102000400040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       000000000000000000000000000000000000000000FFF9F9F9FFE7E7E7FFE5E5
       E5FFE4E4E4FFE4E4E4FFE4E4E4FFE4E4E4FFE4E4E4FFE4E4E4FFE4E4E4FFE4E4
@@ -13428,6 +13455,12 @@ object Main: TMain
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
-      00000000000000008001800100000000}
+      0000000000000000800180010000000000000000000000000000000000000000
+      000000000000}
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 344
+    Top = 256
   end
 end
