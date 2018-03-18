@@ -20,9 +20,8 @@ object About: TAbout
   object AppVersionLabel: TLabel
     Left = 24
     Top = 213
-    Width = 64
+    Width = 3
     Height = 13
-    Caption = 'Version 0.0.6'
   end
   object AboutIconApp: TImage
     Left = 8
