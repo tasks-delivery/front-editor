@@ -8,7 +8,8 @@ uses
   SynEdit, SynMemo, SynEditHighlighter, SynHighlighterHtml, ImgList, AboutModalWindow,
   ToolWin, SynHighlighterCSS, Buttons, ShellCtrls, ShellApi, SynHighlighterJava,
   SynHighlighterXML, SynHighlighterSQL, SynHighlighterJScript, UxTheme, Themes,
-  Math, SynCompletionProposal, SynEditOptionsDialog, OleCtrls, SHDocVw;
+  Math, SynCompletionProposal, SynEditOptionsDialog, OleCtrls, SHDocVw, comobj,
+  MSHTML, ActiveX, IniFiles;
 
 type
   TMain = class(TForm)
@@ -85,7 +86,11 @@ type
     MenuItemView: TMenuItem;
     MenuItemOpenTerminal: TMenuItem;
     WebBrowser1: TWebBrowser;
-    procedure FormShow(Sender: TObject);
+    Timer1: TTimer;
+    HelpNoti: TButton;
+    procedure Timer1Timer(Sender: TObject);
+    procedure FormPaint(Sender: TObject);
+    procedure HelpNotiClick(Sender: TObject);
     procedure FormMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure MenuItemUpdateClick(Sender: TObject);
     procedure MenuItemKeymapInfoClick(Sender: TObject);
@@ -160,9 +165,10 @@ var
   NewSynEdit: TSynEdit;
   mresult : TModalResult;
   NewTabWidth: Integer;
+  document: IHTMLDocument2;
+  Flag: Boolean;
   const size = 10;
-  const s = 'test';
-  const link = 'https://codeload.github.com/tasks-delivery/front-editor/zip/v0.0.7';
+  const releaseVersion = '0.0.7';
 
 implementation
 
@@ -314,34 +320,71 @@ PageEditor.ActivePage :=  PageEditor.FindNextPage(PageEditor.ActivePage, True, F
 end;
 
 procedure TMain.FormCreate(Sender: TObject);
-//var s : string;
 begin
-WebBrowser1.Navigate('https://github.com/tasks-delivery/front-editor/archive/v0.0.7.zip');
-if  WebBrowser1.LocationName = link then
+Flag := False;
+WebBrowser1.Navigate('https://raw.githubusercontent.com/tasks-delivery/front-editor/master/Version-'+releaseVersion);
+  document := WebBrowser1.Document as IHTMLDocument2;
+  if Assigned(document) then
+  begin
+  WebBrowser1.Navigate('https://raw.githubusercontent.com/tasks-delivery/front-editor/master/Version-'+releaseVersion);
+end;
 end;
 
 procedure TMain.MenuItemUpdateClick(Sender: TObject);
-//var link : string;
 begin
-//link := 'https://codeload.github.com/tasks-delivery/front-editor/zip/v0.0.7';
-if  WebBrowser1.LocationName = link then
+if WebBrowser1.OleObject.Document.documentElement.innerText = 'Version-'+releaseVersion then
+begin
  UpdateApp.LabelAppVersion.Visible := False;
  UpdateApp.DownloadApp.Enabled := False;
+  UpdateApp.ShowModal;
+ end
+  else
+ UpdateApp.LabelAppVersion.Visible := True;
+ UpdateApp.DownloadApp.Enabled := True;
  UpdateApp.ShowModal;
 end;
 
-procedure TMain.FormMouseMove(Sender: TObject; Shift: TShiftState; X,
-  Y: Integer);
-  var link : string;
+procedure TMain.FormPaint(Sender: TObject);
+begin
+   HelpNoti.Click;
+end;
+
+procedure TMain.HelpNotiClick(Sender: TObject);
+var IniFile: TIniFile;
+    First : Boolean;
+    A, S:integer;
+    begin
+  IniFile:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'Config.INI');
+  First:=IniFile.ReadBool('CheckBox', 'First', False);
+  if First = True then
+  begin
+  UpdateApp.CheckBoxOffNoti.State:=cbChecked;
+  end
+     else UpdateApp.CheckBoxOffNoti.State:=cbUnchecked;
+  IniFile.Free;
+begin
+If not Flag then
+begin
+  WebBrowser1.Navigate('https://raw.githubusercontent.com/tasks-delivery/front-editor/Release-'+releaseVersion+'/Version-'+releaseVersion);
+  while WebBrowser1.ReadyState<>READYSTATE_COMPLETE do Application.ProcessMessages;
+ if WebBrowser1.OleObject.Document.documentElement.innerText <> 'Version-'+releaseVersion then
+begin
+if UpdateApp.CheckBoxOffNoti.Checked = false then
+  MenuItemUpdate.Click;
+  Flag := true;
+end;
+end;
+end;
+end;
+
+procedure TMain.Timer1Timer(Sender: TObject);
 begin
 //
 end;
 
-procedure TMain.FormShow(Sender: TObject);
-  //var link : string;
+procedure TMain.FormMouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
 begin
-       if Sender =  Main then
-ShowMessage('test');
 //
 end;
 

@@ -11586,7 +11586,7 @@ object Main: TMain
   OnClose = FormClose
   OnCreate = FormCreate
   OnMouseMove = FormMouseMove
-  OnShow = FormShow
+  OnPaint = FormPaint
   DesignSize = (
     684
     534)
@@ -12638,6 +12638,16 @@ object Main: TMain
       8000000000000000000000000000000000000000000000000000000000000000
       00000000000000000100000000000000000000000000000000000000}
   end
+  object HelpNoti: TButton
+    Left = 544
+    Top = 272
+    Width = 75
+    Height = 25
+    Caption = 'HelpNoti'
+    TabOrder = 6
+    Visible = False
+    OnClick = HelpNotiClick
+  end
   object MainMenu: TMainMenu
     object MenuFile: TMenuItem
       Caption = '&File'
@@ -13447,5 +13457,10 @@ object Main: TMain
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000800180010000000000000000000000000000000000000000
       000000000000}
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 344
+    Top = 256
   end
 end
