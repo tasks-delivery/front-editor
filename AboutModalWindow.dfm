@@ -1,7 +1,7 @@
 object About: TAbout
   Left = 0
   Top = 0
-  BorderIcons = []
+  BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'About'
   ClientHeight = 291
@@ -13,15 +13,15 @@ object About: TAbout
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object AppVersionLabel: TLabel
     Left = 24
     Top = 213
-    Width = 64
+    Width = 3
     Height = 13
-    Caption = 'Version 0.0.5'
   end
   object AboutIconApp: TImage
     Left = 8

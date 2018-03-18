@@ -8,7 +8,8 @@ uses
   SynEdit, SynMemo, SynEditHighlighter, SynHighlighterHtml, ImgList, AboutModalWindow,
   ToolWin, SynHighlighterCSS, Buttons, ShellCtrls, ShellApi, SynHighlighterJava,
   SynHighlighterXML, SynHighlighterSQL, SynHighlighterJScript, UxTheme, Themes,
-  Math, SynCompletionProposal, SynEditOptionsDialog;
+  Math, SynCompletionProposal, SynEditOptionsDialog, OleCtrls, SHDocVw, comobj,
+  MSHTML, ActiveX, IniFiles;
 
 type
   TMain = class(TForm)
@@ -68,7 +69,7 @@ type
     ools1: TMenuItem;
     MenuSubItemTodo: TMenuItem;
     MenuItemKeymapInfo: TMenuItem;
-    Update1: TMenuItem;
+    MenuItemUpdate: TMenuItem;
     Proxy1: TMenuItem;
     CustromTemplate1: TMenuItem;
     Settings1: TMenuItem;
@@ -84,6 +85,14 @@ type
     CodeStyle1: TMenuItem;
     MenuItemView: TMenuItem;
     MenuItemOpenTerminal: TMenuItem;
+    WebBrowser1: TWebBrowser;
+    Timer1: TTimer;
+    HelpNoti: TButton;
+    procedure Timer1Timer(Sender: TObject);
+    procedure FormPaint(Sender: TObject);
+    procedure HelpNotiClick(Sender: TObject);
+    procedure FormMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+    procedure MenuItemUpdateClick(Sender: TObject);
     procedure MenuItemKeymapInfoClick(Sender: TObject);
     procedure MenuSubItemIEClick(Sender: TObject);
     procedure MenuSubItemEdgeClick(Sender: TObject);
@@ -140,7 +149,6 @@ type
     procedure BtnHtmlTemplateClick(Sender: TObject);
     procedure MenuItemHTMLClick(Sender: TObject);
     procedure MenuItemOpenFileClick(Sender: TObject);
-    procedure CreateCloseBtn;
     procedure SetFocusToLastString;
     procedure SetLineNumbers;
     procedure SetCodeHighlighter(FName, FTabName, FFileLoard:string);
@@ -156,10 +164,15 @@ var
   NewTab: TTabSheet;
   NewSynEdit: TSynEdit;
   mresult : TModalResult;
+  NewTabWidth: Integer;
+  document: IHTMLDocument2;
+  Flag: Boolean;
+  const size = 10;
+  const releaseVersion = '0.0.7';
 
 implementation
 
-uses KeymapInfoModalWindow;
+uses KeymapInfoModalWindow, Types,commctrl, UpdateModalWindow;
 
 {$R *.dfm}
 
@@ -173,7 +186,7 @@ begin
   NewTab := TTabSheet.Create(PageEditor);
   with NewTab do
   begin
-    PageControl := PageEditor;
+  PageControl := PageEditor;
   end;
   NewSynEdit := TSynEdit.Create(NewTab);
   with NewSynEdit do
@@ -233,30 +246,152 @@ begin
   OpenBrowser('firefox.exe');
 end;
 
-procedure TMain.CreateCloseBtn;
-begin  {
-     with tbutton.Create(application) do
-  begin
-    Parent := NewTab;
-    Caption := 'X';
-    Left := 0;
-    Height := 20;
-    Width := 20;
-    Top := 0;
-    Visible := True;
-  end; }
-end;
-
 procedure TMain.PageEditorDrawTab(Control: TCustomTabControl; TabIndex: Integer;
   const Rect: TRect; Active: Boolean);
+var
+  AText: string;
+  APoint: TPoint;
+  r: TRect;
+  delIcon : TIcon;
 begin
-//
+ with (Control as TPageControl).Canvas do
+  begin
+    FillRect(Rect);
+    Brush.Color := clBtnFace;
+    AText := TPageControl(Control).Pages[TabIndex].Caption;
+    with Control.Canvas do
+    begin
+      APoint.x := (Rect.Right - Rect.Left) div 2 - TextWidth(AText) div 2;
+      APoint.y := (Rect.Bottom - Rect.Top) div 2 - TextHeight(AText) div 2;
+      TextRect(Rect, Rect.Left + APoint.x, Rect.Top + APoint.y, AText);
+    end;
+ inherited;
+  delIcon := TIcon.Create;
+  with Control.Canvas do
+    begin
+      Pen.Color := clBlue;
+      Brush.Color :=clBlack;
+      ImageList1.GetIcon(0, delIcon);
+      Draw(Rect.Right - 20, Rect.Top + 2, delIcon);
+    end;
+//    Brush.Color := clRed;
+//   r := {System.}Types.Rect(Rect.Right - size - 4, Rect.Top + 2, rect.Right - 2, rect.Top + Size + 4);
+//    Pen.Color := clWhite;
+//    Rectangle(r);
+  end;
 end;
 
 procedure TMain.PageEditorMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
+var
+  MousePos:TPoint;
+  HI:TTCHitTestInfo;
+  ret:integer;
+  r: TRect;
 begin
-  PageEditor.BeginDrag(False);
+  if Button = mbLeft then begin
+     GetCursorPos(MousePos);
+     HI.pt := PageEditor.ScreenToClient(MousePos);
+     ret := SendMessage(PageEditor.Handle,TCM_HITTEST,0,LParam(@HI));
+     if (HI.flags and TCHT_ONITEM) <> 0 then begin
+        if PageEditor.ActivePageIndex=ret then begin
+           r := PageEditor.TabRect(PageEditor.ActivePageIndex);
+           if ptInRect(
+                 Rect(r.Right - size - 4, r.Top + 2, r.Right - 2, r.Top + Size + 4),
+                 HI.pt
+              ) then
+              BtnDelTab.Click;
+        end;
+     end;
+  end;
+    PageEditor.BeginDrag(False);
+end;
+
+procedure TMain.BtnDelTabClick(Sender: TObject);
+var i: integer;
+begin
+  if PageEditor.PageCount>1 then
+PageEditor.ActivePage.Destroy;
+PageEditor.ActivePage :=  PageEditor.FindNextPage(PageEditor.ActivePage, True, False)
+ // for i := 0 to PageEditor.PageCount - 1 do
+  //  begin
+   // PageEditor.ActivePage := PageEditor.Pages[i];
+  //  end;
+end;
+
+procedure TMain.FormCreate(Sender: TObject);
+begin
+Flag := False;
+WebBrowser1.Navigate('https://raw.githubusercontent.com/tasks-delivery/front-editor/master/Version-'+releaseVersion);
+  document := WebBrowser1.Document as IHTMLDocument2;
+  if Assigned(document) then
+  begin
+  WebBrowser1.Navigate('https://raw.githubusercontent.com/tasks-delivery/front-editor/master/Version-'+releaseVersion);
+end;
+end;
+
+procedure TMain.MenuItemUpdateClick(Sender: TObject);
+begin
+if WebBrowser1.OleObject.Document.documentElement.innerText = 'Version-'+releaseVersion then
+begin
+ UpdateApp.LabelAppVersion.Visible := False;
+ UpdateApp.DownloadApp.Enabled := False;
+  UpdateApp.ShowModal;
+ end
+  else
+ UpdateApp.LabelAppVersion.Visible := True;
+ UpdateApp.DownloadApp.Enabled := True;
+ UpdateApp.ShowModal;
+end;
+
+procedure TMain.FormPaint(Sender: TObject);
+begin
+   HelpNoti.Click;
+end;
+
+procedure TMain.HelpNotiClick(Sender: TObject);
+var IniFile: TIniFile;
+    First : Boolean;
+    A, S:integer;
+    begin
+  IniFile:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'Config.INI');
+  First:=IniFile.ReadBool('CheckBox', 'First', False);
+  if First = True then
+  begin
+  UpdateApp.CheckBoxOffNoti.State:=cbChecked;
+  end
+     else UpdateApp.CheckBoxOffNoti.State:=cbUnchecked;
+  IniFile.Free;
+begin
+If not Flag then
+begin
+  WebBrowser1.Navigate('https://raw.githubusercontent.com/tasks-delivery/front-editor/master/Version-'+releaseVersion);
+  while WebBrowser1.ReadyState<>READYSTATE_COMPLETE do Application.ProcessMessages;
+ if WebBrowser1.OleObject.Document.documentElement.innerText <> 'Version-'+releaseVersion then
+begin
+if UpdateApp.CheckBoxOffNoti.Checked = false then
+  MenuItemUpdate.Click;
+  Flag := true;
+end;
+end;
+end;
+end;
+
+procedure TMain.Timer1Timer(Sender: TObject);
+begin
+//
+end;
+
+procedure TMain.FormMouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
+begin
+//
+end;
+
+procedure TMain.PageEditorMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+//
 end;
 
 procedure TMain.PageEditorMouseLeave(Sender: TObject);
@@ -270,9 +405,14 @@ begin
 //
 end;
 
+procedure TMain.EditorChange(Sender: TObject);
+begin
+//
+end;
+
 procedure TMain.BtnTerminalClick(Sender: TObject);
 begin
-WinExec('cmd /c start runas /trustlevel:0x20000 cmd.exe', SW_SHOW)
+  WinExec('cmd /c start cmd.exe', SW_SHOW)
 end;
 
 procedure TMain.BtnClearEditorClick(Sender: TObject);
@@ -300,19 +440,9 @@ begin
   BtnCssTemplate.Click
 end;
 
-procedure TMain.EditorChange(Sender: TObject);
-begin
-//
-end;
-
 procedure TMain.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
    PageEditor.Free;
-end;
-
-procedure TMain.FormCreate(Sender: TObject);
-begin
-//
 end;
 
 procedure TMain.MenuItemHTMLClick(Sender: TObject);
@@ -331,9 +461,10 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('   </body>');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' </html>');
-  NewSynEdit.Highlighter:=SynHtmlSyn;
-  end;
-if PageEditor.PageCount > 0 then
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynHtmlSyn;
+  SetFocusToLastString;
+  end
+else
 begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<!doctype html>');
@@ -347,7 +478,7 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('   </body>');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' </html>');
   SetFocusToLastString;
-  NewSynEdit.Highlighter:=SynHtmlSyn;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynHtmlSyn;
 end;
 end;
 
@@ -362,9 +493,10 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('author: User');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('description: none');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('*/');
-  NewSynEdit.Highlighter:=SynCssSyn;
-  end;
-if PageEditor.PageCount > 0 then
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynCssSyn;
+  SetFocusToLastString;
+end
+else
 begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('/*');
@@ -372,15 +504,9 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('author: User');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('description: none');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('*/');
-   SetFocusToLastString;
-  NewSynEdit.Highlighter:=SynCssSyn;
+  SetFocusToLastString;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynCssSyn;
 end;
-end;
-
-procedure TMain.BtnDelTabClick(Sender: TObject);
-begin
-  if (PageEditor.PageCount>1) and (PageEditor.ActivePageIndex>0) then
-PageEditor.ActivePage.Destroy;
 end;
 
 procedure TMain.BtnHtmlTemplateClick(Sender: TObject);
@@ -396,15 +522,16 @@ begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('public class '+PageEditor.ActivePage.HelpKeyword+' {');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
-  NewSynEdit.Highlighter:=SynJavaSyn;
-  end;
-if PageEditor.PageCount > 0 then
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter := SynJavaSyn;
+  SetFocusToLastString;
+end
+else
 begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('public class '+PageEditor.ActivePage.HelpKeyword+' {');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
   SetFocusToLastString;
-  NewSynEdit.Highlighter:=SynJavaSyn;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter := SynJavaSyn;
 end;
 end;
 
@@ -444,9 +571,10 @@ if OpenFile.Execute then begin
   OTabName:=ChangeFileExt(ExtractFileName(OFName),'');
   PageEditor.ActivePage.Hint := OFName;
   PageEditor.ActivePage.HelpKeyword := OTabName;
-  PageEditor.ActivePage.Caption := OFileLoard;
+  PageEditor.ActivePage.Caption := OFileLoard+ '       ';
   SetCodeHighlighter(OFName, OTabName, OFileLoard);
   SetFocusToLastString;
+(PageEditor.ActivePage.Components[0] as TSynEdit).Gutter.ShowLineNumbers := True;
 end;
 end;
 end;
@@ -461,7 +589,7 @@ end;
 
 procedure TMain.MenuItemJavaClick(Sender: TObject);
 begin
-    BtnJavaTemplate.Click
+    BtnJavaTemplate.Click;
 end;
 
 procedure TMain.MenuItemKeymapInfoClick(Sender: TObject);
@@ -479,9 +607,10 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('author: User');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('description: none');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('*/');
-  NewSynEdit.Highlighter:=SynCssSyn;
-  end;
-if PageEditor.PageCount > 0 then
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynCssSyn;
+  SetFocusToLastString;
+end
+else
 begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('/*');
@@ -489,7 +618,7 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('description: none');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('*/');
   SetFocusToLastString;
-  NewSynEdit.Highlighter:=SynCssSyn;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynCssSyn;
 end;
 end;
 
@@ -497,43 +626,44 @@ procedure TMain.SubMenuItemPackageJsonClick(Sender: TObject);
 begin
   if PageEditor.PageCount = 0 then
 begin
-     BtnNewFile.Click;
-     SetLineNumbers;
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('{');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "name": "",');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "private": true,');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "version": "",');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "description": "",');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "repository": "",');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "license": "MIT",');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "devDependencies": {');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             "": "^"');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             },');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "scripts": {');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             "": ""');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             }');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
-     NewSynEdit.Highlighter:=SynJScriptSyn;
-    end;
-if PageEditor.PageCount > 0 then
+  BtnNewFile.Click;
+  SetLineNumbers;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('{');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "name": "",');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "private": true,');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "version": "",');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "description": "",');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "repository": "",');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "license": "MIT",');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "devDependencies": {');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             "": "^"');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             },');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "scripts": {');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             "": ""');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             }');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynJScriptSyn;
+  SetFocusToLastString;
+end
+else
 begin
-     SetLineNumbers;
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('{');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "name": "",');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "private": true,');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "version": "",');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "description": "",');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "repository": "",');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "license": "MIT",');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "devDependencies": {');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             "": "^"');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             },');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "scripts": {');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             "": ""');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             }');
-     (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
-     SetFocusToLastString;
-     NewSynEdit.Highlighter:=SynJScriptSyn;
+  SetLineNumbers;
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('{');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "name": "",');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "private": true,');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "version": "",');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "description": "",');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "repository": "",');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "license": "MIT",');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "devDependencies": {');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             "": "^"');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             },');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add(' "scripts": {');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             "": ""');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('             }');
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('}');
+ SetFocusToLastString;
+ (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynJScriptSyn;
 end;
 end;
 
@@ -547,9 +677,10 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<suite name="">');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('</suite>');
-  NewSynEdit.Highlighter:=SynXmlSyn;
-  end;
-if PageEditor.PageCount > 0 then
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynXmlSyn;
+  SetFocusToLastString;
+end
+else
 begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<?xml version="1.0" encoding="UTF-8"?>');
@@ -557,7 +688,7 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<suite name="">');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('</suite>');
   SetFocusToLastString;
-  NewSynEdit.Highlighter:=SynXmlSyn;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynXmlSyn;
 end;
 end;
 
@@ -640,9 +771,10 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('--');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('CREATE DATABASE  IF NOT EXISTS `'+PageEditor.ActivePage.HelpKeyword+'`;');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('USE `'+PageEditor.ActivePage.HelpKeyword+'`;');
-  NewSynEdit.Highlighter:=SynSqlSyn;
-  end;
-if PageEditor.PageCount > 0 then
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynSqlSyn;
+  SetFocusToLastString;
+end
+else
 begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('--');
@@ -652,7 +784,7 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('CREATE DATABASE  IF NOT EXISTS `'+PageEditor.ActivePage.HelpKeyword+'`;');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('USE `'+PageEditor.ActivePage.HelpKeyword+'`;');
   SetFocusToLastString;
-  NewSynEdit.Highlighter:=SynSqlSyn;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynSqlSyn;
 end;
 end;
 
@@ -668,13 +800,16 @@ begin
   BtnNewFile.Click;
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<?xml version="1.0" encoding="UTF-8"?>');
-  NewSynEdit.Highlighter:=SynXmlSyn;
-  end
-  else
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynXmlSyn;
+  SetFocusToLastString;
+end
+else
+begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<?xml version="1.0" encoding="UTF-8"?>');
   SetFocusToLastString;
-  NewSynEdit.Highlighter:=SynXmlSyn;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynXmlSyn;
+end;
 end;
 
 procedure TMain.TreeClick(Sender: TObject);
@@ -687,7 +822,7 @@ begin
    MenuItemOpenFile.Click;
 end;
 end;
-
+
 procedure TMain.MenuItemViewClick(Sender: TObject);
 begin
 if FontDialog.Execute then
@@ -711,9 +846,10 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('    <css></css>');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('  </group>');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('</groups>');
-  NewSynEdit.Highlighter:=SynXmlSyn;
-  end;
-if PageEditor.PageCount > 0 then
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynXmlSyn;
+  SetFocusToLastString;
+end
+else
 begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<groups xmlns="http://www.isdc.ro/wro">');
@@ -722,9 +858,9 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('</group>');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('</groups>');
   SetFocusToLastString;
-  NewSynEdit.Highlighter:=SynXmlSyn;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynXmlSyn;
 end;
-end;
+end;                                                      
 
 procedure TMain.SubMenuItemPomXmlClick(Sender: TObject);
 begin
@@ -741,9 +877,10 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('    <artifactId></artifactId>');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('    <version></version>');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('</project>');
-  NewSynEdit.Highlighter:=SynXmlSyn;
-  end;
-if PageEditor.PageCount > 0 then
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynXmlSyn;
+  SetFocusToLastString;
+end
+else
 begin
   SetLineNumbers;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('<?xml version="1.0" encoding="UTF-8"?>');
@@ -756,27 +893,23 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('    <version></version>');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('</project>');
   SetFocusToLastString;
-  NewSynEdit.Highlighter:=SynXmlSyn;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynXmlSyn;
 end;
-end;
-
-procedure TMain.PageEditorMouseUp(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-begin
-//
 end;
 
 procedure TMain.MenuSubItemTodoClick(Sender: TObject);
+var LineNum : word;
 begin
 if PageEditor.PageCount > 0  then
 begin
-if (NewSynEdit.Highlighter = SynJavaSyn) or
-   (NewSynEdit.Highlighter = SynJScriptSyn) or
-   (NewSynEdit.Highlighter = SynCssSyn) then
+if ((PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter = SynJavaSyn) or
+   ((PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter = SynJScriptSyn) or
+   ((PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter = SynCssSyn) then
 begin
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('/*');
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('TODO:');
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('*/');
+  LineNum := (NewTab.PageControl.ActivePage.Components[0] as  TSynEdit).CaretY;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Insert(LineNum,'*/');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Insert(LineNum,'TODO:');
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Insert(LineNum,'/*');
   (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
 end;
 end;
@@ -791,40 +924,40 @@ end;
 
 procedure TMain.SetFocusToLastString;
 begin
-  (NewTab.PageControl.ActivePage.Components[0] as  TSynEdit).SelStart:=
-  Length((NewTab.PageControl.ActivePage.Components[0] as TSynEdit).lines.text);
-  (NewTab.PageControl.ActivePage.Components[0] as TSynEdit).perform(EM_LINESCROLL,0,
-  (NewTab.PageControl.ActivePage.Components[0] as TSynEdit).lines.count);
-  (NewTab.PageControl.ActivePage.Components[0] as TSynEdit).SetFocus;
+  (PageEditor.ActivePage.Components[0] as  TSynEdit).SelStart:=
+  Length((PageEditor.ActivePage.Components[0] as TSynEdit).lines.text);
+  (PageEditor.ActivePage.Components[0] as TSynEdit).perform(EM_LINESCROLL,0,
+  (PageEditor.ActivePage.Components[0] as TSynEdit).lines.count);
+  (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
 end;
 
 procedure TMain.SetCodeHighlighter(FName, FTabName, FFileLoard:string);
 begin
   if (FFileLoard = FTabName + '.css') or (FFileLoard = FTabName + '.less') then
   begin
-  NewSynEdit.Highlighter:=SynCssSyn;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynCssSyn;
   end;
      if (FFileLoard = FTabName + '.html') or (FFileLoard = FTabName + '.htm') then
   begin
-  NewSynEdit.Highlighter:=SynHTMLSyn;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynHTMLSyn;
   end;
      if (FFileLoard = FTabName + '.java') or (FFileLoard = FTabName + '.jsp')then
   begin
-  NewSynEdit.Highlighter:=SynJavaSyn;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynJavaSyn;
   end;
      if (FFileLoard = FTabName + '.js') or (FFileLoard = FTabName + '.json') then
   begin
-  NewSynEdit.Highlighter:=SynJScriptSyn;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynJScriptSyn;
   end;
      if FFileLoard = FTabName + '.sql' then
   begin
-  NewSynEdit.Highlighter:=SynSQLSyn;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynSQLSyn;
   end;
      if (FFileLoard = FTabName + '.xml') or (FFileLoard = FTabName + '.xsd') or
      (FFileLoard = FTabName + '.xsl') or (FFileLoard = FTabName + '.xslt') or
      (FFileLoard = FTabName + '.dtd')  then
   begin
-  NewSynEdit.Highlighter:=SynXMLSyn;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter := SynXMLSyn;;
   end;
   MenuSubItemChrome.Enabled := True;
   MenuSubItemFirefox.Enabled := True;
@@ -838,7 +971,7 @@ procedure TMain.SetFocusIfPageExists;
 begin
     if PageEditor.PageCount > 0 then
   begin
-   (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
+    (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
   end;
 end;
 
