@@ -365,7 +365,7 @@ var IniFile: TIniFile;
 begin
 If not Flag then
 begin
-  WebBrowser1.Navigate('https://raw.githubusercontent.com/tasks-delivery/front-editor/Release-'+releaseVersion+'/Version-'+releaseVersion);
+  WebBrowser1.Navigate('https://raw.githubusercontent.com/tasks-delivery/front-editor/master/Version-'+releaseVersion);
   while WebBrowser1.ReadyState<>READYSTATE_COMPLETE do Application.ProcessMessages;
  if WebBrowser1.OleObject.Document.documentElement.innerText <> 'Version-'+releaseVersion then
 begin
