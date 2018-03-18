@@ -11585,6 +11585,8 @@ object Main: TMain
   WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate
+  OnMouseMove = FormMouseMove
+  OnShow = FormShow
   DesignSize = (
     684
     534)
@@ -11615,7 +11617,6 @@ object Main: TMain
     RightEdgeColor = clActiveBorder
     OnChange = EditorChange
     FontSmoothing = fsmNone
-    ExplicitTop = 122
   end
   object NavigationPanel: TToolBar
     Left = 0
@@ -12596,7 +12597,6 @@ object Main: TMain
     OnMouseLeave = PageEditorMouseLeave
     OnMouseMove = PageEditorMouseMove
     OnMouseUp = PageEditorMouseUp
-    ExplicitHeight = 408
   end
   object Tree: TShellTreeView
     Left = 24
@@ -12614,7 +12614,6 @@ object Main: TMain
     ShowRoot = False
     TabOrder = 3
     OnClick = TreeClick
-    ExplicitHeight = 408
   end
   object BtnDelTab: TButton
     Left = 512
