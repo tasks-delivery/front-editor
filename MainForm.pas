@@ -85,6 +85,8 @@ type
     MenuItemView: TMenuItem;
     MenuItemOpenTerminal: TMenuItem;
     WebBrowser1: TWebBrowser;
+    procedure FormShow(Sender: TObject);
+    procedure FormMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure MenuItemUpdateClick(Sender: TObject);
     procedure MenuItemKeymapInfoClick(Sender: TObject);
     procedure MenuSubItemIEClick(Sender: TObject);
@@ -159,6 +161,8 @@ var
   mresult : TModalResult;
   NewTabWidth: Integer;
   const size = 10;
+  const s = 'test';
+  const link = 'https://codeload.github.com/tasks-delivery/front-editor/zip/v0.0.7';
 
 implementation
 
@@ -310,18 +314,35 @@ PageEditor.ActivePage :=  PageEditor.FindNextPage(PageEditor.ActivePage, True, F
 end;
 
 procedure TMain.FormCreate(Sender: TObject);
+//var s : string;
 begin
 WebBrowser1.Navigate('https://github.com/tasks-delivery/front-editor/archive/v0.0.7.zip');
+if  WebBrowser1.LocationName = link then
 end;
 
 procedure TMain.MenuItemUpdateClick(Sender: TObject);
-var link : string;
+//var link : string;
 begin
-link := 'https://codeload.github.com/tasks-delivery/front-editor/zip/v0.0.7';
+//link := 'https://codeload.github.com/tasks-delivery/front-editor/zip/v0.0.7';
 if  WebBrowser1.LocationName = link then
  UpdateApp.LabelAppVersion.Visible := False;
  UpdateApp.DownloadApp.Enabled := False;
  UpdateApp.ShowModal;
+end;
+
+procedure TMain.FormMouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
+  var link : string;
+begin
+//
+end;
+
+procedure TMain.FormShow(Sender: TObject);
+  //var link : string;
+begin
+       if Sender =  Main then
+ShowMessage('test');
+//
 end;
 
 procedure TMain.PageEditorMouseUp(Sender: TObject; Button: TMouseButton;
