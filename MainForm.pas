@@ -171,10 +171,12 @@ var
   const releaseVersion = '0.0.7';
 
 implementation
-
+
+
 uses KeymapInfoModalWindow, Types,commctrl, UpdateModalWindow;
 
-{$R *.dfm}
+
+{$R *.dfm}
 
 procedure TMain.MenuItemNewClick(Sender: TObject);
 begin
@@ -246,7 +248,8 @@ begin
   OpenBrowser('firefox.exe');
 end;
 
-procedure TMain.PageEditorDrawTab(Control: TCustomTabControl; TabIndex: Integer;
+
+procedure TMain.PageEditorDrawTab(Control: TCustomTabControl; TabIndex: Integer;
   const Rect: TRect; Active: Boolean);
 var
   AText: string;
@@ -365,7 +368,7 @@ var IniFile: TIniFile;
 begin
 If not Flag then
 begin
-  WebBrowser1.Navigate('https://raw.githubusercontent.com/tasks-delivery/front-editor/Release-'+releaseVersion+'/Version-'+releaseVersion);
+  WebBrowser1.Navigate('https://raw.githubusercontent.com/tasks-delivery/front-editor/master/Version-'+releaseVersion);
   while WebBrowser1.ReadyState<>READYSTATE_COMPLETE do Application.ProcessMessages;
  if WebBrowser1.OleObject.Document.documentElement.innerText <> 'Version-'+releaseVersion then
 begin
@@ -422,7 +425,8 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Clear;
   (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
 end;
-end;
+
+end;
 
 procedure TMain.ManuItemAboutClick(Sender: TObject);
 begin
@@ -434,7 +438,8 @@ begin
   PageEditor.Free;
   Application.Terminate;
 end;
-
+
+
 procedure TMain.MenuItemCSSClick(Sender: TObject);
 begin
   BtnCssTemplate.Click
@@ -665,7 +670,8 @@ begin
  SetFocusToLastString;
  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynJScriptSyn;
 end;
-end;
+
+end;
 
 procedure TMain.SubMenuItemTestNGXmlClick(Sender: TObject);
 begin
@@ -822,14 +828,16 @@ begin
    MenuItemOpenFile.Click;
 end;
 end;
-
+
+
 procedure TMain.MenuItemViewClick(Sender: TObject);
 begin
 if FontDialog.Execute then
   Editor.Font := FontDialog.Font;
   SetFocusIfPageExists;
 end;
-
+
+
 procedure TMain.SubMenuItemXmlClick(Sender: TObject);
 begin
    BtnXmlTemplate.Click;
