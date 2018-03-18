@@ -12,22 +12,25 @@ object UpdateApp: TUpdateApp
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  FormStyle = fsStayOnTop
   OldCreateOrder = False
+  Position = poDesktopCenter
+  OnClose = FormClose
   OnCreate = FormCreate
+  OnPaint = FormPaint
   PixelsPerInch = 96
   TextHeight = 13
   object LabelAppVersion: TLabel
-    Left = 238
-    Top = 53
-    Width = 155
-    Height = 13
-    Caption = 'Version 0.0.7 has been released'
+    Left = 40
+    Top = 62
+    Width = 0
+    Height = 0
     OnMouseMove = LabelAppVersionMouseMove
     OnMouseLeave = LabelAppVersionMouseLeave
   end
   object ReleaseHistory: TRichEdit
     Left = 40
-    Top = 128
+    Top = 104
     Width = 353
     Height = 129
     Lines.Strings = (
@@ -97,11 +100,19 @@ object UpdateApp: TUpdateApp
   end
   object DownloadApp: TButton
     Left = 318
-    Top = 72
+    Top = 57
     Width = 75
     Height = 25
     Caption = 'Download'
     TabOrder = 1
     OnClick = DownloadAppClick
+  end
+  object CheckBoxOffNoti: TCheckBox
+    Left = 40
+    Top = 256
+    Width = 217
+    Height = 17
+    Caption = 'Turn off application update notification'
+    TabOrder = 2
   end
 end
