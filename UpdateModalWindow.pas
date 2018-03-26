@@ -30,7 +30,7 @@ var
 
 implementation
 
-uses MainForm;
+uses MainForm, AboutModalWindow;
 
 {$R *.dfm}
 
@@ -61,11 +61,18 @@ procedure TUpdateApp.FormPaint(Sender: TObject);
 var IniFile: TIniFile;
     First : Boolean;
 begin
+if releaseVersion = Main.WebBrowser1.OleObject.Document.documentElement.innerText then
+begin
+ LabelAppVersion.Visible := True;
+ DownloadApp.Enabled := True;
+end;
+begin
   IniFile:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'Config.INI');
   First:=IniFile.ReadBool('CheckBox', 'First', False);
   if First = True then CheckBoxOffNoti.State:=cbChecked
      else CheckBoxOffNoti.State:=cbUnchecked;
   IniFile.Free;
+end;
 end;
 
 procedure TUpdateApp.LabelAppVersionMouseLeave(Sender: TObject);

@@ -23,8 +23,9 @@ object UpdateApp: TUpdateApp
   object LabelAppVersion: TLabel
     Left = 40
     Top = 62
-    Width = 0
-    Height = 0
+    Width = 3
+    Height = 13
+    Visible = False
     OnMouseMove = LabelAppVersionMouseMove
     OnMouseLeave = LabelAppVersionMouseLeave
   end
@@ -34,6 +35,15 @@ object UpdateApp: TUpdateApp
     Width = 353
     Height = 129
     Lines.Strings = (
+      'Release 0.0.8'
+      ''
+      'Released 26.03.2018'
+      ''
+      
+        'https://github.com/tasks-delivery/front-editor/releases/tag/v0.0' +
+        '.8'
+      '_____________________________________________________'
+      ''
       'Release 0.0.7'
       ''
       'Released 18.03.2018'
@@ -104,6 +114,7 @@ object UpdateApp: TUpdateApp
     Width = 75
     Height = 25
     Caption = 'Download'
+    Enabled = False
     TabOrder = 1
     OnClick = DownloadAppClick
   end
