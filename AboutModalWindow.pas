@@ -40,10 +40,9 @@ end;
 
 procedure TAbout.FormCreate(Sender: TObject);
 begin
-
  LinkToWikiLabel.Font.Color := clBlue;
  LinkToWikiLabel.Font.Style := [fsUnderline];
- AppVersionLabel.Caption := 'Version '+releaseVersion;
+ AppVersionLabel.Caption := 'Version '+currentVersion;
 end;
 
 procedure TAbout.LinkToWikiLabelClick(Sender: TObject);
