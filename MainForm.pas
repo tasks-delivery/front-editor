@@ -168,7 +168,8 @@ var
   document: IHTMLDocument2;
   Flag: Boolean;
   const size = 10;
-  const releaseVersion = '0.0.7';
+  const releaseVersion = '0.0.9';
+  const currentVersion = '0.0.8';
 
 implementation
 
@@ -322,27 +323,34 @@ end;
 procedure TMain.FormCreate(Sender: TObject);
 begin
 Flag := False;
-WebBrowser1.Navigate('https://raw.githubusercontent.com/tasks-delivery/front-editor/master/Version-'+releaseVersion);
+WebBrowser1.Navigate('https://raw.githubusercontent.com/tasks-delivery/front-editor/master/'+releaseVersion);
   document := WebBrowser1.Document as IHTMLDocument2;
   if Assigned(document) then
   begin
-  WebBrowser1.Navigate('https://raw.githubusercontent.com/tasks-delivery/front-editor/master/Version-'+releaseVersion);
+  WebBrowser1.Navigate('https://raw.githubusercontent.com/tasks-delivery/front-editor/master/'+releaseVersion);
 end;
 end;
 
 procedure TMain.MenuItemUpdateClick(Sender: TObject);
 begin
-if WebBrowser1.OleObject.Document.documentElement.innerText = 'Version-'+releaseVersion then
+ UpdateApp.ShowModal;
+ {
+if WebBrowser1.OleObject.Document.documentElement.innerText <> releaseVersion then
 begin
+ UpdateApp.ShowModal;
  UpdateApp.LabelAppVersion.Visible := False;
  UpdateApp.DownloadApp.Enabled := False;
-  UpdateApp.ShowModal;
- end
-  else
- UpdateApp.LabelAppVersion.Visible := True;
- UpdateApp.DownloadApp.Enabled := True;
- UpdateApp.ShowModal;
 end;
+begin
+   }
+//if releaseVersion <> WebBrowser1.OleObject.Document.documentElement.innerText then
+//begin
+ //UpdateApp.LabelAppVersion.Visible := True;
+// UpdateApp.DownloadApp.Enabled := True;
+//UpdateApp.ShowModal;
+//end;
+end;
+
 
 procedure TMain.FormPaint(Sender: TObject);
 begin
@@ -365,12 +373,13 @@ var IniFile: TIniFile;
 begin
 If not Flag then
 begin
-  WebBrowser1.Navigate('https://raw.githubusercontent.com/tasks-delivery/front-editor/master/Version-'+releaseVersion);
+  WebBrowser1.Navigate('https://raw.githubusercontent.com/tasks-delivery/front-editor/master/'+releaseVersion);
   while WebBrowser1.ReadyState<>READYSTATE_COMPLETE do Application.ProcessMessages;
- if WebBrowser1.OleObject.Document.documentElement.innerText <> 'Version-'+releaseVersion then
+ if WebBrowser1.OleObject.Document.documentElement.innerText = releaseVersion then
 begin
 if UpdateApp.CheckBoxOffNoti.Checked = false then
-  MenuItemUpdate.Click;
+ // MenuItemUpdate.Click;
+ UpdateApp.ShowModal;
   Flag := true;
 end;
 end;
