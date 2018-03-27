@@ -2,7 +2,7 @@ object Main: TMain
   Left = 210
   Top = 144
   Caption = 'Front-Editor'
-  ClientHeight = 534
+  ClientHeight = 554
   ClientWidth = 684
   Color = clActiveCaption
   Constraints.MinHeight = 500
@@ -11589,12 +11589,12 @@ object Main: TMain
   OnPaint = FormPaint
   DesignSize = (
     684
-    534)
+    554)
   PixelsPerInch = 96
   TextHeight = 13
   object Editor: TSynMemo
     Left = 422
-    Top = 128
+    Top = 134
     Width = 120
     Height = 84
     Anchors = []
@@ -11617,6 +11617,7 @@ object Main: TMain
     RightEdgeColor = clActiveBorder
     OnChange = EditorChange
     FontSmoothing = fsmNone
+    ExplicitTop = 128
   end
   object NavigationPanel: TToolBar
     Left = 0
@@ -12582,8 +12583,8 @@ object Main: TMain
   object PageEditor: TPageControl
     Left = 280
     Top = 71
-    Width = 365
-    Height = 428
+    Width = 375
+    Height = 448
     Anchors = [akLeft, akTop, akRight, akBottom]
     DockSite = True
     HotTrack = True
@@ -12602,7 +12603,7 @@ object Main: TMain
     Left = 24
     Top = 71
     Width = 250
-    Height = 428
+    Height = 448
     ObjectTypes = [otFolders, otNonFolders]
     Root = 'rfMyComputer'
     UseShellImages = True
@@ -12614,10 +12615,11 @@ object Main: TMain
     ShowRoot = False
     TabOrder = 3
     OnClick = TreeClick
+    ExplicitHeight = 428
   end
   object BtnDelTab: TButton
-    Left = 512
-    Top = 408
+    Left = 544
+    Top = 312
     Width = 75
     Height = 25
     Caption = 'X'
@@ -12709,21 +12711,12 @@ object Main: TMain
           OnClick = MenuSubItemIEClick
         end
       end
-      object Settings1: TMenuItem
-        Caption = 'Settings'
-        GroupIndex = 2
-        object Keymap3: TMenuItem
-          Caption = 'Keymap'
-        end
-        object CodeColor1: TMenuItem
-          Caption = 'Code Color'
-        end
-      end
       object ools1: TMenuItem
         Caption = 'Tools'
         GroupIndex = 2
         object MenuItemView: TMenuItem
           Caption = 'Text Style'
+          ShortCut = 32852
           OnClick = MenuItemViewClick
         end
         object MenuItemOpenTerminal: TMenuItem
@@ -12731,11 +12724,9 @@ object Main: TMain
           ShortCut = 16468
           OnClick = MenuItemOpenTerminalClick
         end
-        object Proxy1: TMenuItem
-          Caption = 'Proxy'
-        end
         object MenuSubItemTodo: TMenuItem
           Caption = 'TODO'
+          ShortCut = 8276
           OnClick = MenuSubItemTodoClick
         end
       end
@@ -12790,15 +12781,13 @@ object Main: TMain
           OnClick = SubMenuItemXmlClick
         end
       end
-      object CustromTemplate1: TMenuItem
-        Caption = 'Custrom Template'
-      end
     end
     object MenuHelp: TMenuItem
       Caption = '&Help'
       GroupIndex = 2
-      object CodeStyle1: TMenuItem
+      object MenuItemCodeStyle: TMenuItem
         Caption = 'Code Style'
+        OnClick = MenuItemCodeStyleClick
       end
       object MenuItemKeymapInfo: TMenuItem
         Caption = 'Keymap'
@@ -13316,8 +13305,8 @@ object Main: TMain
   end
   object ImageList1: TImageList
     ShareImages = True
-    Left = 376
-    Top = 352
+    Left = 480
+    Top = 304
     Bitmap = {
       494C010102000400040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
@@ -13460,7 +13449,7 @@ object Main: TMain
   end
   object Timer1: TTimer
     OnTimer = Timer1Timer
-    Left = 344
-    Top = 256
+    Left = 432
+    Top = 304
   end
 end

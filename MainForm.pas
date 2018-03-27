@@ -70,11 +70,6 @@ type
     MenuSubItemTodo: TMenuItem;
     MenuItemKeymapInfo: TMenuItem;
     MenuItemUpdate: TMenuItem;
-    Proxy1: TMenuItem;
-    CustromTemplate1: TMenuItem;
-    Settings1: TMenuItem;
-    Keymap3: TMenuItem;
-    CodeColor1: TMenuItem;
     MenuItemBrowsers: TMenuItem;
     MenuSubItemChrome: TMenuItem;
     MenuSubItemFirefox: TMenuItem;
@@ -82,12 +77,13 @@ type
     MenuSubItemSafari: TMenuItem;
     MenuSubItemIE: TMenuItem;
     MenuSubItemOpera: TMenuItem;
-    CodeStyle1: TMenuItem;
+    MenuItemCodeStyle: TMenuItem;
     MenuItemView: TMenuItem;
     MenuItemOpenTerminal: TMenuItem;
     WebBrowser1: TWebBrowser;
     Timer1: TTimer;
     HelpNoti: TButton;
+    procedure MenuItemCodeStyleClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure HelpNotiClick(Sender: TObject);
@@ -173,7 +169,7 @@ var
 
 implementation
 
-uses KeymapInfoModalWindow, Types,commctrl, UpdateModalWindow;
+uses KeymapInfoModalWindow, Types,commctrl, UpdateModalWindow, CodeStyleWindow;
 
 {$R *.dfm}
 
@@ -351,7 +347,6 @@ begin
 //end;
 end;
 
-
 procedure TMain.FormPaint(Sender: TObject);
 begin
    HelpNoti.Click;
@@ -384,6 +379,11 @@ if UpdateApp.CheckBoxOffNoti.Checked = false then
 end;
 end;
 end;
+end;
+
+procedure TMain.MenuItemCodeStyleClick(Sender: TObject);
+begin
+   CodeStyleWin.ShowModal;
 end;
 
 procedure TMain.Timer1Timer(Sender: TObject);
