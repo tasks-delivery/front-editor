@@ -135,5 +135,8 @@
     <Transaction>2018.03.18 19:01:54.439.bdsproj,D:\projects\Delphi\front-editor\Front_Editor.bdsproj=D:\projects\Delphi\front-editor\Front_Editor.bdsproj</Transaction>
     <Transaction>2018.03.27 00:12:48.662.bdsproj,D:\projects\Delphi\front-editor\Front_Editor.bdsproj=D:\projects\Delphi\front-editor\Front_Editor.bdsproj</Transaction>
     <Transaction>2018.03.27 21:43:23.361.bdsproj,D:\projects\Delphi\front-editor\Front_Editor.bdsproj=D:\projects\Delphi\front-editor\Front_Editor.bdsproj</Transaction>
+    <Transaction>2018.03.27 21:51:28.500.pas,D:\projects\Delphi\front-editor\Unit1.pas=D:\projects\Delphi\front-editor\CodeStyleWindow.pas</Transaction>
+    <Transaction>2018.03.27 21:51:28.500.dfm,D:\projects\Delphi\front-editor\Unit1.dfm=D:\projects\Delphi\front-editor\CodeStyleWindow.dfm</Transaction>
+    <Transaction>2018.03.28 00:23:18.822.bdsproj,D:\projects\Delphi\front-editor\Front_Editor.bdsproj=D:\projects\Delphi\front-editor\Front_Editor.bdsproj</Transaction>
   </Transactions>
 </BorlandProject>
