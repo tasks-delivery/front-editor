@@ -9,3 +9,13 @@
 /.cfg
 /*.local
 /*.cfg
+/*local
+/*cfg
+/local
+/cfg
+/*.bdsproj.local
+/.bdsproj.local
+.bdsproj.local
+.cfg
+
+
