@@ -11585,7 +11585,6 @@ object Main: TMain
   WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate
-  OnMouseMove = FormMouseMove
   OnPaint = FormPaint
   DesignSize = (
     684
@@ -11615,9 +11614,7 @@ object Main: TMain
     Highlighter = SynHTMLSyn
     Options = [eoAltSetsColumnMode, eoAutoIndent, eoDragDropEditing, eoEnhanceEndKey, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoSmartTabs, eoSpecialLineDefaultFg, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces]
     RightEdgeColor = clActiveBorder
-    OnChange = EditorChange
     FontSmoothing = fsmNone
-    ExplicitTop = 128
   end
   object NavigationPanel: TToolBar
     Left = 0
@@ -12590,14 +12587,10 @@ object Main: TMain
     HotTrack = True
     OwnerDraw = True
     TabOrder = 2
-    OnChange = PageEditorChange
     OnDragDrop = PageEditorDragDrop
     OnDragOver = PageEditorDragOver
     OnDrawTab = PageEditorDrawTab
     OnMouseDown = PageEditorMouseDown
-    OnMouseLeave = PageEditorMouseLeave
-    OnMouseMove = PageEditorMouseMove
-    OnMouseUp = PageEditorMouseUp
   end
   object Tree: TShellTreeView
     Left = 24
@@ -12615,7 +12608,6 @@ object Main: TMain
     ShowRoot = False
     TabOrder = 3
     OnClick = TreeClick
-    ExplicitHeight = 428
   end
   object BtnDelTab: TButton
     Left = 544
@@ -12808,9 +12800,6 @@ object Main: TMain
     end
   end
   object OpenFile: TOpenDialog
-    FileName = 
-      'C:\Users\User\Downloads\FM\front-editor-master\front-editor\zona' +
-      '.txt'
     Filter = 'All|*.*'
     FilterIndex = 0
     Options = [ofOverwritePrompt, ofHideReadOnly, ofNoChangeDir, ofNoValidate, ofCreatePrompt, ofNoReadOnlyReturn, ofEnableSizing]
@@ -12821,6 +12810,7 @@ object Main: TMain
     Filter = 'All|*.*'
     Options = [ofOverwritePrompt, ofHideReadOnly, ofNoChangeDir, ofNoValidate, ofCreatePrompt, ofNoReadOnlyReturn, ofEnableSizing]
     Title = 'Save file'
+    OnFolderChange = SaveFileFolderChange
     Left = 56
   end
   object SynHTMLSyn: TSynHTMLSyn
@@ -13448,7 +13438,6 @@ object Main: TMain
       000000000000}
   end
   object Timer1: TTimer
-    OnTimer = Timer1Timer
     Left = 432
     Top = 304
   end
