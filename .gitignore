@@ -7,3 +7,5 @@
 /Config.INI
 /.local
 /.cfg
+/*.local
+/*.cfg
