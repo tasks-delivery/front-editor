@@ -88,7 +88,6 @@ type
     procedure FormPaint(Sender: TObject);
     procedure HelpNotiClick(Sender: TObject);
     procedure MenuItemUpdateClick(Sender: TObject);
-    procedure MenuItemKeymapInfoClick(Sender: TObject);
     procedure MenuSubItemIEClick(Sender: TObject);
     procedure MenuSubItemEdgeClick(Sender: TObject);
     procedure MenuSubItemSafariClick(Sender: TObject);
@@ -162,7 +161,7 @@ var
 
 implementation
 
-uses KeymapInfoModalWindow, Types,commctrl, UpdateModalWindow, CodeStyleWindow;
+uses Types,commctrl, UpdateModalWindow, CodeStyleWindow;
 
 {$R *.dfm}
 
@@ -529,11 +528,6 @@ begin
     BtnJavaTemplate.Click;
 end;
 
-procedure TMain.MenuItemKeymapInfoClick(Sender: TObject);
-begin
-   KeymapInfo.ShowModal;
-end;
-
 procedure TMain.SubMenuItemJSClick(Sender: TObject);
 begin
 if PageEditor.PageCount = 0 then
@@ -746,16 +740,46 @@ end;
 
 procedure TMain.TreeClick(Sender: TObject);
 var F: TShellFolder;
+  OFName, OTabName, OFileLoard: string;
 begin
  F := Tree.SelectedFolder;
  if Assigned(F) then
    if not F.IsFolder then
    begin
-   MenuItemOpenFile.Click;
+  NewTab := TTabSheet.Create(PageEditor);
+  with NewTab do
+  begin
+    PageControl := PageEditor;
+  end;
+  NewSynEdit := TSynEdit.Create(NewTab);
+  begin
+    with NewSynEdit do
+    begin
+    Parent := NewTab;
+    Align := alClient;
+   begin
+  OpenFile.FileName := Tree.path;
+  OFName := OpenFile.FileName;
+  Editor.Enabled := True;
+  PageEditor.ActivePageIndex := PageEditor.PageCount - 1;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.LoadFromFile(OFName);
+  begin
+  OFileLoard:=copy(ExtractFileName(OFName),0,pos('.',OpenFile.FileName)-1);
+  OTabName:=ChangeFileExt(ExtractFileName(OFName),'');
+  PageEditor.ActivePage.Hint := OFName;
+  PageEditor.ActivePage.HelpKeyword := OTabName;
+  PageEditor.ActivePage.Caption := OFileLoard+ '       ';
+  SetCodeHighlighter(OFName, OTabName, OFileLoard);
+  SetFocusToLastString;
+(PageEditor.ActivePage.Components[0] as TSynEdit).Gutter.ShowLineNumbers := True;
 end;
 end;
-
-procedure TMain.MenuItemViewClick(Sender: TObject);
+end;
+end;
+end;
+end;
+
+procedure TMain.MenuItemViewClick(Sender: TObject);
 begin
 if FontDialog.Execute then
   Editor.Font := FontDialog.Font;

@@ -13,7 +13,7 @@ object CodeStyleWin: TCodeStyleWin
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poScreenCenter
   OnPaint = FormPaint
   PixelsPerInch = 96
   TextHeight = 13
@@ -41,7 +41,6 @@ object CodeStyleWin: TCodeStyleWin
     Gutter.Font.Height = -11
     Gutter.Font.Name = 'Courier New'
     Gutter.Font.Style = []
-    Lines.UnicodeStrings = ''
     ScrollBars = ssNone
     FontSmoothing = fsmNone
   end
