@@ -6,10 +6,10 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Menus, StdCtrls, ComCtrls, ExtCtrls, SynEditExport, SynExportHTML,
   SynEdit, SynMemo, SynEditHighlighter, SynHighlighterHtml, ImgList, AboutModalWindow,
-  ToolWin, SynHighlighterCSS, Buttons, ShellCtrls, ShellApi, SynHighlighterJava,
+  ToolWin, SynHighlighterCSS, Buttons, ShellApi, SynHighlighterJava,
   SynHighlighterXML, SynHighlighterSQL, SynHighlighterJScript, UxTheme, Themes,
   Math, SynCompletionProposal, SynEditOptionsDialog, OleCtrls, SHDocVw, comobj,
-  MSHTML, ActiveX, IniFiles;
+  MSHTML, ActiveX, IniFiles, ShellCtrls;
 
 type
   TMain = class(TForm)
@@ -83,11 +83,10 @@ type
     WebBrowser1: TWebBrowser;
     Timer1: TTimer;
     HelpNoti: TButton;
+    procedure SaveFileFolderChange(Sender: TObject);
     procedure MenuItemCodeStyleClick(Sender: TObject);
-    procedure Timer1Timer(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure HelpNotiClick(Sender: TObject);
-    procedure FormMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure MenuItemUpdateClick(Sender: TObject);
     procedure MenuItemKeymapInfoClick(Sender: TObject);
     procedure MenuSubItemIEClick(Sender: TObject);
@@ -101,11 +100,6 @@ type
     procedure PageEditorDragDrop(Sender, Source: TObject; X, Y: Integer);
     procedure PageEditorDragOver(Sender, Source: TObject; X, Y: Integer;
       State: TDragState; var Accept: Boolean);
-    procedure PageEditorMouseLeave(Sender: TObject);
-    procedure PageEditorMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    procedure PageEditorMouseMove(Sender: TObject; Shift: TShiftState; X,
-      Y: Integer);
     procedure BtnDelTabClick(Sender: TObject);
     procedure PageEditorMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
@@ -128,8 +122,6 @@ type
     procedure BtnCssTemplateClick(Sender: TObject);
     procedure MenuItemJavaClick(Sender: TObject);
     procedure BtnJavaTemplateClick(Sender: TObject);
-    procedure EditorChange(Sender: TObject);
-    procedure PageEditorChange(Sender: TObject);
     procedure BtnTerminalClick(Sender: TObject);
     procedure MenuItemCloseAppClick(Sender: TObject);
     procedure TreeClick(Sender: TObject);
@@ -150,6 +142,7 @@ type
     procedure SetCodeHighlighter(FName, FTabName, FFileLoard:string);
     procedure SetFocusIfPageExists;
     procedure OpenBrowser(browser:string);
+    procedure BrowseEnable;
   private
   public
   end;
@@ -164,8 +157,8 @@ var
   document: IHTMLDocument2;
   Flag: Boolean;
   const size = 10;
-  const releaseVersion = '0.0.9';
-  const currentVersion = '0.0.8';
+  const releaseVersion = '0.1.0';
+  const currentVersion = '0.0.9';
 
 implementation
 
@@ -197,12 +190,7 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Gutter.ShowLineNumbers := True;
   MenuItemSaveas.Click;
   SetFocusToLastString;
-  MenuSubItemChrome.Enabled := True;
-  MenuSubItemFirefox.Enabled := True;
-  MenuSubItemSafari.Enabled := True;
-  MenuSubItemOpera.Enabled := True;
-  MenuSubItemIE.Enabled := True;
-  MenuSubItemEdge.Enabled := True;
+  BrowseEnable;
 end;
 
 procedure TMain.MenuSubItemChromeClick(Sender: TObject);
@@ -248,7 +236,6 @@ end;
 var
   AText: string;
   APoint: TPoint;
-  r: TRect;
   delIcon : TIcon;
 begin
  with (Control as TPageControl).Canvas do
@@ -271,10 +258,6 @@ begin
       ImageList1.GetIcon(0, delIcon);
       Draw(Rect.Right - 20, Rect.Top + 2, delIcon);
     end;
-//    Brush.Color := clRed;
-//   r := {System.}Types.Rect(Rect.Right - size - 4, Rect.Top + 2, rect.Right - 2, rect.Top + Size + 4);
-//    Pen.Color := clWhite;
-//    Rectangle(r);
   end;
 end;
 
@@ -305,15 +288,10 @@ begin
 end;
 
 procedure TMain.BtnDelTabClick(Sender: TObject);
-var i: integer;
 begin
   if PageEditor.PageCount>1 then
 PageEditor.ActivePage.Destroy;
 PageEditor.ActivePage :=  PageEditor.FindNextPage(PageEditor.ActivePage, True, False)
- // for i := 0 to PageEditor.PageCount - 1 do
-  //  begin
-   // PageEditor.ActivePage := PageEditor.Pages[i];
-  //  end;
 end;
 
 procedure TMain.FormCreate(Sender: TObject);
@@ -330,21 +308,6 @@ end;
 procedure TMain.MenuItemUpdateClick(Sender: TObject);
 begin
  UpdateApp.ShowModal;
- {
-if WebBrowser1.OleObject.Document.documentElement.innerText <> releaseVersion then
-begin
- UpdateApp.ShowModal;
- UpdateApp.LabelAppVersion.Visible := False;
- UpdateApp.DownloadApp.Enabled := False;
-end;
-begin
-   }
-//if releaseVersion <> WebBrowser1.OleObject.Document.documentElement.innerText then
-//begin
- //UpdateApp.LabelAppVersion.Visible := True;
-// UpdateApp.DownloadApp.Enabled := True;
-//UpdateApp.ShowModal;
-//end;
 end;
 
 procedure TMain.FormPaint(Sender: TObject);
@@ -355,7 +318,6 @@ end;
 procedure TMain.HelpNotiClick(Sender: TObject);
 var IniFile: TIniFile;
     First : Boolean;
-    A, S:integer;
     begin
   IniFile:=TIniFile.Create(ExtractFilePath(Application.ExeName)+'Config.INI');
   First:=IniFile.ReadBool('CheckBox', 'First', False);
@@ -373,8 +335,7 @@ begin
  if WebBrowser1.OleObject.Document.documentElement.innerText = releaseVersion then
 begin
 if UpdateApp.CheckBoxOffNoti.Checked = false then
- // MenuItemUpdate.Click;
- UpdateApp.ShowModal;
+  UpdateApp.ShowModal;
   Flag := true;
 end;
 end;
@@ -384,39 +345,6 @@ end;
 procedure TMain.MenuItemCodeStyleClick(Sender: TObject);
 begin
    CodeStyleWin.ShowModal;
-end;
-
-procedure TMain.Timer1Timer(Sender: TObject);
-begin
-//
-end;
-
-procedure TMain.FormMouseMove(Sender: TObject; Shift: TShiftState; X,
-  Y: Integer);
-begin
-//
-end;
-
-procedure TMain.PageEditorMouseUp(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-begin
-//
-end;
-
-procedure TMain.PageEditorMouseLeave(Sender: TObject);
-begin
-//
-end;
-
-procedure TMain.PageEditorMouseMove(Sender: TObject; Shift: TShiftState; X,
-  Y: Integer);
-begin
-//
-end;
-
-procedure TMain.EditorChange(Sender: TObject);
-begin
-//
 end;
 
 procedure TMain.BtnTerminalClick(Sender: TObject);
@@ -576,7 +504,7 @@ if OpenFile.Execute then begin
   PageEditor.ActivePageIndex := PageEditor.PageCount - 1;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.LoadFromFile(OFName);
   begin
-  OFileLoard:=copy(ExtractFileName(OFName),0,pos('.',OFName)-1);
+  OFileLoard:=copy(ExtractFileName(OFName),0,pos('.',OpenFile.FileName)-1);
   OTabName:=ChangeFileExt(ExtractFileName(OFName),'');
   PageEditor.ActivePage.Hint := OFName;
   PageEditor.ActivePage.HelpKeyword := OTabName;
@@ -699,11 +627,6 @@ begin
   SetFocusToLastString;
   (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynXmlSyn;
 end;
-end;
-
-procedure TMain.PageEditorChange(Sender: TObject);
-begin
-//
 end;
 
 procedure TMain.PageEditorDragDrop(Sender, Source: TObject; X, Y: Integer);
@@ -940,6 +863,11 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
 end;
 
+procedure TMain.SaveFileFolderChange(Sender: TObject);
+begin
+ Tree.Path;
+end;
+
 procedure TMain.SetCodeHighlighter(FName, FTabName, FFileLoard:string);
 begin
   if (FFileLoard = FTabName + '.css') or (FFileLoard = FTabName + '.less') then
@@ -968,12 +896,7 @@ begin
   begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter := SynXMLSyn;;
   end;
-  MenuSubItemChrome.Enabled := True;
-  MenuSubItemFirefox.Enabled := True;
-  MenuSubItemSafari.Enabled := True;
-  MenuSubItemOpera.Enabled := True;
-  MenuSubItemIE.Enabled := True;
-  MenuSubItemEdge.Enabled := True;
+  BrowseEnable;
 end;
 
 procedure TMain.SetFocusIfPageExists;
@@ -982,6 +905,16 @@ begin
   begin
     (PageEditor.ActivePage.Components[0] as TSynEdit).SetFocus;
   end;
+end;
+
+procedure TMain.BrowseEnable;
+begin
+  MenuSubItemChrome.Enabled := True;
+  MenuSubItemFirefox.Enabled := True;
+  MenuSubItemSafari.Enabled := True;
+  MenuSubItemOpera.Enabled := True;
+  MenuSubItemIE.Enabled := True;
+  MenuSubItemEdge.Enabled := True;
 end;
 
 procedure TMain.OpenBrowser(browser:string);
