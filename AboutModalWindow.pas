@@ -20,9 +20,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure LinkToWikiLabelClick(Sender: TObject);
   private
-    { Private declarations }
   public
-    { Public declarations }
   end;
 
 var

@@ -20,9 +20,7 @@ type
     procedure LabelAppVersionMouseLeave(Sender: TObject);
     procedure DownloadAppClick(Sender: TObject);
   private
-    { Private declarations }
   public
-    { Public declarations }
   end;
 
 var
