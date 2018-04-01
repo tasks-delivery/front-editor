@@ -54,7 +54,7 @@ procedure TUpdateApp.FormCreate(Sender: TObject);
 begin
   LabelAppVersion.Font.Color := clBlue;
   LabelAppVersion.Font.Style := [fsUnderline];
-  LabelAppVersion.Caption := 'Version '+releaseVersion+' has been released';
+  LabelAppVersion.Caption := 'New version has been released';
 end;
 
 procedure TUpdateApp.FormPaint(Sender: TObject);

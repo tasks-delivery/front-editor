@@ -2,7 +2,7 @@ object Main: TMain
   Left = 210
   Top = 144
   Caption = 'Front-Editor'
-  ClientHeight = 534
+  ClientHeight = 554
   ClientWidth = 684
   Color = clActiveCaption
   Constraints.MinHeight = 500
@@ -11582,19 +11582,19 @@ object Main: TMain
     C0000003FFFFFFFFF000000FFFFFFFFFFE0000FFFFFF}
   Menu = MainMenu
   OldCreateOrder = False
+  Position = poScreenCenter
   WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate
-  OnMouseMove = FormMouseMove
   OnPaint = FormPaint
   DesignSize = (
     684
-    534)
+    554)
   PixelsPerInch = 96
   TextHeight = 13
   object Editor: TSynMemo
     Left = 422
-    Top = 128
+    Top = 134
     Width = 120
     Height = 84
     Anchors = []
@@ -11615,7 +11615,6 @@ object Main: TMain
     Highlighter = SynHTMLSyn
     Options = [eoAltSetsColumnMode, eoAutoIndent, eoDragDropEditing, eoEnhanceEndKey, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoSmartTabs, eoSpecialLineDefaultFg, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces]
     RightEdgeColor = clActiveBorder
-    OnChange = EditorChange
     FontSmoothing = fsmNone
   end
   object NavigationPanel: TToolBar
@@ -12582,27 +12581,23 @@ object Main: TMain
   object PageEditor: TPageControl
     Left = 280
     Top = 71
-    Width = 365
-    Height = 428
+    Width = 375
+    Height = 448
     Anchors = [akLeft, akTop, akRight, akBottom]
     DockSite = True
     HotTrack = True
     OwnerDraw = True
     TabOrder = 2
-    OnChange = PageEditorChange
     OnDragDrop = PageEditorDragDrop
     OnDragOver = PageEditorDragOver
     OnDrawTab = PageEditorDrawTab
     OnMouseDown = PageEditorMouseDown
-    OnMouseLeave = PageEditorMouseLeave
-    OnMouseMove = PageEditorMouseMove
-    OnMouseUp = PageEditorMouseUp
   end
   object Tree: TShellTreeView
     Left = 24
     Top = 71
     Width = 250
-    Height = 428
+    Height = 448
     ObjectTypes = [otFolders, otNonFolders]
     Root = 'rfMyComputer'
     UseShellImages = True
@@ -12616,8 +12611,8 @@ object Main: TMain
     OnClick = TreeClick
   end
   object BtnDelTab: TButton
-    Left = 512
-    Top = 408
+    Left = 544
+    Top = 312
     Width = 75
     Height = 25
     Caption = 'X'
@@ -12709,21 +12704,12 @@ object Main: TMain
           OnClick = MenuSubItemIEClick
         end
       end
-      object Settings1: TMenuItem
-        Caption = 'Settings'
-        GroupIndex = 2
-        object Keymap3: TMenuItem
-          Caption = 'Keymap'
-        end
-        object CodeColor1: TMenuItem
-          Caption = 'Code Color'
-        end
-      end
       object ools1: TMenuItem
         Caption = 'Tools'
         GroupIndex = 2
         object MenuItemView: TMenuItem
           Caption = 'Text Style'
+          ShortCut = 32852
           OnClick = MenuItemViewClick
         end
         object MenuItemOpenTerminal: TMenuItem
@@ -12731,11 +12717,9 @@ object Main: TMain
           ShortCut = 16468
           OnClick = MenuItemOpenTerminalClick
         end
-        object Proxy1: TMenuItem
-          Caption = 'Proxy'
-        end
         object MenuSubItemTodo: TMenuItem
           Caption = 'TODO'
+          ShortCut = 8276
           OnClick = MenuSubItemTodoClick
         end
       end
@@ -12790,20 +12774,10 @@ object Main: TMain
           OnClick = SubMenuItemXmlClick
         end
       end
-      object CustromTemplate1: TMenuItem
-        Caption = 'Custrom Template'
-      end
     end
     object MenuHelp: TMenuItem
       Caption = '&Help'
       GroupIndex = 2
-      object CodeStyle1: TMenuItem
-        Caption = 'Code Style'
-      end
-      object MenuItemKeymapInfo: TMenuItem
-        Caption = 'Keymap'
-        OnClick = MenuItemKeymapInfoClick
-      end
       object MenuItemSupport: TMenuItem
         Caption = 'Support'
         OnClick = MenuItemSupportClick
@@ -12819,12 +12793,9 @@ object Main: TMain
     end
   end
   object OpenFile: TOpenDialog
-    FileName = 
-      'C:\Users\User\Downloads\FM\front-editor-master\front-editor\zona' +
-      '.txt'
     Filter = 'All|*.*'
     FilterIndex = 0
-    Options = [ofOverwritePrompt, ofHideReadOnly, ofNoChangeDir, ofNoValidate, ofCreatePrompt, ofNoReadOnlyReturn, ofEnableSizing]
+    Options = [ofOverwritePrompt, ofHideReadOnly, ofNoChangeDir, ofNoValidate, ofPathMustExist, ofFileMustExist, ofCreatePrompt, ofNoReadOnlyReturn, ofEnableSizing]
     Title = 'Open file'
     Left = 24
   end
@@ -12832,6 +12803,7 @@ object Main: TMain
     Filter = 'All|*.*'
     Options = [ofOverwritePrompt, ofHideReadOnly, ofNoChangeDir, ofNoValidate, ofCreatePrompt, ofNoReadOnlyReturn, ofEnableSizing]
     Title = 'Save file'
+    OnFolderChange = SaveFileFolderChange
     Left = 56
   end
   object SynHTMLSyn: TSynHTMLSyn
@@ -13316,8 +13288,8 @@ object Main: TMain
   end
   object ImageList1: TImageList
     ShareImages = True
-    Left = 376
-    Top = 352
+    Left = 480
+    Top = 304
     Bitmap = {
       494C010102000400040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
@@ -13459,8 +13431,7 @@ object Main: TMain
       000000000000}
   end
   object Timer1: TTimer
-    OnTimer = Timer1Timer
-    Left = 344
-    Top = 256
+    Left = 432
+    Top = 304
   end
 end
