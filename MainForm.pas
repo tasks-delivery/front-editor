@@ -68,7 +68,6 @@ type
     ImageList1: TImageList;
     ools1: TMenuItem;
     MenuSubItemTodo: TMenuItem;
-    MenuItemKeymapInfo: TMenuItem;
     MenuItemUpdate: TMenuItem;
     MenuItemBrowsers: TMenuItem;
     MenuSubItemChrome: TMenuItem;
@@ -77,14 +76,12 @@ type
     MenuSubItemSafari: TMenuItem;
     MenuSubItemIE: TMenuItem;
     MenuSubItemOpera: TMenuItem;
-    MenuItemCodeStyle: TMenuItem;
     MenuItemView: TMenuItem;
     MenuItemOpenTerminal: TMenuItem;
     WebBrowser1: TWebBrowser;
     Timer1: TTimer;
     HelpNoti: TButton;
     procedure SaveFileFolderChange(Sender: TObject);
-    procedure MenuItemCodeStyleClick(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure HelpNotiClick(Sender: TObject);
     procedure MenuItemUpdateClick(Sender: TObject);
@@ -161,7 +158,7 @@ var
 
 implementation
 
-uses Types,commctrl, UpdateModalWindow, CodeStyleWindow;
+uses Types,commctrl, UpdateModalWindow;
 
 {$R *.dfm}
 
@@ -339,11 +336,6 @@ if UpdateApp.CheckBoxOffNoti.Checked = false then
 end;
 end;
 end;
-end;
-
-procedure TMain.MenuItemCodeStyleClick(Sender: TObject);
-begin
-   CodeStyleWin.ShowModal;
 end;
 
 procedure TMain.BtnTerminalClick(Sender: TObject);

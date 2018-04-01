@@ -12778,13 +12778,6 @@ object Main: TMain
     object MenuHelp: TMenuItem
       Caption = '&Help'
       GroupIndex = 2
-      object MenuItemCodeStyle: TMenuItem
-        Caption = 'Code Style'
-        OnClick = MenuItemCodeStyleClick
-      end
-      object MenuItemKeymapInfo: TMenuItem
-        Caption = 'Keymap'
-      end
       object MenuItemSupport: TMenuItem
         Caption = 'Support'
         OnClick = MenuItemSupportClick

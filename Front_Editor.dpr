@@ -4,8 +4,7 @@ uses
   Forms,
   MainForm in 'MainForm.pas' {Main},
   AboutModalWindow in 'AboutModalWindow.pas' {About},
-  UpdateModalWindow in 'UpdateModalWindow.pas' {UpdateApp},
-  CodeStyleWindow in 'CodeStyleWindow.pas' {CodeStyleWin};
+  UpdateModalWindow in 'UpdateModalWindow.pas' {UpdateApp};
 
 {$R *.res}
 
@@ -15,6 +14,5 @@ begin
   Application.CreateForm(TMain, Main);
   Application.CreateForm(TAbout, About);
   Application.CreateForm(TUpdateApp, UpdateApp);
-  Application.CreateForm(TCodeStyleWin, CodeStyleWin);
   Application.Run;
 end.
