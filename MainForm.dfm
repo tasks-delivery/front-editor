@@ -11582,6 +11582,7 @@ object Main: TMain
     C0000003FFFFFFFFF000000FFFFFFFFFFE0000FFFFFF}
   Menu = MainMenu
   OldCreateOrder = False
+  Position = poScreenCenter
   WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate
@@ -12783,7 +12784,6 @@ object Main: TMain
       end
       object MenuItemKeymapInfo: TMenuItem
         Caption = 'Keymap'
-        OnClick = MenuItemKeymapInfoClick
       end
       object MenuItemSupport: TMenuItem
         Caption = 'Support'
@@ -12802,7 +12802,7 @@ object Main: TMain
   object OpenFile: TOpenDialog
     Filter = 'All|*.*'
     FilterIndex = 0
-    Options = [ofOverwritePrompt, ofHideReadOnly, ofNoChangeDir, ofNoValidate, ofCreatePrompt, ofNoReadOnlyReturn, ofEnableSizing]
+    Options = [ofOverwritePrompt, ofHideReadOnly, ofNoChangeDir, ofNoValidate, ofPathMustExist, ofFileMustExist, ofCreatePrompt, ofNoReadOnlyReturn, ofEnableSizing]
     Title = 'Open file'
     Left = 24
   end

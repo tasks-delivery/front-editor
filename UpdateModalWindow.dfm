@@ -14,7 +14,7 @@ object UpdateApp: TUpdateApp
   Font.Style = []
   FormStyle = fsStayOnTop
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnPaint = FormPaint
@@ -35,6 +35,15 @@ object UpdateApp: TUpdateApp
     Width = 353
     Height = 129
     Lines.Strings = (
+      'Release 0.0.9'
+      ''
+      'Released 01.04.2018'
+      ''
+      
+        'https://github.com/tasks-delivery/front-editor/releases/tag/v0.0' +
+        '.9'
+      '_____________________________________________________'
+      ''
       'Release 0.0.8'
       ''
       'Released 26.03.2018'
