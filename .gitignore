@@ -1,7 +1,8 @@
-/__history
+/*.__history
 /build
 /.idea
 /target
 /*.iml
 /Config.INI
-
+/*.local
+/*.cfg

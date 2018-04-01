@@ -11582,10 +11582,10 @@ object Main: TMain
     C0000003FFFFFFFFF000000FFFFFFFFFFE0000FFFFFF}
   Menu = MainMenu
   OldCreateOrder = False
-  Position = poScreenCenter
   WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate
+  OnMouseMove = FormMouseMove
   OnPaint = FormPaint
   DesignSize = (
     684
@@ -11615,7 +11615,9 @@ object Main: TMain
     Highlighter = SynHTMLSyn
     Options = [eoAltSetsColumnMode, eoAutoIndent, eoDragDropEditing, eoEnhanceEndKey, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoSmartTabs, eoSpecialLineDefaultFg, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces]
     RightEdgeColor = clActiveBorder
+    OnChange = EditorChange
     FontSmoothing = fsmNone
+    ExplicitTop = 128
   end
   object NavigationPanel: TToolBar
     Left = 0
@@ -12588,10 +12590,14 @@ object Main: TMain
     HotTrack = True
     OwnerDraw = True
     TabOrder = 2
+    OnChange = PageEditorChange
     OnDragDrop = PageEditorDragDrop
     OnDragOver = PageEditorDragOver
     OnDrawTab = PageEditorDrawTab
     OnMouseDown = PageEditorMouseDown
+    OnMouseLeave = PageEditorMouseLeave
+    OnMouseMove = PageEditorMouseMove
+    OnMouseUp = PageEditorMouseUp
   end
   object Tree: TShellTreeView
     Left = 24
@@ -12609,6 +12615,7 @@ object Main: TMain
     ShowRoot = False
     TabOrder = 3
     OnClick = TreeClick
+    ExplicitHeight = 428
   end
   object BtnDelTab: TButton
     Left = 544
@@ -12778,6 +12785,14 @@ object Main: TMain
     object MenuHelp: TMenuItem
       Caption = '&Help'
       GroupIndex = 2
+      object MenuItemCodeStyle: TMenuItem
+        Caption = 'Code Style'
+        OnClick = MenuItemCodeStyleClick
+      end
+      object MenuItemKeymapInfo: TMenuItem
+        Caption = 'Keymap'
+        OnClick = MenuItemKeymapInfoClick
+      end
       object MenuItemSupport: TMenuItem
         Caption = 'Support'
         OnClick = MenuItemSupportClick
@@ -12793,9 +12808,10 @@ object Main: TMain
     end
   end
   object OpenFile: TOpenDialog
+
     Filter = 'All|*.*'
     FilterIndex = 0
-    Options = [ofOverwritePrompt, ofHideReadOnly, ofNoChangeDir, ofNoValidate, ofPathMustExist, ofFileMustExist, ofCreatePrompt, ofNoReadOnlyReturn, ofEnableSizing]
+    Options = [ofOverwritePrompt, ofHideReadOnly, ofNoChangeDir, ofNoValidate, ofCreatePrompt, ofNoReadOnlyReturn, ofEnableSizing]
     Title = 'Open file'
     Left = 24
   end
@@ -12803,7 +12819,6 @@ object Main: TMain
     Filter = 'All|*.*'
     Options = [ofOverwritePrompt, ofHideReadOnly, ofNoChangeDir, ofNoValidate, ofCreatePrompt, ofNoReadOnlyReturn, ofEnableSizing]
     Title = 'Save file'
-    OnFolderChange = SaveFileFolderChange
     Left = 56
   end
   object SynHTMLSyn: TSynHTMLSyn
@@ -13431,6 +13446,7 @@ object Main: TMain
       000000000000}
   end
   object Timer1: TTimer
+    OnTimer = Timer1Timer
     Left = 432
     Top = 304
   end

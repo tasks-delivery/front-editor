@@ -68,6 +68,7 @@ type
     ImageList1: TImageList;
     ools1: TMenuItem;
     MenuSubItemTodo: TMenuItem;
+    MenuItemKeymapInfo: TMenuItem;
     MenuItemUpdate: TMenuItem;
     MenuItemBrowsers: TMenuItem;
     MenuSubItemChrome: TMenuItem;
@@ -76,15 +77,18 @@ type
     MenuSubItemSafari: TMenuItem;
     MenuSubItemIE: TMenuItem;
     MenuSubItemOpera: TMenuItem;
+    MenuItemCodeStyle: TMenuItem;
     MenuItemView: TMenuItem;
     MenuItemOpenTerminal: TMenuItem;
     WebBrowser1: TWebBrowser;
     Timer1: TTimer;
     HelpNoti: TButton;
     procedure SaveFileFolderChange(Sender: TObject);
+    procedure MenuItemCodeStyleClick(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure HelpNotiClick(Sender: TObject);
     procedure MenuItemUpdateClick(Sender: TObject);
+    procedure MenuItemKeymapInfoClick(Sender: TObject);
     procedure MenuSubItemIEClick(Sender: TObject);
     procedure MenuSubItemEdgeClick(Sender: TObject);
     procedure MenuSubItemSafariClick(Sender: TObject);
@@ -158,7 +162,7 @@ var
 
 implementation
 
-uses Types,commctrl, UpdateModalWindow;
+uses KeymapInfoModalWindow, Types,commctrl, UpdateModalWindow, CodeStyleWindow;
 
 {$R *.dfm}
 
@@ -336,6 +340,11 @@ if UpdateApp.CheckBoxOffNoti.Checked = false then
 end;
 end;
 end;
+end;
+
+procedure TMain.MenuItemCodeStyleClick(Sender: TObject);
+begin
+   CodeStyleWin.ShowModal;
 end;
 
 procedure TMain.BtnTerminalClick(Sender: TObject);
@@ -518,6 +527,11 @@ end;
 procedure TMain.MenuItemJavaClick(Sender: TObject);
 begin
     BtnJavaTemplate.Click;
+end;
+
+procedure TMain.MenuItemKeymapInfoClick(Sender: TObject);
+begin
+   KeymapInfo.ShowModal;
 end;
 
 procedure TMain.SubMenuItemJSClick(Sender: TObject);
@@ -732,46 +746,16 @@ end;
 
 procedure TMain.TreeClick(Sender: TObject);
 var F: TShellFolder;
-  OFName, OTabName, OFileLoard: string;
 begin
  F := Tree.SelectedFolder;
  if Assigned(F) then
    if not F.IsFolder then
    begin
-  NewTab := TTabSheet.Create(PageEditor);
-  with NewTab do
-  begin
-    PageControl := PageEditor;
-  end;
-  NewSynEdit := TSynEdit.Create(NewTab);
-  begin
-    with NewSynEdit do
-    begin
-    Parent := NewTab;
-    Align := alClient;
-   begin
-  OpenFile.FileName := Tree.path;
-  OFName := OpenFile.FileName;
-  Editor.Enabled := True;
-  PageEditor.ActivePageIndex := PageEditor.PageCount - 1;
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.LoadFromFile(OFName);
-  begin
-  OFileLoard:=copy(ExtractFileName(OFName),0,pos('.',OpenFile.FileName)-1);
-  OTabName:=ChangeFileExt(ExtractFileName(OFName),'');
-  PageEditor.ActivePage.Hint := OFName;
-  PageEditor.ActivePage.HelpKeyword := OTabName;
-  PageEditor.ActivePage.Caption := OFileLoard+ '       ';
-  SetCodeHighlighter(OFName, OTabName, OFileLoard);
-  SetFocusToLastString;
-(PageEditor.ActivePage.Components[0] as TSynEdit).Gutter.ShowLineNumbers := True;
+   MenuItemOpenFile.Click;
 end;
 end;
-end;
-end;
-end;
-end;
-
-procedure TMain.MenuItemViewClick(Sender: TObject);
+
+procedure TMain.MenuItemViewClick(Sender: TObject);
 begin
 if FontDialog.Execute then
   Editor.Font := FontDialog.Font;
