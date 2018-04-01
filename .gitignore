@@ -1,8 +1,9 @@
-/*__history
+/__history
+/components/SynEdit/Source/__history
 /build
 /.idea
 /target
-/*.iml
+/.iml
 /Config.INI
-/*.local
-/*.cfg
+/.local
+/.cfg
