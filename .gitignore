@@ -16,6 +16,6 @@
 /*.bdsproj.local
 /.bdsproj.local
 .bdsproj.local
-.cfg
+*cfg
 
 
