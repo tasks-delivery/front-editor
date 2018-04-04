@@ -28,15 +28,10 @@ branches:
     - dev
 
 stages:
-   - deploy app
+   - test
 
 jobs:
   include:
-     - stage: deploy app
+     - stage: test
        script:
-         - mvn clean test
-     - stage: deploy app
-       os:
-         - osx
-       script:
-         - mvn clean test
+         - mvn clean test -P local

@@ -1,59 +1,69 @@
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import autoitx4java.AutoItX;
+import com.jacob.activeX.ActiveXComponent;
+import com.jacob.com.Dispatch;
+import com.jacob.com.LibraryLoader;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
-//import io.appium.java_client.windows.WindowsDriver;
-import static com.codeborne.selenide.Selenide.$;
 
 public class TestDeploy {
-
-
-   // private static WindowsDriver CalculatorSession = null;
-   // private static WebElement CalculatorResult = null;
-
+    //jacob-1.18-x64.dll
+    //jacob-1.18-x86.dll
+    //jacob-1.17-x86.dll
+    //jacob-1.16-M2-x64.dll
 
     @Test
     public void FirstTestDeploy() throws IOException {
+        File file = new File("lib", "jacob-1.16-M2-x64.dll"); //path to the jacob dll
+        System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());
+        LibraryLoader.loadJacobLibrary();
+        AutoItX x = new AutoItX();
+     //   String notepad = "Untitled - Notepad";
+     //   String testString = "this is a test.";
+        x.run("Front_Editor.exe");
+
         /*
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("app", "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
-        CalculatorSession = new WindowsDriver(new URL("http://127.0.0.1:4723"), capabilities);
-        CalculatorSession.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-
-        CalculatorResult = CalculatorSession.findElementByAccessibilityId("CalculatorResults");
-        Assert.assertNotNull(CalculatorResult);
+        _WinWaitActivate("Front-Editor","")
+        MouseClick("left",359,64,1)
+        _WinWaitActivate("Save file","&Имя файла:")
+        MouseClick("left",565,14,1)
 */
-/*
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("app", "Front_Editor.exe");
-        capabilities.setCapability("platformName", "Windows");
-        capabilities.setCapability("deviceName", "WindowsPC");
+        x.winWaitActive("Front-Editor");
+        x.mouseClick("left",359,64);
+        x.winWaitActive("Save file");
+       x.mouseClick("left",564,14);
+        x.winClose("Save file");
 
-        CalculatorSession = new WindowsDriver<WindowsElement> (new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-        */
-    //    CalculatorSession.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+      //  x.mouseClick("left",361,73);
+     //   x.mouseClick("left",564,12);
 
-     //   CalculatorSession.findElementByXPath("//Button[starts-with(@Name, \"Menu\")]").click();
-     //   CalculatorSession.findElementByXPath("//ListItem[@Name=\"Standard Calculator\"]").click();
-
-      //  CalculatorSession.findElementByName("Clear").click();
-     //   CalculatorSession.findElementByName("Seven").click();
-     //   CalculatorResult = CalculatorSession.findElementByName("Display is  7 ");
-      //  Assert.assertNotNull(CalculatorResult);
-
-
-   //    driver = new WinAppDriver();
-      //  Runtime.getRuntime().exec("Front_Editor.exe");
-
-     //   TBitBtn9
-
-        $(By.className("TBitBtn9")).click();
-
-
+     //   x.winActivate(notepad);
+     //   x.winWaitActive(notepad);
+     //   x.send(testString);
+     //   Assert.assertTrue(x.winExists(notepad, testString));
+      //  x.winClose(notepad, testString);
+      //  x.winWaitActive("Notepad");
+      //  x.send("{ALT}n");
+      //  Assert.assertFalse(x.winExists(notepad, testString));
     }
+
+    @Test
+    public void core() {
+            File file = new File("./src/main/resources/jacob-1.18-x64.dll"); // path
+            System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());
+            AutoItX x = new AutoItX();
+            String notepad = "Untitled - Notepad";
+            String testString = "this is a test.";
+            x.run("notepad", "C:/Windows/System32", AutoItX.SW_MAXIMIZE);
+            x.winActivate(notepad);
+            x.winWaitActive(notepad);
+            x.send(testString);
+            Assert.assertTrue(x.winExists(notepad, testString));
+            x.winClose(notepad, testString);
+            x.winWaitActive("Notepad");
+            x.send("{ALT}n");
+            Assert.assertFalse(x.winExists(notepad, testString));
+        }
 
 }
