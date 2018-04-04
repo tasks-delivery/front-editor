@@ -5,6 +5,5 @@
 /target
 /*.iml
 /Config.INI
-*local
+*.local
 *.cfg
-
