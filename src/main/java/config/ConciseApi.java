@@ -6,10 +6,11 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import java.io.File;
 
-public class ConciseApi {
+public abstract class ConciseApi {
 
    public AutoItX autoItX;
    public String appName = "Front-Editor";
+   public String saveFileDialog = "Save file";
 
     @BeforeClass
     public void setUp(){
