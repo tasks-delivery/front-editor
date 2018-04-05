@@ -1,8 +1,21 @@
 branches:
      only:
       - dev
-      
-install:
-  # Install DocumentDB Emulator
-- ps: Start-FileDownload 'https://aka.ms/cosmosdb-emulator' -FileName 'C:\projects\front-editor\Front_Editor.exe'      
 
+install: scripts/install-tools.cmd
+build_script:
+  - scripts/build.cmd
+  - test.cmd
+artifacts:
+  - path: diskimage.zip
+    name: any pi full disk image
+  - path: kernel.img.zip
+    name: pi needs 3 more files
+  - path: kernel7.img.zip
+    name: pi2/3 needs 3 more files
+cache:
+  - c:\Ultibo -> test.cmd
+skip_commits:
+  files:
+    - docs/**/*
+- README.md
