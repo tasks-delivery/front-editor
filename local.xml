@@ -4,6 +4,7 @@
     <test name="test for local">
         <classes>
             <class name="SmokeTests"/>
+            <class name="TemplateTest"/>
         </classes>
     </test>
 </suite>

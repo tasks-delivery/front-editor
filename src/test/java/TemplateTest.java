@@ -1,49 +1,134 @@
-import autoitx4java.AutoItX;
+
 import com.codeborne.selenide.Selenide;
-import com.jacob.com.LibraryLoader;
-import config.ConciseApi;
-import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.io.File;
-
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.testng.Assert.*;
+import static org.hamcrest.core.Is.is;
 
-public class TemplateTest extends ConciseApi {
-
-    public void clickBtnJavaTemplate(){
-        autoItX.mouseClick("left",359,64);
-    }
-
-    public void closeSaveDialog(){
-        autoItX.winWaitActive("Save file");
-        autoItX.winClose("Save file");
-    }
-
-    public void clickBtnClear(){
-        autoItX.mouseClick("left",186,69);
-    }
+public class TemplateTest extends CommonMethods {
 
     @Test
     public void javaCodeShouldBeVisible(){
+        clickBtnNewFile();
+        autoItX.winWaitActive(saveFileDialog);
+        assertThat(true, is(autoItX.winExists(saveFileDialog)));
+        closeSaveDialog();
         clickBtnJavaTemplate();
-       closeSaveDialog();
-        clickBtnClear();
-       //autoItX.controlShow("", "","");
-        //autoItX.mouseClick("left",416,174);
-      //  autoItX.controlShow(appName, "test","")
-        autoItX.send("test");
-       // autoItX.controlShow(appName, "test","TSynEdit");
-        Selenide.sleep(1000);
-     //   assertThat(autoItX.(appName, "test","TSynEdit1", "test"));
-     //   autoItX.controlCommandFindString(appName, "test","TSynEdit1", "test"));
-       // Assert.assertTrue(autoItX.controlEnable(appName, "test",""));
-     //   Assert.assertTrue(autoItX.controlCommandIsEnabled(appName, "test", "TSynEdit1"));
-
-      //  Assert.assertFalse(autoItX.controlShow(appName, "tset","TSynEdit1"));
-      //  Assert.assertFalse(autoItX.winExists(appName, "public"));
-       // Assert.assertFalse(x.controlGetText("","","pubsic"));
+        editorShouldHaveText("public class");
     }
 
+    @Test
+    public void htmlCodeShouldBeVisible(){
+        clickBtnNewFile();
+        autoItX.winWaitActive(saveFileDialog);
+        assertThat(true, is(autoItX.winExists(saveFileDialog)));
+        closeSaveDialog();
+        clickBtnHtmlTemplate();
+        editorShouldHaveText("<!doctype html>");
+    }
+
+    @Test
+    public void sqlCodeShouldBeVisible(){
+        clickBtnNewFile();
+        autoItX.winWaitActive(saveFileDialog);
+        assertThat(true, is(autoItX.winExists(saveFileDialog)));
+        closeSaveDialog();
+        clickBtnSqlTemplate();
+        editorShouldHaveText("CREATE DATABASE");
+    }
+
+    @Test
+    public void cssCodeShouldBeVisible(){
+        clickBtnNewFile();
+        autoItX.winWaitActive(saveFileDialog);
+        assertThat(true, is(autoItX.winExists(saveFileDialog)));
+        closeSaveDialog();
+        clickBtnCssTemplate();
+        editorShouldHaveText("css stylesheet");
+    }
+
+    @Test
+    public void jsCodeShouldBeVisible(){
+        clickBtnNewFile();
+        autoItX.winWaitActive(saveFileDialog);
+        assertThat(true, is(autoItX.winExists(saveFileDialog)));
+        closeSaveDialog();
+        clickBtnJsTemplate();
+        editorShouldHaveText("author: User");
+    }
+
+    @Test
+    public void xmlCodeShouldBeVisible(){
+        clickBtnNewFile();
+        autoItX.winWaitActive(saveFileDialog);
+        assertThat(true, is(autoItX.winExists(saveFileDialog)));
+        closeSaveDialog();
+        clickBtnXmlTemplate();
+        editorShouldHaveText("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+    }
+
+    @Test
+    public void clearSqlCode(){
+        clickBtnNewFile();
+        autoItX.winWaitActive(saveFileDialog);
+        assertThat(true, is(autoItX.winExists(saveFileDialog)));
+        closeSaveDialog();
+        clickBtnSqlTemplate();
+        clickBtnClear();
+        editorShouldHaveText("");
+    }
+
+    @Test
+    public void clearXmlCode(){
+        clickBtnNewFile();
+        autoItX.winWaitActive(saveFileDialog);
+        assertThat(true, is(autoItX.winExists(saveFileDialog)));
+        closeSaveDialog();
+        clickBtnXmlTemplate();
+        clickBtnClear();
+        editorShouldHaveText("");
+    }
+
+    @Test
+    public void clearJsCode(){
+        clickBtnNewFile();
+        autoItX.winWaitActive(saveFileDialog);
+        assertThat(true, is(autoItX.winExists(saveFileDialog)));
+        closeSaveDialog();
+        clickBtnJsTemplate();
+        clickBtnClear();
+        editorShouldHaveText("");
+    }
+
+    @Test
+    public void clearJavaCode(){
+        clickBtnNewFile();
+        autoItX.winWaitActive(saveFileDialog);
+        assertThat(true, is(autoItX.winExists(saveFileDialog)));
+        closeSaveDialog();
+        clickBtnJavaTemplate();
+        clickBtnClear();
+        editorShouldHaveText("");
+    }
+
+    @Test
+    public void clearHtmlCode(){
+        clickBtnNewFile();
+        autoItX.winWaitActive(saveFileDialog);
+        assertThat(true, is(autoItX.winExists(saveFileDialog)));
+        closeSaveDialog();
+        clickBtnHtmlTemplate();
+        clickBtnClear();
+        editorShouldHaveText("");
+    }
+
+    @Test
+    public void clearCssCode(){
+        clickBtnNewFile();
+        autoItX.winWaitActive(saveFileDialog);
+        assertThat(true, is(autoItX.winExists(saveFileDialog)));
+        closeSaveDialog();
+        clickBtnCssTemplate();
+        clickBtnClear();
+        editorShouldHaveText("");
+    }
 }
