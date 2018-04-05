@@ -5,8 +5,8 @@ group: deprecated-2017Q4
 
 jdk: openjdk8
 
-#services:
-#  - docker
+services:
+   - docker
 
 cache:
   directories:
@@ -34,4 +34,6 @@ jobs:
   include:
      - stage: test
        script:
+         - docker build -t myaspnet .
+         - docker run myaspnet
          - mvn clean test -P local
