@@ -1,21 +1,17 @@
 branches:
      only:
-      - dev
+      - test-deploy
 
-install: scripts/install-tools.cmd
+# http://www.appveyor.com/docs/appveyor-yml
+environment:
+  matrix:
+    #- JAVA_HOME: C:\Program Files\Java\jdk1.7.0
+    - JAVA_HOME: C:\Program Files\Java\jdk1.8.0
+install:
+  # Log versions for debugging
+  - java -version
+  - mvn --version
 build_script:
-  - scripts/build.cmd
-  - test.cmd
-artifacts:
-  - path: diskimage.zip
-    name: any pi full disk image
-  - path: kernel.img.zip
-    name: pi needs 3 more files
-  - path: kernel7.img.zip
-    name: pi2/3 needs 3 more files
-cache:
-  - c:\Ultibo -> test.cmd
-skip_commits:
-  files:
-    - docs/**/*
-- README.md
+  - mvn --batch-mode -DskipTests package
+test_script:
+  - mvn --batch-mode test -P local
