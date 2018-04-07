@@ -13,19 +13,18 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import static java.lang.Runtime.getRuntime;
+
 public class selen {
 
 	public void startWinDriver() throws IOException, InterruptedException {
-		final File batchFile = new File("Winium.Desktop.Driver.exe");
-		final ProcessBuilder processBuilder = new ProcessBuilder(batchFile.getAbsolutePath());
-		final Process process = processBuilder.start();
-		final int exitStatus = process.waitFor();
-		System.out.println("Processed finished with status: " + exitStatus);
+		getRuntime().
+			exec("cmd /c start \"\" run.bat");
 	}
 
 	@Test
 	public void setUp() throws Exception {
-	//	startWinDriver();
+		startWinDriver();
 		WiniumDriver driver = null;
 		String appPath = "Front_Editor.exe";
 		DesktopOptions option = new DesktopOptions();
