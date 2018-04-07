@@ -14,6 +14,7 @@ public class SmokeTests extends ConciseApi {
     @Test
     public void verifyCloseApp(){
         closeApp();
+        Selenide.sleep(1000);
         assertThat(false, is(autoItX.winExists(appName)));
     }
 
