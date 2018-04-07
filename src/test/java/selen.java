@@ -31,7 +31,7 @@ public class selen {
 		option.setApplicationPath(appPath);
 		option.setDebugConnectToRunningApp(false);
 		option.setLaunchDelay(2);
-		driver = new WiniumDriver(new URL("http://localhost:9999"),option);
+		driver = new WiniumDriver(new URL("https://localhost:9999"),option);
 		Thread.sleep(1000);
 		/*
 		WebElement window =  driver.findElementByClassName("CalcFrame");
