@@ -1619,7 +1619,7 @@ begin
   if (Items.Count > 0) then
     ClearItems;
   if not Assigned(Images) then SetUseShellImages(FUseShellImages);
-  { TODO : What is the Items.Count test for here? }
+  { TODO : What is the Items.Count AboutWindow for here? }
   if (not FLoadingRoot) {and (Items.Count = 0)} then
     CreateRoot;
 end;

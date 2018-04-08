@@ -25,5 +25,16 @@ public abstract class ConciseApi {
     @AfterClass
     public void closeApp(){
         autoItX.winClose(appName);
+        autoItX.winWaitNoActive(appName);
+    }
+
+    public void openApp(){
+        autoItX.run("Front_Editor.exe");
+        autoItX.winWaitActive(appName);
+    }
+
+    public void closeWindow(String window){
+        autoItX.winClose(window);
+        autoItX.winWaitNoActive(window);
     }
 }

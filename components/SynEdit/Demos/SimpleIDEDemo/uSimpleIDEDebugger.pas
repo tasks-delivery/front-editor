@@ -104,7 +104,7 @@ type
 
 const
   SampleSource =
-{  1 }  'program Test;'#13#10 +
+{  1 }  'program AboutWindow;'#13#10 +
 {  2 }  ''#13#10 +
 {  3 }  'procedure TestProc;'#13#10 +
 {  4 }  'begin'#13#10 +

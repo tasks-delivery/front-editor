@@ -1,6 +1,6 @@
 branches:
      only:
-      - test-deploy
+      - dev
 
 # http://www.appveyor.com/docs/appveyor-yml
 environment:

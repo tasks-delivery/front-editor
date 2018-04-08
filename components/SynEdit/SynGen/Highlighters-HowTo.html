@@ -421,7 +421,7 @@ cross multiple lines):</p>
 </div>
 <p>Once
 you have generated the source code for this highlighter, and use it
-in your application, you can test it to see if it suits your needs.
+in your application, you can AboutWindow it to see if it suits your needs.
 Once you have the generated source code from SynGen, you can further
 enhance it by modifying this code in Delphi.</p>
 <h3><B>Highlighting
@@ -434,7 +434,7 @@ practice you will often want to create a highlighter that will
 highlight e.g. data types in a different color then the other
 keywords. So now we will expand our grammar file, to add a new
 keyword &lsquo;SynEdit&rsquo;, which will be highlighted as a new
-token type &lsquo;Test&rsquo;. Our grammar file will become to look
+token type &lsquo;AboutWindow&rsquo;. Our grammar file will become to look
 like this:</p>
 <div class="box">
 			<p>TSynSampleSyn
@@ -451,7 +451,7 @@ like this:</p>
 			<p>Space</p>
 			<p>String</p>
 			<p>Key</p>
-			<p>Test
+			<p>AboutWindow
 			     { <FONT FACE="Wingdings">&szlig;</FONT> Add the new token
 			type here }</p>
 			<p>|&gt;&lt;|</p>
@@ -463,10 +463,10 @@ like this:</p>
 			<p>|&gt;&lt;|</p>
 			<br>
 			<p>KEYS
-			Test    { <FONT FACE="Wingdings">&szlig;</FONT> Create a new KEYS
+			AboutWindow    { <FONT FACE="Wingdings">&szlig;</FONT> Create a new KEYS
 			section, and specify the token type }</p>
 			<p>SynEdit
-			     { So now this keyword will be highlighted with the Test token
+			     { So now this keyword will be highlighted with the AboutWindow token
 			}</p>
 			<p>|&gt;&lt;|</p>
 			<br>
@@ -505,7 +505,7 @@ multiple sections with the same (or no) token type are allowed. The
 SynGen program will merge them automatically.</p>
 <p>After
 you have run this grammar file through the SynGen utility you can
-test your highlighter, and you&rsquo;ll notice that the SynEdit
+AboutWindow your highlighter, and you&rsquo;ll notice that the SynEdit
 keyword is highlighted using a different attribute than the Hello and
 World keywords.</p>
 <h3><B>Setting
@@ -534,7 +534,7 @@ attributes.  The section will then look like this:</p>
 			Foreground=clRed</p>
 			<p>Key
 			Style=[fsBold]</p>
-			<p>Test
+			<p>AboutWindow
 			Background=clSilver|Foreground=clBlue|Style=[fsUnderline,
 			fsItalic]</p>
 			<p>|&gt;&lt;|</p>

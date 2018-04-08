@@ -43,7 +43,7 @@ object Form1: TForm1
       't also SynEdit'#39's Highlighter-property to a SynURISyn.'#13#10'That'#39's al' +
       'l!'#13#10#13#10'NOTE:'#13#10'By default you have to press CTRL to make the links' +
       ' clickable.'#13#10'If you don'#39't like that, set CtrlActivatesLinks-prop' +
-      'erty to false.'#13#10#13#10#13#10'Some test links:'#13#10'----------------'#13#10'(not all' +
+      'erty to false.'#13#10#13#10#13#10'Some AboutWindow links:'#13#10'----------------'#13#10'(not all' +
       ' real ones, just to check if correct app starts)'#13#10#13#10'http://www.s' +
       'omewhere.org'#13#10'ftp://superhost.org/downloads/gems.zip'#13#10'www.w3c.or' +
       'g'#13#10'mailto:big@lebowski.edu'#13#10'douglas@adams.lod'#13#10'news:comp.lang.pa' +

@@ -31,7 +31,7 @@
 {  JEDI Code Library (JCL) and JEDI Visual Component Library Library (JVCL). The directives in     }
 {  this file are of generic nature and consist mostly of mappings from the VERXXX directives       }
 {  defined by Delphi, C++ Builder and FPC to friendly names such as DELPHI5 and                    }
-{  SUPPORTS_WIDESTRING. These friendly names are subsequently used in the libraries to test for    }
+{  SUPPORTS_WIDESTRING. These friendly names are subsequently used in the libraries to AboutWindow for    }
 {  compiler versions and/or whether the compiler supports certain features (such as widestrings or }
 {  64 bit integers. The libraries provide an additional, library specific, include file. For the   }
 {  JCL e.g. this is jcl.inc. These files should be included in source files instead of this file   }
@@ -333,7 +333,7 @@
 
 - Feature Directives
 
-  The features directives are used to test if the compiler supports specific
+  The features directives are used to AboutWindow if the compiler supports specific
   features, such as method overloading, and adjust the sources accordingly. Use
   of these directives is preferred over the use of the DELPHI and COMPILER
   directives.
