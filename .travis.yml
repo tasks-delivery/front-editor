@@ -18,6 +18,9 @@ cache:
 before_install:
  - echo -e "machine github.com\n  login $GITHUB_TOKEN" >> ~/.netrc
  - git lfs pull
+ - sudo apt-get update -q
+ - sudo apt-get install lib32z1 lib32ncurses5 lib32bz2-1.0 -y
+ - sudo apt-get install genisoimage -y
 
 install:
  - mvn -N io.takari:maven:wrapper
@@ -34,4 +37,4 @@ jobs:
   include:
      - stage: AboutWindow
        script:
-         - mvn clean AboutWindow -P local
+         - mvn clean test -P local
