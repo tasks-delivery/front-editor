@@ -12030,6 +12030,7 @@ object Main: TMain
       Width = 40
       Height = 40
       Hint = 'Add html template'
+      HelpType = htKeyword
       ParentShowHint = False
       ShowHint = True
       TabOrder = 2

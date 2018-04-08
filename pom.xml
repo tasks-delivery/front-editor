@@ -5,34 +5,47 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>front.editor</groupId>
     <artifactId>front-editor</artifactId>
-    <version>0.0.6-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <properties>
         <selenide.version>4.9</selenide.version>
-        <selenium.java.version>3.8.1</selenium.java.version>
-        <selenium.server.version>3.8.1</selenium.server.version>
-        <selenium.remote.version>3.8.1</selenium.remote.version>
-        <modelmapper.version>0.7.4</modelmapper.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
     </properties>
+    <profiles>
+        <profile>
+            <id>local</id>
+            <activation>
+                <property>
+                    <name>SUITES</name>
+                </property>
+            </activation>
+            <properties>
+                <suites>local</suites>
+            </properties>
+        </profile>
+    </profiles>
     <build>
         <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.20</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${suites}.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                </configuration>
             </plugin>
         </plugins>
     </build>
     <dependencies>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>com.sun.net.httpserver</groupId>
             <artifactId>http</artifactId>
@@ -43,17 +56,15 @@
             <artifactId>gson</artifactId>
             <version>2.8.0</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/de.openkeyword/autoit -->
-
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${selenium.java.version}</version>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.9.9</version>
         </dependency>
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-server</artifactId>
-            <version>${selenium.server.version}</version>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.0</version>
         </dependency>
         <dependency>
             <groupId>com.codeborne</groupId>
@@ -65,36 +76,20 @@
             <artifactId>testng</artifactId>
             <version>6.11</version>
         </dependency>
-        <!--
         <dependency>
             <groupId>de.openkeyword</groupId>
             <artifactId>autoit</artifactId>
-            <version>0.1.13</version>
+            <version>0.0.15</version>
         </dependency>
         <dependency>
-            <groupId>com.holmos</groupId>
-            <artifactId>holmos-webtest</artifactId>
-            <version>1.0.2u10</version>
+            <groupId>com.hynnet</groupId>
+            <artifactId>jacob</artifactId>
+            <version>1.14.3</version>
         </dependency>
-        <dependency>
-            <groupId>io.appium</groupId>
-            <artifactId>java-client</artifactId>
-            <version>5.0.0-BETA6</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-        </dependency>
-        <dependency>
-             <groupId>com.sikulix</groupId>
-             <artifactId>sikulixapi</artifactId>
-             <version>1.1.0</version>
-         </dependency>-->
-        <dependency>
-            <groupId>com.github.2gis.winium</groupId>
-            <artifactId>winium-webdriver</artifactId>
-            <version>0.1.0-1</version>
-        </dependency>
+      <dependency>
+        <groupId>com.github.2gis.winium</groupId>
+        <artifactId>winium-webdriver</artifactId>
+        <version>0.1.0-1</version>
+      </dependency>
     </dependencies>
 </project>

@@ -118,7 +118,7 @@ begin
     dwlConditionMask := VerSetConditionMask(dwlConditionMask, VER_SERVICEPACKMAJOR, op);
     dwlConditionMask := VerSetConditionMask(dwlConditionMask, VER_SERVICEPACKMINOR, op);
 
-    // Perform the test.
+    // Perform the AboutWindow.
     Result := VerifyVersionInfo(osvi, VER_MAJORVERSION or VER_MINORVERSION or
       VER_SERVICEPACKMAJOR or VER_SERVICEPACKMINOR, dwlConditionMask);
   end;

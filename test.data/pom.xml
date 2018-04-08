@@ -74,7 +74,7 @@
 			</properties>
 		</profile>
 		<profile>
-			<id>local-test</id>
+			<id>local-AboutWindow</id>
 			<activation>
 				<property>
 					<name>SUITES</name>
@@ -85,7 +85,7 @@
 			</properties>
 		</profile>
 		<profile>
-			<id>unit-test</id>
+			<id>unit-AboutWindow</id>
 			<activation>
 				<property>
 					<name>SUITES</name>
@@ -96,7 +96,7 @@
 			</properties>
 		</profile>
 		<profile>
-			<id>api-test</id>
+			<id>api-AboutWindow</id>
 			<activation>
 				<property>
 					<name>SUITES</name>
@@ -348,7 +348,7 @@
 					<imageTags>
 						<imageTag>v${project.version}</imageTag>
 						<imageTag>latest</imageTag>
-						<imageTag>test</imageTag>
+						<imageTag>AboutWindow</imageTag>
 					</imageTags>
 					<forceTags>true</forceTags>
 					<imageName>fiodar/td</imageName>

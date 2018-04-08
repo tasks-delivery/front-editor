@@ -8,7 +8,7 @@ Comment Style=[fsItalic]|Foreground=clNavy
 Space
 String Foreground=clRed
 Key Style=[fsBold]
-Test Background=clSilver|Foreground=clBlue|Style=[fsUnderline, fsItalic]
+AboutWindow Background=clSilver|Foreground=clBlue|Style=[fsUnderline, fsItalic]
 |><|
 
 KEYS
@@ -16,7 +16,7 @@ Hello
 World
 |><|
 
-KEYS Test
+KEYS AboutWindow
 SynEdit
 |><|
 
