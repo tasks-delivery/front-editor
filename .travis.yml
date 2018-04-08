@@ -6,7 +6,7 @@ group: deprecated-2017Q4
 jdk: openjdk8
 
 #services:
-#  - docker
+#   - docker
 
 cache:
   directories:
@@ -31,10 +31,10 @@ branches:
     - dev
 
 stages:
-   - test
+   - AboutWindow
 
 jobs:
   include:
-     - stage: test
+     - stage: AboutWindow
        script:
          - mvn clean test -P local

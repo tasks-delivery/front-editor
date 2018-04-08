@@ -44,7 +44,7 @@ object Form1: TForm1
       'in debugging-mode.'#13#10'Therefore this demo includes the unit LibExe' +
       'c.pas from Andreas Hausladen'#13#10'that fixes this issue.'#13#10'More unoff' +
       'icial Kylix patches can be found at http://www.kylix-patch.de.vu' +
-      '/'#13#10#13#10'Some test links:'#13#10'----------------'#13#10'(not all real ones, jus' +
+      '/'#13#10#13#10'Some AboutWindow links:'#13#10'----------------'#13#10'(not all real ones, jus' +
       't to check if correct app starts)'#13#10#13#10'http://www.somewhere.org'#13#10'f' +
       'tp://superhost.org/downloads/gems.zip'#13#10'www.w3c.org'#13#10'mailto:big@l' +
       'ebowski.edu'#13#10'douglas@adams.lod'#13#10'news:comp.lang.pascal.borland'

@@ -153,8 +153,8 @@ var
   document: IHTMLDocument2;
   Flag: Boolean;
   const size = 10;
-  const releaseVersion = '0.1.0';
-  const currentVersion = '0.0.9';
+  const releaseVersion = '0.1.1';
+  const currentVersion = '0.1.0';
 
 implementation
 

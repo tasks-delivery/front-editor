@@ -207,7 +207,7 @@ type
     // that regcomp() supplies a regmust only if the r.e. contains something
     // potentially expensive (at present, the only such thing detected is * or +
     // at the start of the r.e., which can involve a lot of backup).  Regmlen is
-    // supplied because the test in regexec() needs it and regcomp() is computing
+    // supplied because the AboutWindow in regexec() needs it and regcomp() is computing
     // it anyway.
     {$IFDEF UseFirstCharSet} //###0.929
     FirstCharSet : TSetOfREChar;
@@ -393,8 +393,8 @@ type
     property ModifierR : boolean index 2 read GetModifier write SetModifier;
     // Modifier /r - use r.e.syntax extended for russian,
     // (was property ExtSyntaxEnabled in previous versions)
-    // If true, then а-я  additional include russian letter 'ё',
-    // А-Я  additional include 'Ё', and а-Я include all russian symbols.
+    // If true, then пїЅ-пїЅ  additional include russian letter 'пїЅ',
+    // пїЅ-пїЅ  additional include 'пїЅ', and пїЅ-пїЅ include all russian symbols.
     // You have to turn it off if it may interfere with you national alphabet.
     // , initialized from RegExprModifierR
 
@@ -1456,7 +1456,7 @@ procedure TRegExpr.Tail (p : PRegExprChar; val : PRegExprChar);
    // shr after subtraction to calculate widechar distance %-( )
    // so, if difference is negative we have .. the "feature" :(
    // I could wrap it in $IFDEF UniCode, but I didn't because
-   // "P – Q computes the difference between the address given
+   // "P пїЅ Q computes the difference between the address given
    // by P (the higher address) and the address given by Q (the
    // lower address)" - Delphi help quotation.
    else PRENextOff (scan + REOpSz)^ := val - scan; //###0.933
@@ -1567,17 +1567,17 @@ const
    #$418,#$419,#$41A,#$41B,#$41C,#$41D,#$41E,#$41F,
    #$420,#$421,#$422,#$423,#$424,#$425,#$426,#$427,
    #$428,#$429,#$42A,#$42B,#$42C,#$42D,#$42E,#$42F,#0);
- RusRangeLoLow = #$430{'а'};
- RusRangeLoHigh = #$44F{'я'};
- RusRangeHiLow = #$410{'А'};
- RusRangeHiHigh = #$42F{'Я'};
+ RusRangeLoLow = #$430{'пїЅ'};
+ RusRangeLoHigh = #$44F{'пїЅ'};
+ RusRangeHiLow = #$410{'пїЅ'};
+ RusRangeHiHigh = #$42F{'пїЅ'};
 {$ELSE}
- RusRangeLo = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя';
- RusRangeHi = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
- RusRangeLoLow = 'а';
- RusRangeLoHigh = 'я';
- RusRangeHiLow = 'А';
- RusRangeHiHigh = 'Я';
+ RusRangeLo = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+ RusRangeHi = 'пїЅпїЅпїЅпїЅпїЅЕЁпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+ RusRangeLoLow = 'пїЅ';
+ RusRangeLoHigh = 'пїЅ';
+ RusRangeHiLow = 'пїЅ';
+ RusRangeHiHigh = 'пїЅ';
 {$ENDIF}
 
 function TRegExpr.CompileRegExpr (exp : PRegExprChar) : boolean;
@@ -3598,7 +3598,7 @@ procedure TRegExpr.SetInputString (const AInputString : RegExprString);
   fInputStart := PChar (fInputString);
   Len := length (fInputString);
   fInputEnd := PRegExprChar (integer (fInputStart) + Len); ??
-  !! startp/endp все равно будет опасно использовать ?
+  !! startp/endp пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ?
   }
  end; { of procedure TRegExpr.SetInputString
 --------------------------------------------------------------}

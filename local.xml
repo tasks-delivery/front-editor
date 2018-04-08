@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="test for local">
-    <test name="test for local">
+<suite name="AboutWindow for local">
+    <test name="AboutWindow for local">
         <classes>
-            <class name="SmokeTests"/>
-            <class name="TemplateTest"/>
-        </classes>
-    </test>
-</suite>
+            <class name="MainWindowTest"/>
+            <class name="AboutWindowTest"/>
+            <class name="UpdateWindowTest"/>
+         </classes>
+     </test>
+ </suite>
