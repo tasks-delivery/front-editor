@@ -4,6 +4,7 @@ import autoitx4java.AutoItX;
 import com.jacob.com.LibraryLoader;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import java.awt.*;
 import java.io.File;
 
 public abstract class ConciseApi {
@@ -11,6 +12,12 @@ public abstract class ConciseApi {
    public AutoItX autoItX;
    public String appName = "Front-Editor";
    public String saveFileDialog = "Save file";
+
+    public void pressKey(int key) throws AWTException {
+        Robot robot = new Robot();
+        robot.keyPress(key);
+        robot.keyRelease(key);
+    }
 
     @BeforeClass
     public void setUp(){

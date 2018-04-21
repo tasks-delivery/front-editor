@@ -1,10 +1,22 @@
+import java.awt.*;
+import java.awt.event.KeyEvent;
+
 public class MainWindow extends AboutWindow{
 
     public String terminal = "C:\\WINDOWS\\system32\\cmd.exe";
     public String textStyle = "Шрифт";
+    public String openFile = "Open file";
+
+    public void clickBtnOpenFile(String file) throws AWTException {
+        autoItX.mouseClick("left", 58, 65);
+        autoItX.winWaitActive(openFile);
+        autoItX.send(file);
+        pressKey(KeyEvent.VK_ENTER);
+    }
 
     public void clickBtnNewFile(){
         autoItX.mouseClick("left", 104, 65);
+        autoItX.winWaitActive(saveFileDialog);
     }
 
     public void clickBtnClear(){
@@ -46,21 +58,48 @@ public class MainWindow extends AboutWindow{
     }
 
     public void openAboutWindow(){
-        autoItX.mouseClick("left",126,35);
+        openMenuItemHelp();
         autoItX.mouseClick("left",154,102);
         autoItX.winWaitActive(about);
     }
 
     public void openUpdateWindow(){
-        autoItX.mouseClick("left",126,35);
+        openMenuItemHelp();
         autoItX.mouseClick("left",148,88);
         autoItX.winWaitActive(update);
     }
 
-	public Boolean aboutAreaShouldHaveText(String text){
+	public Boolean EditorShouldHaveText(String text){
 		autoItX.mouseClick("left", 355,166);
 		Boolean x = autoItX.winGetText(appName).contains(text);
 		return x;
 	}
+
+    public void openMenuItemFile(){
+        autoItX.mouseClick("left",21,39);
+    }
+
+    public void openMenuItemEdit(){
+        autoItX.mouseClick("left",54,39);
+    }
+
+    public void openMenuItemCode(){
+        autoItX.mouseClick("left",95,39);
+    }
+
+	public void openMenuItemHelp(){
+        autoItX.mouseClick("left",126,39);
+    }
+
+	public void clickMenuItemExit(){
+        openMenuItemFile();
+        autoItX.mouseClick("left",60,129);
+        autoItX.winWaitNoActive(appName);
+    }
+
+    public void clickMenuItemNew(){
+        openMenuItemFile();
+        autoItX.mouseClick("left",33,62);
+    }
 
 }
