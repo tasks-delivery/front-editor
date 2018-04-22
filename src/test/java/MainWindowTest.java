@@ -1,8 +1,8 @@
+import com.codeborne.selenide.Selenide;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
 import java.awt.*;
-
+import java.awt.event.KeyEvent;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -22,6 +22,89 @@ public class MainWindowTest extends MainWindow {
     }
 
     @Test
+    public void toDoShouldNotBeVisibleIfEditorWithoutTabs() throws AWTException {
+        closeApp();
+        openApp();
+        pressKeyInSameTime(KeyEvent.VK_SHIFT, KeyEvent.VK_T);
+        Assert.assertFalse(EditorShouldHaveText("TODO:"));
+    }
+
+    @Test
+    public void itIsPossibleToStartTerminalByTopBarMenu() throws AWTException {
+        clickSubMenuItemTerminal();
+        autoItX.winWaitActive(terminal);
+        assertThat(true, is(autoItX.winExists(terminal)));
+        closeWindow(terminal);
+    }
+
+    @Test
+    public void itIsPossibleToStartTextStyleByTopBarMenu() throws AWTException {
+        clickSubMenuItemTextStyle();
+        autoItX.winWaitActive(textStyle);
+        assertThat(true, is(autoItX.winExists(textStyle)));
+        closeWindow(textStyle);
+    }
+
+    @Test
+    public void applicationShouldBeCloseByClickingAltWithF4() throws AWTException {
+        pressKeyInSameTime(KeyEvent.VK_ALT, KeyEvent.VK_F4);
+        autoItX.winWaitNoActive(appName);
+        assertThat(false, is(autoItX.winExists(appName)));
+        openApp();
+    }
+
+    @Test
+    public void newFileShouldBeVisibleByClickingCtrlWithN() throws AWTException {
+        pressKeyInSameTime(KeyEvent.VK_CONTROL, KeyEvent.VK_N);
+        autoItX.winWaitActive(saveFileDialog);
+        closeWindow(saveFileDialog);
+        Assert.assertTrue(EditorShouldHaveText(""));
+    }
+
+    @Test
+    public void saveFileDialogShouldBeVisibleByClickingCtrlWithS() throws AWTException {
+        clickBtnNewFile();
+        closeWindow(saveFileDialog);
+        pressKeyInSameTime(KeyEvent.VK_CONTROL, KeyEvent.VK_S);
+        autoItX.winWaitActive(saveFileDialog);
+        assertThat(true, is(autoItX.winExists(saveFileDialog)));
+        closeWindow(saveFileDialog);
+    }
+
+    @Test
+    public void openFileDialogShouldBeVisibleByClickingCtrlWithO() throws AWTException {
+        pressKeyInSameTime(KeyEvent.VK_CONTROL, KeyEvent.VK_O);
+        autoItX.winWaitActive(openFileDialog);
+        assertThat(true, is(autoItX.winExists(openFileDialog)));
+        closeWindow(openFileDialog);
+    }
+
+    @Test
+    public void terminalShouldBeVisibleByClickingCtrlWithO() throws AWTException {
+        pressKeyInSameTime(KeyEvent.VK_CONTROL, KeyEvent.VK_T);
+        autoItX.winWaitActive(terminal);
+        assertThat(true, is(autoItX.winExists(terminal)));
+        closeWindow(terminal);
+    }
+
+    @Test
+    public void textStyleWindowShouldBeVisibleByClickingAltWithT() throws AWTException {
+        pressKeyInSameTime(KeyEvent.VK_ALT, KeyEvent.VK_T);
+        autoItX.winWaitActive(textStyle);
+        assertThat(true, is(autoItX.winExists(textStyle)));
+        closeWindow(textStyle);
+    }
+
+    @Test
+    public void saveFileDialogShouldNotBeVisibleIfPageEditorWithoutTabs() {
+        closeApp();
+        openApp();
+        clickBtnSaveFile();
+        autoItX.winWaitNoActive(saveFileDialog);
+        assertThat(false, is(autoItX.winExists(saveFileDialog)));
+    }
+
+    @Test
     public void applicationShouldBeCloseByClickingMenuItemExit(){
         clickMenuItemExit();
         assertThat(false, is(autoItX.winExists(appName)));
@@ -37,58 +120,11 @@ public class MainWindowTest extends MainWindow {
     }
 
     @Test
-    public void htmlFileShouldBeOpen() throws AWTException {
-        clickBtnOpenFile("test.html");
-        Assert.assertTrue(EditorShouldHaveText("<!doctype html>"));
-    }
-
-    @Test
-    public void htmFileShouldBeOpen() throws AWTException {
-        clickBtnOpenFile("test.htm");
-        Assert.assertTrue(EditorShouldHaveText("<!doctype html>"));
-    }
-
-    @Test
-    public void xmlFileShouldBeOpen() throws AWTException {
-        clickBtnOpenFile("test.xml");
-        Assert.assertTrue(EditorShouldHaveText("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"));
-    }
-
-    @Test
-    public void sqlFileShouldBeOpen() throws AWTException {
-        clickBtnOpenFile("test.sql");
-        Assert.assertTrue(EditorShouldHaveText("CREATE DATABASE"));
-    }
-
-    @Test
-    public void jsFileShouldBeOpen() throws AWTException {
-        clickBtnOpenFile("test.js");
-        Assert.assertTrue(EditorShouldHaveText("author: User"));
-    }
-
-    @Test
-    public void cssFileShouldBeOpen() throws AWTException {
-        clickBtnOpenFile("test.css");
-        Assert.assertTrue(EditorShouldHaveText("css stylesheet"));
-    }
-
-    @Test
-    public void lessFileShouldBeOpen() throws AWTException {
-        clickBtnOpenFile("test.less");
-        Assert.assertTrue(EditorShouldHaveText("css stylesheet"));
-    }
-
-    @Test
-    public void javaFileShouldBeOpen() throws AWTException {
-        clickBtnOpenFile("test.java");
-        Assert.assertTrue(EditorShouldHaveText("public class"));
-    }
-
-    @Test
     public void terminalWindow(){
         clickBtnTerminal();
         assertThat(true, is(autoItX.winExists(terminal)));
         closeWindow(terminal);
+        autoItX.winWaitNoActive(terminal);
         assertThat(false, is(autoItX.winExists(terminal)));
     }
 
@@ -97,73 +133,8 @@ public class MainWindowTest extends MainWindow {
         clickBtnTextStyle();
         assertThat(true, is(autoItX.winExists(textStyle)));
         closeWindow(textStyle);
+        autoItX.winWaitNoActive(textStyle);
         assertThat(false, is(autoItX.winExists(textStyle)));
-    }
-
-    @Test
-    public void javaTemplate(){
-        clickBtnNewFile();
-        assertThat(true, is(autoItX.winExists(saveFileDialog)));
-        closeWindow(saveFileDialog);
-        clickBtnJavaTemplate();
-        Assert.assertTrue(EditorShouldHaveText("public class"));
-        clickBtnClear();
-        Assert.assertFalse(EditorShouldHaveText("public class"));
-    }
-
-    @Test
-    public void htmlTemplate(){
-        clickBtnNewFile();
-        assertThat(true, is(autoItX.winExists(saveFileDialog)));
-        closeWindow(saveFileDialog);
-        clickBtnHtmlTemplate();
-        Assert.assertTrue(EditorShouldHaveText("<!doctype html>"));
-        clickBtnClear();
-        Assert.assertFalse(EditorShouldHaveText("<!doctype html>"));
-    }
-
-    @Test
-    public void sqlTemplate(){
-        clickBtnNewFile();
-        assertThat(true, is(autoItX.winExists(saveFileDialog)));
-        closeWindow(saveFileDialog);
-        clickBtnSqlTemplate();
-        Assert.assertTrue(EditorShouldHaveText("CREATE DATABASE"));
-        clickBtnClear();
-        Assert.assertFalse(EditorShouldHaveText("CREATE DATABASE"));
-    }
-
-    @Test
-    public void cssTemplate(){
-        clickBtnNewFile();
-        assertThat(true, is(autoItX.winExists(saveFileDialog)));
-        closeWindow(saveFileDialog);
-        clickBtnCssTemplate();
-        Assert.assertTrue(EditorShouldHaveText("css stylesheet"));
-        clickBtnClear();
-        Assert.assertFalse(EditorShouldHaveText("css stylesheet"));
-    }
-
-    @Test
-    public void jsTemplate(){
-        clickBtnNewFile();
-        assertThat(true, is(autoItX.winExists(saveFileDialog)));
-        closeWindow(saveFileDialog);
-        clickBtnJsTemplate();
-        Assert.assertTrue(EditorShouldHaveText("author: User"));
-        clickBtnClear();
-        Assert.assertFalse(EditorShouldHaveText("author: User"));
-    }
-
-    @Test
-    public void xmlTemplate(){
-        clickBtnNewFile();
-        assertThat(true, is(autoItX.winExists(saveFileDialog)));
-        closeWindow(saveFileDialog);
-        clickBtnXmlTemplate();
-        Assert.assertTrue(EditorShouldHaveText("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"));
-        clickBtnClear();
-        Assert.assertFalse(EditorShouldHaveText("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"));
     }
 
 }
