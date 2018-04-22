@@ -19,6 +19,14 @@ public abstract class ConciseApi {
         robot.keyRelease(key);
     }
 
+    public void pressKeyInSameTime(int key1, int key2) throws AWTException {
+        Robot rb = new Robot();
+        rb.keyPress(key1);
+        rb.keyPress(key2);
+        rb.keyRelease(key1);
+        rb.keyRelease(key2);
+    }
+
     @BeforeClass
     public void setUp(){
         File file = new File("lib", "jacob-1.16-M2-x64.dll");

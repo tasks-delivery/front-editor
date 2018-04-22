@@ -3,6 +3,8 @@
 <suite name="AboutWindow for local">
     <test name="AboutWindow for local">
         <classes>
+            <class name="TemplateTest"/>
+            <class name="SaveAndOpenFilesTest"/>
             <class name="MainWindowTest"/>
             <class name="AboutWindowTest"/>
             <class name="UpdateWindowTest"/>

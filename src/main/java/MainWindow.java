@@ -1,17 +1,33 @@
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 public class MainWindow extends AboutWindow{
 
     public String terminal = "C:\\WINDOWS\\system32\\cmd.exe";
     public String textStyle = "Шрифт";
-    public String openFile = "Open file";
+    public String openFileDialog = "Open file";
 
-    public void clickBtnOpenFile(String file) throws AWTException {
-        autoItX.mouseClick("left", 58, 65);
-        autoItX.winWaitActive(openFile);
+    public void openDialogOpenFile(String file, int key) throws AWTException {
+        clickBtnOpenFile();
+        autoItX.winWaitActive(openFileDialog);
         autoItX.send(file);
-        pressKey(KeyEvent.VK_ENTER);
+        pressKey(key);
+    }
+
+    public void openSaveFileDialog(String file, int key1, int key2, int key3) throws AWTException {
+        clickBtnSaveFile();
+        autoItX.winWaitActive(saveFileDialog);
+        autoItX.send(file);
+        pressKey(key1);
+        pressKey(key2);
+        pressKey(key3);
+    }
+
+    public void clickBtnOpenFile(){
+        autoItX.mouseClick("left", 58, 65);
+    }
+
+    public void clickBtnSaveFile(){
+        autoItX.mouseClick("left", 21, 71);
     }
 
     public void clickBtnNewFile(){
@@ -58,13 +74,13 @@ public class MainWindow extends AboutWindow{
     }
 
     public void openAboutWindow(){
-        openMenuItemHelp();
+        openMenuHelp();
         autoItX.mouseClick("left",154,102);
         autoItX.winWaitActive(about);
     }
 
     public void openUpdateWindow(){
-        openMenuItemHelp();
+        openMenuHelp();
         autoItX.mouseClick("left",148,88);
         autoItX.winWaitActive(update);
     }
@@ -75,30 +91,64 @@ public class MainWindow extends AboutWindow{
 		return x;
 	}
 
-    public void openMenuItemFile(){
+	public void clickSubMenuItemToDo(){
+	    openMenuEdit();
+	    openMenuItemTools();
+	    openSubMenuItemToDo();
+    }
+
+    public void clickSubMenuItemTerminal(){
+        openMenuEdit();
+        openMenuItemTools();
+        openSubMenuItemTerminal();
+    }
+
+    public void clickSubMenuItemTextStyle(){
+        openMenuEdit();
+        openMenuItemTools();
+        openSubMenuItemTextStyle();
+    }
+
+    public void openMenuFile(){
         autoItX.mouseClick("left",21,39);
     }
 
-    public void openMenuItemEdit(){
+    public void openMenuEdit(){
         autoItX.mouseClick("left",54,39);
     }
 
-    public void openMenuItemCode(){
+    public void openMenuItemTools(){
+        autoItX.mouseClick("left",84,85);
+    }
+
+    public void openSubMenuItemToDo(){
+        autoItX.mouseClick("left",235,129);
+    }
+
+    public void openSubMenuItemTerminal(){
+        autoItX.mouseClick("left",226,103);
+    }
+
+    public void openSubMenuItemTextStyle(){
+        autoItX.mouseClick("left",211,81);
+    }
+
+    public void openMenuCode(){
         autoItX.mouseClick("left",95,39);
     }
 
-	public void openMenuItemHelp(){
+	public void openMenuHelp(){
         autoItX.mouseClick("left",126,39);
     }
 
 	public void clickMenuItemExit(){
-        openMenuItemFile();
+        openMenuFile();
         autoItX.mouseClick("left",60,129);
         autoItX.winWaitNoActive(appName);
     }
 
     public void clickMenuItemNew(){
-        openMenuItemFile();
+        openMenuFile();
         autoItX.mouseClick("left",33,62);
     }
 
