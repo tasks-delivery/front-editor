@@ -153,8 +153,8 @@ var
   document: IHTMLDocument2;
   Flag: Boolean;
   const size = 10;
-  const releaseVersion = '0.1.1';
-  const currentVersion = '0.1.0';
+  const releaseVersion = '0.1.2';
+  const currentVersion = '0.1.1';
 
 implementation
 
@@ -655,7 +655,7 @@ begin
     STabName:=ChangeFileExt(ExtractFileName(SFName),'');
     PageEditor.ActivePage.Hint := SFName;
     PageEditor.ActivePage.HelpKeyword := STabName;
-    PageEditor.ActivePage.Caption := SFileLoard;
+    PageEditor.ActivePage.Caption := SFileLoard+ '       ';
     SetCodeHighlighter(SFName, STabName, SFileLoard);
 end;
 end;
