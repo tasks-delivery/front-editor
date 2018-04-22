@@ -2,7 +2,7 @@ object Main: TMain
   Left = 210
   Top = 144
   Caption = 'Front-Editor'
-  ClientHeight = 554
+  ClientHeight = 574
   ClientWidth = 684
   Color = clActiveCaption
   Constraints.MinHeight = 500
@@ -11589,12 +11589,12 @@ object Main: TMain
   OnPaint = FormPaint
   DesignSize = (
     684
-    554)
+    574)
   PixelsPerInch = 96
   TextHeight = 13
   object Editor: TSynMemo
     Left = 422
-    Top = 134
+    Top = 140
     Width = 120
     Height = 84
     Anchors = []
@@ -11616,6 +11616,7 @@ object Main: TMain
     Options = [eoAltSetsColumnMode, eoAutoIndent, eoDragDropEditing, eoEnhanceEndKey, eoGroupUndo, eoScrollPastEol, eoShowScrollHint, eoSmartTabDelete, eoSmartTabs, eoSpecialLineDefaultFg, eoTabIndent, eoTabsToSpaces, eoTrimTrailingSpaces]
     RightEdgeColor = clActiveBorder
     FontSmoothing = fsmNone
+    ExplicitTop = 134
   end
   object NavigationPanel: TToolBar
     Left = 0
@@ -12583,7 +12584,7 @@ object Main: TMain
     Left = 280
     Top = 71
     Width = 375
-    Height = 448
+    Height = 468
     Anchors = [akLeft, akTop, akRight, akBottom]
     DockSite = True
     HotTrack = True
@@ -12593,12 +12594,13 @@ object Main: TMain
     OnDragOver = PageEditorDragOver
     OnDrawTab = PageEditorDrawTab
     OnMouseDown = PageEditorMouseDown
+    ExplicitHeight = 448
   end
   object Tree: TShellTreeView
     Left = 24
     Top = 71
     Width = 250
-    Height = 448
+    Height = 468
     ObjectTypes = [otFolders, otNonFolders]
     Root = 'rfMyComputer'
     UseShellImages = True
@@ -12610,6 +12612,7 @@ object Main: TMain
     ShowRoot = False
     TabOrder = 3
     OnClick = TreeClick
+    ExplicitHeight = 448
   end
   object BtnDelTab: TButton
     Left = 544
