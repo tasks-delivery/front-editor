@@ -9,9 +9,19 @@ import java.io.File;
 
 public abstract class ConciseApi {
 
-   public AutoItX autoItX;
-   public String appName = "Front-Editor";
-   public String saveFileDialog = "Save file";
+    public String testJavaFile = "test.java";
+    public String testHtmlFile = "test.html";
+    public String testJsFile = "test.js";
+    public String testXmlFile = "test.xml";
+    public String testSqlFile = "test.sql";
+    public String testCssFile = "test.css";
+    public String testLessFile = "test.less";
+    public String testHtmFile = "test.htm";
+    public String toDo = "TODO:";
+
+    public AutoItX autoItX;
+    public String appName = "Front-Editor";
+    public String saveFileDialog = "Save file";
 
     public void pressKey(int key) throws AWTException {
         Robot robot = new Robot();
@@ -46,6 +56,11 @@ public abstract class ConciseApi {
     public void openApp(){
         autoItX.run("Front_Editor.exe");
         autoItX.winWaitActive(appName);
+    }
+
+    public void restartApp(){
+        closeApp();
+        openApp();
     }
 
     public void closeWindow(String window){

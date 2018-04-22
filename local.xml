@@ -6,8 +6,11 @@
             <class name="TemplateTest"/>
             <class name="SaveAndOpenFilesTest"/>
             <class name="MainWindowTest"/>
-            <class name="AboutWindowTest"/>
-            <class name="UpdateWindowTest"/>
+            <class name="ShortCutTest"/>
+            <class name="MenuFileTest"/>
+            <class name="MenuEditTest"/>
+            <class name="MenuCodeTest"/>
+            <class name="MenuHelpTest"/>
          </classes>
      </test>
  </suite>

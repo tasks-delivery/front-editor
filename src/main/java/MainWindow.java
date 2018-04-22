@@ -1,20 +1,19 @@
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
-public class MainWindow extends AboutWindow{
+public class MainWindow extends MenuHelp{
 
     public String terminal = "C:\\WINDOWS\\system32\\cmd.exe";
     public String textStyle = "Шрифт";
     public String openFileDialog = "Open file";
 
-    public void openDialogOpenFile(String file, int key) throws AWTException {
-        clickBtnOpenFile();
+    public void openFile(String file, int key) throws AWTException {
         autoItX.winWaitActive(openFileDialog);
         autoItX.send(file);
         pressKey(key);
     }
 
-    public void openSaveFileDialog(String file, int key1, int key2, int key3) throws AWTException {
-        clickBtnSaveFile();
+    public void saveFile(String file, int key1, int key2, int key3) throws AWTException {
         autoItX.winWaitActive(saveFileDialog);
         autoItX.send(file);
         pressKey(key1);
@@ -73,83 +72,54 @@ public class MainWindow extends AboutWindow{
         autoItX.winWaitActive(terminal);
     }
 
-    public void openAboutWindow(){
-        openMenuHelp();
-        autoItX.mouseClick("left",154,102);
-        autoItX.winWaitActive(about);
-    }
-
-    public void openUpdateWindow(){
-        openMenuHelp();
-        autoItX.mouseClick("left",148,88);
-        autoItX.winWaitActive(update);
-    }
-
 	public Boolean EditorShouldHaveText(String text){
 		autoItX.mouseClick("left", 355,166);
 		Boolean x = autoItX.winGetText(appName).contains(text);
 		return x;
 	}
 
-	public void clickSubMenuItemToDo(){
-	    openMenuEdit();
-	    openMenuItemTools();
-	    openSubMenuItemToDo();
-    }
-
-    public void clickSubMenuItemTerminal(){
-        openMenuEdit();
-        openMenuItemTools();
-        openSubMenuItemTerminal();
-    }
-
-    public void clickSubMenuItemTextStyle(){
-        openMenuEdit();
-        openMenuItemTools();
-        openSubMenuItemTextStyle();
-    }
-
-    public void openMenuFile(){
-        autoItX.mouseClick("left",21,39);
-    }
-
-    public void openMenuEdit(){
-        autoItX.mouseClick("left",54,39);
-    }
-
-    public void openMenuItemTools(){
-        autoItX.mouseClick("left",84,85);
-    }
-
-    public void openSubMenuItemToDo(){
-        autoItX.mouseClick("left",235,129);
-    }
-
-    public void openSubMenuItemTerminal(){
-        autoItX.mouseClick("left",226,103);
-    }
-
-    public void openSubMenuItemTextStyle(){
-        autoItX.mouseClick("left",211,81);
-    }
-
-    public void openMenuCode(){
-        autoItX.mouseClick("left",95,39);
-    }
-
-	public void openMenuHelp(){
-        autoItX.mouseClick("left",126,39);
-    }
-
-	public void clickMenuItemExit(){
-        openMenuFile();
-        autoItX.mouseClick("left",60,129);
-        autoItX.winWaitNoActive(appName);
-    }
-
-    public void clickMenuItemNew(){
-        openMenuFile();
-        autoItX.mouseClick("left",33,62);
+	public void restoreTestData(String java, String js, String html, String htm, String css, String less, String sql, String xml) throws AWTException {
+	    restartApp();
+        clickBtnOpenFile();
+        openFile(java, KeyEvent.VK_ENTER);
+        clickBtnJavaTemplate();
+        clickBtnSaveFile();
+        saveFile(java, KeyEvent.VK_ENTER, KeyEvent.VK_LEFT, KeyEvent.VK_ENTER);
+        clickBtnOpenFile();
+        openFile(html, KeyEvent.VK_ENTER);
+        clickBtnHtmlTemplate();
+        clickBtnSaveFile();
+        saveFile(html, KeyEvent.VK_ENTER, KeyEvent.VK_LEFT, KeyEvent.VK_ENTER);
+        clickBtnOpenFile();
+        openFile(css, KeyEvent.VK_ENTER);
+        clickBtnCssTemplate();
+        clickBtnSaveFile();
+        saveFile(css, KeyEvent.VK_ENTER, KeyEvent.VK_LEFT, KeyEvent.VK_ENTER);
+        clickBtnOpenFile();
+        openFile(js, KeyEvent.VK_ENTER);
+        clickBtnJsTemplate();
+        clickBtnSaveFile();
+        saveFile(js, KeyEvent.VK_ENTER, KeyEvent.VK_LEFT, KeyEvent.VK_ENTER);
+        clickBtnOpenFile();
+        openFile(xml, KeyEvent.VK_ENTER);
+        clickBtnXmlTemplate();
+        clickBtnSaveFile();
+        saveFile(xml, KeyEvent.VK_ENTER, KeyEvent.VK_LEFT, KeyEvent.VK_ENTER);
+        clickBtnOpenFile();
+        openFile(sql, KeyEvent.VK_ENTER);
+        clickBtnSqlTemplate();
+        clickBtnSaveFile();
+        saveFile(sql, KeyEvent.VK_ENTER, KeyEvent.VK_LEFT, KeyEvent.VK_ENTER);
+        clickBtnOpenFile();
+        openFile(less, KeyEvent.VK_ENTER);
+        clickBtnSqlTemplate();
+        clickBtnSaveFile();
+        saveFile(less, KeyEvent.VK_ENTER, KeyEvent.VK_LEFT, KeyEvent.VK_ENTER);
+        clickBtnOpenFile();
+        openFile(htm, KeyEvent.VK_ENTER);
+        clickBtnSqlTemplate();
+        clickBtnSaveFile();
+        saveFile(htm, KeyEvent.VK_ENTER, KeyEvent.VK_LEFT, KeyEvent.VK_ENTER);
     }
 
 }
