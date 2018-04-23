@@ -115,4 +115,11 @@ public class MenuEdit extends MenuFile{
         openMenuItemTools();
         openSubMenuItemTextStyle();
     }
+
+    public void destroyBrowser(String browser){
+        autoItX.processClose(String.valueOf(autoItX.processExists("OpenWith.exe")));
+        autoItX.processClose(String.valueOf(autoItX.processExists("MC3D2D~1.EXE")));
+        autoItX.processClose(String.valueOf(autoItX.processExists("launcher.exe")));
+        autoItX.processClose(String.valueOf(autoItX.processExists(browser+".exe")));
+    }
 }

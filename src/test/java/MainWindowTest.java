@@ -1,7 +1,10 @@
+import com.codeborne.selenide.Selenide;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -38,19 +41,19 @@ public class MainWindowTest extends MainWindow {
     @Test
     public void terminalWindow(){
         clickBtnTerminal();
-        assertThat(true, is(autoItX.winExists(terminal)));
-        closeWindow(terminal);
-        autoItX.winWaitNoActive(terminal);
-        assertThat(false, is(autoItX.winExists(terminal)));
+        assertThat(true, is(getTerminal()));
+        autoItX.processClose(String.valueOf(autoItX.processExists(cmd)));
+        autoItX.processWaitClose(String.valueOf(autoItX.processExists(cmd)));
+        assertThat(false, is(getTerminal()));
     }
 
     @Test
     public void textStyleWindow(){
         clickBtnTextStyle();
-        assertThat(true, is(autoItX.winExists(textStyle)));
-        closeWindow(textStyle);
-        autoItX.winWaitNoActive(textStyle);
-        assertThat(false, is(autoItX.winExists(textStyle)));
+        Selenide.sleep(1000);
+        assertThat(true, is(autoItX.winExists(textStyleWindow(textStyle))));
+        closeWindow(textStyleWindow(textStyle));
+        assertThat(false, is(autoItX.winExists(textStyleWindow(textStyle))));
     }
 
 }

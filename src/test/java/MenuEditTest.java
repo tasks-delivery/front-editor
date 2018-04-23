@@ -1,7 +1,9 @@
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -72,17 +74,18 @@ public class MenuEditTest extends MainWindow {
     @Test
     public void itIsPossibleToStartTerminalByTopBarMenu() throws AWTException {
         clickSubMenuItemTerminal();
-        autoItX.winWaitActive(terminal);
-        assertThat(true, is(autoItX.winExists(terminal)));
-        closeWindow(terminal);
+        assertThat(true, is(getTerminal()));
+        autoItX.processClose(String.valueOf(autoItX.processExists(cmd)));
+        autoItX.processWaitClose(String.valueOf(autoItX.processExists(cmd)));
+        assertThat(false, is(getTerminal()));
     }
 
     @Test
     public void itIsPossibleToStartTextStyleByTopBarMenu() throws AWTException {
         clickSubMenuItemTextStyle();
-        autoItX.winWaitActive(textStyle);
-        assertThat(true, is(autoItX.winExists(textStyle)));
-        closeWindow(textStyle);
+        autoItX.winWaitActive(textStyleWindow(textStyle));
+        assertThat(true, is(autoItX.winExists(textStyleWindow(textStyle))));
+        closeWindow(textStyleWindow(textStyle));
     }
 
     @Test
@@ -98,6 +101,7 @@ public class MenuEditTest extends MainWindow {
         assertThat(true, is(autoItX.winExists(saveFileDialog)));
         saveFile(testHtmFile, KeyEvent.VK_ENTER, KeyEvent.VK_LEFT, KeyEvent.VK_ENTER);
         clickSubMenuItemChrome();
+        destroyBrowser("chrome");
         autoItX.winWaitNoActive(confirm);
         assertThat(false, is(autoItX.winExists(confirm)));
         restartApp();
@@ -116,6 +120,7 @@ public class MenuEditTest extends MainWindow {
         assertThat(true, is(autoItX.winExists(saveFileDialog)));
         saveFile(testJavaFile, KeyEvent.VK_ENTER, KeyEvent.VK_LEFT, KeyEvent.VK_ENTER);
         clickSubMenuItemFirefox();
+        destroyBrowser("firefox");
         autoItX.winWaitNoActive(confirm);
         assertThat(false, is(autoItX.winExists(confirm)));
         restartApp();
@@ -134,6 +139,7 @@ public class MenuEditTest extends MainWindow {
         assertThat(true, is(autoItX.winExists(saveFileDialog)));
         saveFile(testCssFile, KeyEvent.VK_ENTER, KeyEvent.VK_LEFT, KeyEvent.VK_ENTER);
         clickSubMenuItemOpera();
+        destroyBrowser("opera");
         autoItX.winWaitNoActive(confirm);
         assertThat(false, is(autoItX.winExists(confirm)));
         restartApp();
@@ -152,6 +158,7 @@ public class MenuEditTest extends MainWindow {
         assertThat(true, is(autoItX.winExists(saveFileDialog)));
         saveFile(testSqlFile, KeyEvent.VK_ENTER, KeyEvent.VK_LEFT, KeyEvent.VK_ENTER);
         clickSubMenuItemSafari();
+        destroyBrowser("safari");
         autoItX.winWaitNoActive(confirm);
         assertThat(false, is(autoItX.winExists(confirm)));
         restartApp();
@@ -161,15 +168,16 @@ public class MenuEditTest extends MainWindow {
     public void itIsNotPossibleToOpenFileInEdgeIfFileWasNotSave() throws AWTException {
         clickBtnNewFile();
         closeWindow(saveFileDialog);
-        clickBtnJsTemplate();
+        clickBtnHtmlTemplate();
         clickSubMenuItemEdge();
         autoItX.winWaitActive(confirm);
         assertThat(true, is(autoItX.winExists(confirm)));
         clickBtnOkInConfirmWindow();
         autoItX.winWaitActive(saveFileDialog);
         assertThat(true, is(autoItX.winExists(saveFileDialog)));
-        saveFile(testJsFile, KeyEvent.VK_ENTER, KeyEvent.VK_LEFT, KeyEvent.VK_ENTER);
+        saveFile(testHtmlFile, KeyEvent.VK_ENTER, KeyEvent.VK_LEFT, KeyEvent.VK_ENTER);
         clickSubMenuItemEdge();
+        destroyBrowser("MicrosoftEdge");
         autoItX.winWaitNoActive(confirm);
         assertThat(false, is(autoItX.winExists(confirm)));
         restartApp();
@@ -188,6 +196,7 @@ public class MenuEditTest extends MainWindow {
         assertThat(true, is(autoItX.winExists(saveFileDialog)));
         saveFile(testXmlFile, KeyEvent.VK_ENTER, KeyEvent.VK_LEFT, KeyEvent.VK_ENTER);
         clickSubMenuItemIe();
+        destroyBrowser("iexplore");
         autoItX.winWaitNoActive(confirm);
         assertThat(false, is(autoItX.winExists(confirm)));
         restartApp();
@@ -198,6 +207,7 @@ public class MenuEditTest extends MainWindow {
         clickBtnOpenFile();
         openFile(testJsFile, KeyEvent.VK_ENTER);
         clickSubMenuItemChrome();
+        destroyBrowser("chrome");
         autoItX.winWaitNoActive(confirm);
         assertThat(false, is(autoItX.winExists(confirm)));
         restartApp();
@@ -208,6 +218,7 @@ public class MenuEditTest extends MainWindow {
         clickBtnOpenFile();
         openFile(testXmlFile, KeyEvent.VK_ENTER);
         clickSubMenuItemFirefox();
+        destroyBrowser("firefox");
         autoItX.winWaitNoActive(confirm);
         assertThat(false, is(autoItX.winExists(confirm)));
         restartApp();
@@ -218,6 +229,7 @@ public class MenuEditTest extends MainWindow {
         clickBtnOpenFile();
         openFile(testSqlFile, KeyEvent.VK_ENTER);
         clickSubMenuItemOpera();
+        destroyBrowser("opera");
         autoItX.winWaitNoActive(confirm);
         assertThat(false, is(autoItX.winExists(confirm)));
         restartApp();
@@ -228,6 +240,7 @@ public class MenuEditTest extends MainWindow {
         clickBtnOpenFile();
         openFile(testCssFile, KeyEvent.VK_ENTER);
         clickSubMenuItemSafari();
+        destroyBrowser("safari");
         autoItX.winWaitNoActive(confirm);
         assertThat(false, is(autoItX.winExists(confirm)));
         restartApp();
@@ -238,6 +251,7 @@ public class MenuEditTest extends MainWindow {
         clickBtnOpenFile();
         openFile(testJavaFile, KeyEvent.VK_ENTER);
         clickSubMenuItemEdge();
+        destroyBrowser("MicrosoftEdge");
         autoItX.winWaitNoActive(confirm);
         assertThat(false, is(autoItX.winExists(confirm)));
         restartApp();
@@ -248,6 +262,7 @@ public class MenuEditTest extends MainWindow {
         clickBtnOpenFile();
         openFile(testHtmFile, KeyEvent.VK_ENTER);
         clickSubMenuItemIe();
+        destroyBrowser("iexplore");
         autoItX.winWaitNoActive(confirm);
         assertThat(false, is(autoItX.winExists(confirm)));
         restartApp();

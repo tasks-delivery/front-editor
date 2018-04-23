@@ -1,5 +1,9 @@
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -27,10 +31,11 @@ public class MenuHelpTest extends MainWindow{
     }
 
     @Test
-    public void closeAboutWindowByClickingOkButton(){
+    public void closeAboutWindowByClickingEnderKey() throws AWTException {
         openAboutWindow();
         assertThat(true, is(autoItX.winExists(about)));
-        clickBtnOK();
+        pressKey(KeyEvent.VK_ENTER);
+        autoItX.winWaitNoActive(about,btnOk);
         assertThat(false, is(autoItX.winExists(about,btnOk)));
     }
 
