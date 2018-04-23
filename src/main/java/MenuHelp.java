@@ -10,10 +10,6 @@ public class MenuHelp extends MenuCode {
         autoItX.mouseClick("left",498,646);
     }
 
-    public void clickBtnOK(){
-        autoItX.mouseClick("left",631,625);
-    }
-
     public void openMenuHelp(){
         autoItX.mouseClick("left",126,39);
     }

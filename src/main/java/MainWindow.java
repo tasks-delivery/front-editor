@@ -1,11 +1,36 @@
+import com.codeborne.selenide.Selenide;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Locale;
 
 public class MainWindow extends MenuHelp{
 
-    public String terminal = "C:\\WINDOWS\\system32\\cmd.exe";
-    public String textStyle = "Шрифт";
+    public String cmd = "cmd.exe";
+    public String textStyle;
     public String openFileDialog = "Open file";
+
+    public String textStyleWindow(String textStyle){
+        Locale lang = Locale.getDefault();
+        if (lang.getLanguage() == "en"){
+             textStyle = "Font";
+        }
+        if (lang.getLanguage() == "ru"){
+             textStyle = "Шрифт";
+        }
+        return textStyle;
+    }
+
+    public boolean getTerminal(){
+        Selenide.sleep(500);
+        if (autoItX.processExists(cmd) != 0)
+        {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     public void openFile(String file, int key) throws AWTException {
         autoItX.winWaitActive(openFileDialog);
@@ -64,12 +89,11 @@ public class MainWindow extends MenuHelp{
 
     public void clickBtnTextStyle(){
         autoItX.mouseClick("left",137,52);
-        autoItX.winWaitActive(textStyle);
+        autoItX.winActivate(textStyleWindow(textStyle));
     }
 
     public void clickBtnTerminal(){
         autoItX.mouseClick("left",469,52);
-        autoItX.winWaitActive(terminal);
     }
 
 	public Boolean EditorShouldHaveText(String text){

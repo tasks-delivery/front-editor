@@ -1,7 +1,9 @@
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -44,17 +46,18 @@ public class ShortCutTest extends MainWindow {
     @Test
     public void terminalShouldBeVisibleByClickingCtrlWithO() throws AWTException {
         pressKeyInSameTime(KeyEvent.VK_CONTROL, KeyEvent.VK_T);
-        autoItX.winWaitActive(terminal);
-        assertThat(true, is(autoItX.winExists(terminal)));
-        closeWindow(terminal);
+        assertThat(true, is(getTerminal()));
+        autoItX.processClose(String.valueOf(autoItX.processExists(cmd)));
+        autoItX.processWaitClose(String.valueOf(autoItX.processExists(cmd)));
+        assertThat(false, is(getTerminal()));
     }
 
     @Test
     public void textStyleWindowShouldBeVisibleByClickingAltWithT() throws AWTException {
         pressKeyInSameTime(KeyEvent.VK_ALT, KeyEvent.VK_T);
-        autoItX.winWaitActive(textStyle);
-        assertThat(true, is(autoItX.winExists(textStyle)));
-        closeWindow(textStyle);
+        autoItX.winWaitActive(textStyleWindow(textStyle));
+        assertThat(true, is(autoItX.winExists(textStyleWindow(textStyle))));
+        closeWindow(textStyleWindow(textStyle));
     }
 
     @Test
