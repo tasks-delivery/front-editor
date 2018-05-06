@@ -1,0 +1,35 @@
+language: java
+dist: trusty
+sudo: required
+group: deprecated-2017Q4
+
+jdk: openjdk8
+
+cache:
+  directories:
+  - .autoconf
+  - $HOME/.m2
+  - _build
+  - deps
+
+before_install:
+ - echo -e "machine github.com\n  login $GITHUB_TOKEN" >> ~/.netrc
+ - git lfs pull
+
+install:
+ - mvn -N io.takari:maven:wrapper
+ - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+branches:
+  only:
+    - dev
+    - master
+
+stages:
+   - test
+
+jobs:
+  include:
+     - stage: test
+       script:
+         - mvn compile
