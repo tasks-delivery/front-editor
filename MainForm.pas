@@ -530,7 +530,7 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('author: User');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('description: none');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('*/');
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynCssSyn;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynJScriptSyn;
   SetFocusToLastString;
 end
 else
@@ -541,7 +541,7 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('description: none');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('*/');
   SetFocusToLastString;
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynCssSyn;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynJScriptSyn;
 end;
 end;
 

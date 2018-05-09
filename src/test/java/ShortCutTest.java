@@ -65,7 +65,7 @@ public class ShortCutTest extends MainWindow {
         clickBtnNewFile();
         closeWindow(saveFileDialog);
         clickBtnJavaTemplate();
-        pressKeyInSameTime(KeyEvent.VK_SHIFT, KeyEvent.VK_T);
+        pressKeyInSameTime(KeyEvent.VK_CONTROL, KeyEvent.VK_Q);
         Assert.assertTrue(EditorShouldHaveText(toDo));
     }
 
@@ -74,7 +74,7 @@ public class ShortCutTest extends MainWindow {
         clickBtnNewFile();
         closeWindow(saveFileDialog);
         clickBtnCssTemplate();
-        pressKeyInSameTime(KeyEvent.VK_SHIFT, KeyEvent.VK_T);
+        pressKeyInSameTime(KeyEvent.VK_CONTROL, KeyEvent.VK_Q);
         Assert.assertTrue(EditorShouldHaveText(toDo));
     }
 
@@ -83,7 +83,7 @@ public class ShortCutTest extends MainWindow {
         clickBtnNewFile();
         closeWindow(saveFileDialog);
         clickBtnJsTemplate();
-        pressKeyInSameTime(KeyEvent.VK_SHIFT, KeyEvent.VK_T);
+        pressKeyInSameTime(KeyEvent.VK_CONTROL, KeyEvent.VK_Q);
         Assert.assertTrue(EditorShouldHaveText(toDo));
     }
 
@@ -92,7 +92,7 @@ public class ShortCutTest extends MainWindow {
         clickBtnNewFile();
         closeWindow(saveFileDialog);
         clickBtnSqlTemplate();
-        pressKeyInSameTime(KeyEvent.VK_SHIFT, KeyEvent.VK_T);
+        pressKeyInSameTime(KeyEvent.VK_CONTROL, KeyEvent.VK_Q);
         Assert.assertFalse(EditorShouldHaveText(toDo));
     }
 
@@ -101,7 +101,7 @@ public class ShortCutTest extends MainWindow {
         clickBtnNewFile();
         closeWindow(saveFileDialog);
         clickBtnXmlTemplate();
-        pressKeyInSameTime(KeyEvent.VK_SHIFT, KeyEvent.VK_T);
+        pressKeyInSameTime(KeyEvent.VK_CONTROL, KeyEvent.VK_Q);
         Assert.assertFalse(EditorShouldHaveText(toDo));
     }
 
@@ -110,7 +110,7 @@ public class ShortCutTest extends MainWindow {
         clickBtnNewFile();
         closeWindow(saveFileDialog);
         clickBtnHtmlTemplate();
-        pressKeyInSameTime(KeyEvent.VK_SHIFT, KeyEvent.VK_T);
+        pressKeyInSameTime(KeyEvent.VK_CONTROL, KeyEvent.VK_Q);
         Assert.assertFalse(EditorShouldHaveText(toDo));
     }
 
@@ -118,7 +118,7 @@ public class ShortCutTest extends MainWindow {
     public void toDoShouldNotBeVisibleByClickingAltWithTIfTemplateIsNotSelected() throws AWTException {
         clickBtnNewFile();
         closeWindow(saveFileDialog);
-        pressKeyInSameTime(KeyEvent.VK_SHIFT, KeyEvent.VK_T);
+        pressKeyInSameTime(KeyEvent.VK_CONTROL, KeyEvent.VK_Q);
         Assert.assertFalse(EditorShouldHaveText(toDo));
     }
 
