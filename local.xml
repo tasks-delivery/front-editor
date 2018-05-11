@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="AboutWindow for local">
+    <test name="AboutWindow for local">
+        <classes>
+            <class name="TemplateTest"/>
+            <class name="SaveAndOpenFilesTest"/>
+            <class name="MainWindowTest"/>
+            <class name="ShortCutTest"/>
+            <class name="MenuFileTest"/>
+            <class name="MenuEditTest"/>
+            <class name="MenuCodeTest"/>
+            <class name="MenuHelpTest"/>
+         </classes>
+     </test>
+ </suite>
