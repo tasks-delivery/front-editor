@@ -38,7 +38,10 @@ public class MainWindowTest extends MainWindow {
         assertThat(false, is(autoItX.winExists(saveFileDialog)));
     }
 
-    @Test
+    /*
+    TODO Not stable (cmd isn't closed)
+     */
+    @Test(enabled = false)
     public void terminalWindow(){
         clickBtnTerminal();
         assertThat(true, is(getTerminal()));

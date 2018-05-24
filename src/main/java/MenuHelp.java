@@ -22,7 +22,7 @@ public class MenuHelp extends MenuCode {
 
     public void openUpdateWindow(){
         openMenuHelp();
-        autoItX.mouseClick("left",148,88);
+        autoItX.mouseClick("left",154,80);
         autoItX.winWaitActive(update);
     }
 
