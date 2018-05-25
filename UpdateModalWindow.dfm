@@ -35,6 +35,15 @@ object UpdateApp: TUpdateApp
     Width = 353
     Height = 129
     Lines.Strings = (
+      'Release 0.1.3'
+      ''
+      'Released 25.05.2018'
+      ''
+      
+        'https://github.com/tasks-delivery/front-editor/releases/tag/v0.1' +
+        '.3'
+      '_____________________________________________________'
+      ''
       'Release 0.1.2'
       ''
       'Released 06.05.2018'
