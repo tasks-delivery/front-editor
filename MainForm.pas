@@ -153,8 +153,8 @@ var
   document: IHTMLDocument2;
   Flag: Boolean;
   const size = 10;
-  const releaseVersion = '0.1.3';
-  const currentVersion = '0.1.2';
+  const releaseVersion = '0.1.4';
+  const currentVersion = '0.1.3';
 
 implementation
 
@@ -530,7 +530,7 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('author: User');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('description: none');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('*/');
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynCssSyn;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynJScriptSyn;
   SetFocusToLastString;
 end
 else
@@ -541,7 +541,7 @@ begin
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('description: none');
   (PageEditor.ActivePage.Components[0] as TSynEdit).Lines.Add('*/');
   SetFocusToLastString;
-  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynCssSyn;
+  (PageEditor.ActivePage.Components[0] as TSynEdit).Highlighter:=SynJScriptSyn;
 end;
 end;
 

@@ -2,10 +2,19 @@ package config;
 
 import autoitx4java.AutoItX;
 import com.jacob.com.LibraryLoader;
+import com.sun.jna.Library;
+import com.sun.jna.Native;
+import com.sun.jna.NativeLibrary;
+import com.sun.jna.Platform;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
+
 import java.awt.*;
 import java.io.File;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class ConciseApi {
 

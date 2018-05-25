@@ -71,7 +71,10 @@ public class MenuEditTest extends MainWindow {
         Assert.assertFalse(EditorShouldHaveText(toDo));
     }
 
-    @Test
+    /*
+    TODO No stable (cmd isn't shown)
+     */
+    @Test(enabled = false)
     public void itIsPossibleToStartTerminalByTopBarMenu() throws AWTException {
         clickSubMenuItemTerminal();
         assertThat(true, is(getTerminal()));
